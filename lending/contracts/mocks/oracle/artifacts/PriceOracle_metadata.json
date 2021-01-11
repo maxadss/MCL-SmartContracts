@@ -1,0 +1,181 @@
+{
+	"compiler": {
+		"version": "0.5.17+commit.d19bba13"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_asset",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_price",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"name": "AssetPriceUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_price",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"name": "EthPriceUpdated",
+				"type": "event"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_asset",
+						"type": "address"
+					}
+				],
+				"name": "getAssetPrice",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "address[]",
+						"name": "_assets",
+						"type": "address[]"
+					}
+				],
+				"name": "getAssetsPrices",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "getEthUsdPrice",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_asset",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_price",
+						"type": "uint256"
+					}
+				],
+				"name": "setAssetPrice",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_price",
+						"type": "uint256"
+					}
+				],
+				"name": "setEthUsdPrice",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"localhost/mocks/oracle/PriceOracle.sol": "PriceOracle"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"localhost/interfaces/IPriceOracle.sol": {
+			"keccak256": "0x12861762ae6e9f9914080771857cab85ba207543324e9fd1025906671ff14138",
+			"urls": [
+				"bzz-raw://c853fda01731ef796e60cca52421749ba66c25747d46f64c0cc51c659afb9992",
+				"dweb:/ipfs/QmX31jJcsvYJxSLYnXQBkyts6sxbHtAeGCkrJxdNEv77mc"
+			]
+		},
+		"localhost/mocks/oracle/PriceOracle.sol": {
+			"keccak256": "0x9500108c03054e2b1bd7b9c4ca462d3427a523a730cc4cb14a730a65970b3c33",
+			"urls": [
+				"bzz-raw://214e427a71234fb66956ea78dcbd32115bafca3a7cb50d1e4af4b5038f62817a",
+				"dweb:/ipfs/QmPpA4KTKSZySzVb48Y9Lk9ag4P3AVhMUB9tbCwPN37PNE"
+			]
+		}
+	},
+	"version": 1
+}

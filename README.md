@@ -1,1 +1,1 @@
-# MCL-SmartContracts
+# MCLend-SmartContracts
