@@ -212,7 +212,7 @@ contract RewardsManager is Ownable, ReentrancyGuard {
 
         // For optimization, if _shares is 0, then we just update the next claimable pointer
         if (_shares == 0) {
-            updateRange(pool, _user, _type, 0, 0, 0, false);
+            updateRange(pool, _user, uint256(_type), 0, 0, 0, false);
             return;
         }
 
