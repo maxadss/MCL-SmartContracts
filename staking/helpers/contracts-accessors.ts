@@ -1,10 +1,10 @@
+import { BMxxIncentivesController } from './../types/BMxxIncentivesController.d';
 import {deployContract, getContractFactory, getContract} from './contracts-helpers';
 import {eContractid, tEthereumAddress} from './types';
 import {MintableErc20} from '../types/MintableErc20';
-import {StakedbMXX} from '../types/StakedbMXX';
+import {StakedbMxx} from '../types/StakedbMXX';
 import {Ierc20Detailed} from '../types/Ierc20Detailed';
 import {InitializableAdminUpgradeabilityProxy} from '../types/InitializableAdminUpgradeabilityProxy';
-import {bMXXIncentivesController} from '../types/bMXXIncentivesController';
 import {LendingPoolMock} from '../types/LendingPoolMock';
 import {MockTransferHook} from '../types/MockTransferHook';
 import {verifyContract} from './etherscan-verification';
@@ -41,7 +41,7 @@ export const deployStakedbMXX = async (
     emissionManager,
     distributionDuration,
   ];
-  const instance = await deployContract<StakedbMXX>(id, args);
+  const instance = await deployContract<StakedbMxx>(id, args);
   if (verify) {
     await verifyContract(id, instance.address, args);
   }
@@ -68,7 +68,7 @@ export const deploybMXXIncentivesController = async (
     emissionManager,
     distributionDuration,
   ];
-  const instance = await deployContract<bMXXIncentivesController>(id, args);
+  const instance = await deployContract<BMxxIncentivesController>(id, args);
   await instance.deployTransaction.wait();
   if (verify) {
     await verifyContract(id, instance.address, args);
@@ -99,7 +99,7 @@ export const deployBTokenMock = async (bicAddress: tEthereumAddress, slug: strin
 export const getMintableErc20 = getContractFactory<MintableErc20>(eContractid.MintableErc20);
 export const getLendingPoolMock = getContractFactory<LendingPoolMock>(eContractid.LendingPoolMock);
 
-export const getStakedbMXX = getContractFactory<StakedbMXX>(eContractid.StakedbMXX);
+export const getStakedbMXX = getContractFactory<StakedbMxx>(eContractid.StakedbMXX);
 
 export const getStakedbMXXProxy = async (address?: tEthereumAddress) => {
   return await getContract<InitializableAdminUpgradeabilityProxy>(
@@ -109,14 +109,14 @@ export const getStakedbMXXProxy = async (address?: tEthereumAddress) => {
 };
 
 export const getStakedbMXXImpl = async (address?: tEthereumAddress) => {
-  return await getContract<StakedbMXX>(
+  return await getContract<StakedbMxx>(
     eContractid.StakedbMXX,
     address ||
       (await getDb().get(`${eContractid.StakedbMXXImpl}.${BRE.network.name}`).value()).address
   );
 };
 
-export const getbMXXIncentivesController = getContractFactory<bMXXIncentivesController>(
+export const getbMXXIncentivesController = getContractFactory<BMxxIncentivesController>(
   eContractid.bMXXIncentivesController
 );
 

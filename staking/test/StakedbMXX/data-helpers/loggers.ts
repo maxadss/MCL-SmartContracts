@@ -1,6 +1,6 @@
 import {tEthereumAddress} from '../../../helpers/types';
 import {MintableErc20} from '../../../types/MintableErc20';
-import {StakedbMXX} from '../../../types/StakedbMXX';
+import {StakedbMxx} from '../../../types/StakedbMXX';
 
 export const logmTokenBalanceOf = async (
   account: tEthereumAddress,
@@ -11,7 +11,7 @@ export const logmTokenBalanceOf = async (
   );
 };
 
-export const logStakedbMXXBalanceOf = async (staker: tEthereumAddress, stakedbMXX: StakedbMXX) => {
+export const logStakedbMXXBalanceOf = async (staker: tEthereumAddress, stakedbMXX: StakedbMxx) => {
   console.log(
     `[stakedbMXX.balanceOf(${staker})]: ${(await stakedbMXX.balanceOf(staker)).toString()}`
   );
@@ -19,7 +19,7 @@ export const logStakedbMXXBalanceOf = async (staker: tEthereumAddress, stakedbMX
 
 export const logGetStakeTotalRewardsBalance = async (
   staker: tEthereumAddress,
-  stakedbMXX: StakedbMXX
+  stakedbMXX: StakedbMxx
 ) => {
   console.log(
     `[stakedbMXX.getTotalRewardsBalance(${staker})]: ${(
@@ -28,7 +28,7 @@ export const logGetStakeTotalRewardsBalance = async (
   );
 };
 
-export const logRewardPerStakedbMXX = async (stakedbMXX: StakedbMXX) => {
+export const logRewardPerStakedbMXX = async (stakedbMXX: StakedbMxx) => {
   console.log(
     `[stakedbMXX.getRewardPerStakedbMXX()]: ${(
       await stakedbMXX.getRewardPerStakedbMXX()

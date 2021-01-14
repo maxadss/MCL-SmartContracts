@@ -6,7 +6,7 @@ const ChaiBigNumber = require('chai-bignumber');
 
 import {ethers, ContractTransaction, BigNumberish} from 'ethers';
 
-import {StakedbMXX} from '../../../types/StakedbMXX';
+import {StakedbMxx} from '../../../types/StakedbMXX';
 
 import {getRewards} from '../../DistributionManager/data-helpers/base-math';
 import {getUserIndex} from '../../DistributionManager/data-helpers/asset-user-data';
@@ -22,7 +22,7 @@ type AssetConfig = {
 };
 
 export const compareRewardsAtAction = async (
-  stakedbMXX: StakedbMXX,
+  stakedbMXX: StakedbMxx,
   userAddress: string,
   actions: () => Promise<ContractTransaction>[],
   shouldReward?: boolean,
@@ -92,7 +92,7 @@ export const compareRewardsAtAction = async (
 };
 
 export const compareRewardsAtTransfer = async (
-  stakedbMXX: StakedbMXX,
+  stakedbMXX: StakedbMxx,
   from: SignerWithAddress,
   to: SignerWithAddress,
   amount: BigNumberish,

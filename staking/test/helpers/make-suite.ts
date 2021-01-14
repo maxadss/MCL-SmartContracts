@@ -1,3 +1,4 @@
+import { BMxxIncentivesController } from './../../types/BMxxIncentivesController.d';
 import {evmRevert, evmSnapshot, BRE} from '../../helpers/misc-utils';
 import {Signer} from 'ethers';
 import {getEthersSigners} from '../../helpers/contracts-helpers';
@@ -6,14 +7,13 @@ import {tEthereumAddress} from '../../helpers/types';
 import chai from 'chai';
 // @ts-ignore
 import bignumberChai from 'chai-bignumber';
-import {StakedbMXX} from '../../types/StakedbMXX';
+import {StakedbMxx} from '../../types/StakedbMXX';
 import {
   getbMXXIncentivesController,
   getBTokenMock,
   getMintableErc20,
   getStakedbMXX,
 } from '../../helpers/contracts-accessors';
-import {bMXXIncentivesController} from '../../types/bMXXIncentivesController';
 import {MintableErc20} from '../../types/MintableErc20';
 import {BTokenMock} from '../../types/BTokenMock';
 
@@ -33,8 +33,8 @@ export interface TestEnv {
   deployer: SignerWithAddress;
   users: SignerWithAddress[];
   mToken: MintableErc20;
-  bMXXIncentivesController: bMXXIncentivesController;
-  stakedbMXX: StakedbMXX;
+  bMXXIncentivesController: BMxxIncentivesController;
+  stakedbMXX: StakedbMxx;
   aDaiMock: BTokenMock;
   aWethMock: BTokenMock;
 }
@@ -50,8 +50,8 @@ const testEnv: TestEnv = {
   deployer: {} as SignerWithAddress,
   users: [] as SignerWithAddress[],
   mToken: {} as MintableErc20,
-  stakedbMXX: {} as StakedbMXX,
-  bMXXIncentivesController: {} as bMXXIncentivesController,
+  stakedbMXX: {} as StakedbMxx,
+  bMXXIncentivesController: {} as BMxxIncentivesController,
   aDaiMock: {} as BTokenMock,
   aWethMock: {} as BTokenMock,
 } as TestEnv;

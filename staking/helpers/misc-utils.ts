@@ -1,4 +1,4 @@
-import BigNumber from '../test/StakedbMXX/node_modules/bignumber.js.js';
+import BigNumber from 'bignumber.js';
 import low from 'lowdb';
 import FileSync from 'lowdb/adapters/FileSync';
 import {WAD} from './constants';

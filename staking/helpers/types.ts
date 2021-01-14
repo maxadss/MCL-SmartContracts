@@ -1,4 +1,4 @@
-import BigNumber from '../test/StakedbMXX/node_modules/bignumber.js.js';
+import BigNumber from 'bignumber.js';
 
 export enum eEthereumNetwork {
   coverage = 'coverage',
