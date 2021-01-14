@@ -19,11 +19,8 @@ import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 
-interface Erc20WithSnapshotInterface extends ethers.utils.Interface {
+interface MintableErc20Interface extends ethers.utils.Interface {
   functions: {
-    "_bMXXGovernance()": FunctionFragment;
-    "_countsSnapshots(address)": FunctionFragment;
-    "_snapshots(address,uint256)": FunctionFragment;
     "allowance(address,address)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
@@ -35,20 +32,9 @@ interface Erc20WithSnapshotInterface extends ethers.utils.Interface {
     "totalSupply()": FunctionFragment;
     "transfer(address,uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
+    "mint(uint256)": FunctionFragment;
   };
 
-  encodeFunctionData(
-    functionFragment: "_bMXXGovernance",
-    values?: void
-  ): string;
-  encodeFunctionData(
-    functionFragment: "_countsSnapshots",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "_snapshots",
-    values: [string, BigNumberish]
-  ): string;
   encodeFunctionData(
     functionFragment: "allowance",
     values: [string, string]
@@ -78,16 +64,8 @@ interface Erc20WithSnapshotInterface extends ethers.utils.Interface {
     functionFragment: "transferFrom",
     values: [string, string, BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "mint", values: [BigNumberish]): string;
 
-  decodeFunctionResult(
-    functionFragment: "_bMXXGovernance",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "_countsSnapshots",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "_snapshots", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
@@ -111,19 +89,18 @@ interface Erc20WithSnapshotInterface extends ethers.utils.Interface {
     functionFragment: "transferFrom",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
 
   events: {
     "Approval(address,address,uint256)": EventFragment;
-    "SnapshotDone(address,uint128,uint128)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SnapshotDone"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
-export class Erc20WithSnapshot extends Contract {
+export class MintableErc20 extends Contract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -134,33 +111,9 @@ export class Erc20WithSnapshot extends Contract {
   removeAllListeners(eventName: EventFilter | string): this;
   removeListener(eventName: any, listener: Listener): this;
 
-  interface: Erc20WithSnapshotInterface;
+  interface: MintableErc20Interface;
 
   functions: {
-    _bMXXGovernance(
-      overrides?: CallOverrides
-    ): Promise<{
-      0: string;
-    }>;
-
-    _countsSnapshots(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<{
-      0: BigNumber;
-    }>;
-
-    _snapshots(
-      arg0: string,
-      arg1: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<{
-      blockNumber: BigNumber;
-      value: BigNumber;
-      0: BigNumber;
-      1: BigNumber;
-    }>;
-
     /**
      * returns the allowance of spender on the tokens owned by owner
      * @param owner the owner of the tokens
@@ -270,22 +223,16 @@ export class Erc20WithSnapshot extends Contract {
       amount: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
+
+    /**
+     * Function to mint tokens
+     * @param value The amount of tokens to mint.
+     */
+    mint(
+      value: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
   };
-
-  _bMXXGovernance(overrides?: CallOverrides): Promise<string>;
-
-  _countsSnapshots(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-  _snapshots(
-    arg0: string,
-    arg1: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<{
-    blockNumber: BigNumber;
-    value: BigNumber;
-    0: BigNumber;
-    1: BigNumber;
-  }>;
 
   /**
    * returns the allowance of spender on the tokens owned by owner
@@ -374,25 +321,16 @@ export class Erc20WithSnapshot extends Contract {
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
+  /**
+   * Function to mint tokens
+   * @param value The amount of tokens to mint.
+   */
+  mint(
+    value: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
   staticCall: {
-    _bMXXGovernance(overrides?: CallOverrides): Promise<string>;
-
-    _countsSnapshots(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    _snapshots(
-      arg0: string,
-      arg1: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<{
-      blockNumber: BigNumber;
-      value: BigNumber;
-      0: BigNumber;
-      1: BigNumber;
-    }>;
-
     /**
      * returns the allowance of spender on the tokens owned by owner
      * @param owner the owner of the tokens
@@ -479,6 +417,12 @@ export class Erc20WithSnapshot extends Contract {
       amount: BigNumberish,
       overrides?: Overrides
     ): Promise<boolean>;
+
+    /**
+     * Function to mint tokens
+     * @param value The amount of tokens to mint.
+     */
+    mint(value: BigNumberish, overrides?: Overrides): Promise<boolean>;
   };
 
   filters: {
@@ -488,15 +432,10 @@ export class Erc20WithSnapshot extends Contract {
       value: null
     ): EventFilter;
 
-    SnapshotDone(owner: null, oldValue: null, newValue: null): EventFilter;
-
     Transfer(from: string | null, to: string | null, value: null): EventFilter;
   };
 
   estimateGas: {
-    _bMXXGovernance(): Promise<BigNumber>;
-    _countsSnapshots(arg0: string): Promise<BigNumber>;
-    _snapshots(arg0: string, arg1: BigNumberish): Promise<BigNumber>;
     allowance(owner: string, spender: string): Promise<BigNumber>;
     approve(spender: string, amount: BigNumberish): Promise<BigNumber>;
     balanceOf(account: string): Promise<BigNumber>;
@@ -518,12 +457,10 @@ export class Erc20WithSnapshot extends Contract {
       recipient: string,
       amount: BigNumberish
     ): Promise<BigNumber>;
+    mint(value: BigNumberish): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    _bMXXGovernance(): Promise<PopulatedTransaction>;
-    _countsSnapshots(arg0: string): Promise<PopulatedTransaction>;
-    _snapshots(arg0: string, arg1: BigNumberish): Promise<PopulatedTransaction>;
     allowance(owner: string, spender: string): Promise<PopulatedTransaction>;
     approve(
       spender: string,
@@ -551,5 +488,6 @@ export class Erc20WithSnapshot extends Contract {
       recipient: string,
       amount: BigNumberish
     ): Promise<PopulatedTransaction>;
+    mint(value: BigNumberish): Promise<PopulatedTransaction>;
   };
 }

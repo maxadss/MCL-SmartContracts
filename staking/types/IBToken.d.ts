@@ -7,18 +7,18 @@ import {
   Signer,
   BigNumber,
   BigNumberish,
-  PopulatedTransaction
+  PopulatedTransaction,
 } from "ethers";
 import {
   Contract,
   ContractTransaction,
-  CallOverrides
+  CallOverrides,
 } from "@ethersproject/contracts";
 import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 
-interface IBTokenInterface extends ethers.utils.Interface {
+interface IbTokenInterface extends ethers.utils.Interface {
   functions: {
     "getScaledUserBalanceAndSupply(address)": FunctionFragment;
   };
@@ -36,7 +36,7 @@ interface IBTokenInterface extends ethers.utils.Interface {
   events: {};
 }
 
-export class IBToken extends Contract {
+export class IbToken extends Contract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -47,7 +47,7 @@ export class IBToken extends Contract {
   removeAllListeners(eventName: EventFilter | string): this;
   removeListener(eventName: any, listener: Listener): this;
 
-  interface: IBTokenInterface;
+  interface: IbTokenInterface;
 
   functions: {
     getScaledUserBalanceAndSupply(

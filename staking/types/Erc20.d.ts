@@ -7,13 +7,13 @@ import {
   Signer,
   BigNumber,
   BigNumberish,
-  PopulatedTransaction
+  PopulatedTransaction,
 } from "ethers";
 import {
   Contract,
   ContractTransaction,
   Overrides,
-  CallOverrides
+  CallOverrides,
 } from "@ethersproject/contracts";
 import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
@@ -21,19 +21,28 @@ import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 
 interface Erc20Interface extends ethers.utils.Interface {
   functions: {
-    "allowance(address,address)": FunctionFragment;
-    "approve(address,uint256)": FunctionFragment;
-    "balanceOf(address)": FunctionFragment;
-    "decimals()": FunctionFragment;
-    "decreaseAllowance(address,uint256)": FunctionFragment;
-    "increaseAllowance(address,uint256)": FunctionFragment;
     "name()": FunctionFragment;
     "symbol()": FunctionFragment;
+    "decimals()": FunctionFragment;
     "totalSupply()": FunctionFragment;
+    "balanceOf(address)": FunctionFragment;
     "transfer(address,uint256)": FunctionFragment;
+    "allowance(address,address)": FunctionFragment;
+    "approve(address,uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
+    "increaseAllowance(address,uint256)": FunctionFragment;
+    "decreaseAllowance(address,uint256)": FunctionFragment;
   };
 
+  encodeFunctionData(functionFragment: "name", values?: void): string;
+  encodeFunctionData(functionFragment: "symbol", values?: void): string;
+  encodeFunctionData(functionFragment: "decimals", values?: void): string;
+  encodeFunctionData(functionFragment: "totalSupply", values?: void): string;
+  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "transfer",
+    values: [string, BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "allowance",
     values: [string, string]
@@ -42,49 +51,40 @@ interface Erc20Interface extends ethers.utils.Interface {
     functionFragment: "approve",
     values: [string, BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
-  encodeFunctionData(functionFragment: "decimals", values?: void): string;
-  encodeFunctionData(
-    functionFragment: "decreaseAllowance",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "increaseAllowance",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "name", values?: void): string;
-  encodeFunctionData(functionFragment: "symbol", values?: void): string;
-  encodeFunctionData(functionFragment: "totalSupply", values?: void): string;
-  encodeFunctionData(
-    functionFragment: "transfer",
-    values: [string, BigNumberish]
-  ): string;
   encodeFunctionData(
     functionFragment: "transferFrom",
     values: [string, string, BigNumberish]
   ): string;
+  encodeFunctionData(
+    functionFragment: "increaseAllowance",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "decreaseAllowance",
+    values: [string, BigNumberish]
+  ): string;
 
-  decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "decreaseAllowance",
+    functionFragment: "totalSupply",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "transferFrom",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "increaseAllowance",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "totalSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "transferFrom",
+    functionFragment: "decreaseAllowance",
     data: BytesLike
   ): Result;
 
@@ -111,20 +111,40 @@ export class Erc20 extends Contract {
   interface: Erc20Interface;
 
   functions: {
-    allowance(
-      owner: string,
-      spender: string,
+    /**
+     */
+    name(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
+
+    /**
+     */
+    symbol(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
+
+    /**
+     */
+    decimals(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: number;
+    }>;
+
+    /**
+     */
+    totalSupply(
       overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
     }>;
 
-    approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
+    /**
+     */
     balanceOf(
       account: string,
       overrides?: CallOverrides
@@ -132,96 +152,134 @@ export class Erc20 extends Contract {
       0: BigNumber;
     }>;
 
-    decimals(
-      overrides?: CallOverrides
-    ): Promise<{
-      0: number;
-    }>;
-
-    decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    name(
-      overrides?: CallOverrides
-    ): Promise<{
-      0: string;
-    }>;
-
-    symbol(
-      overrides?: CallOverrides
-    ): Promise<{
-      0: string;
-    }>;
-
-    totalSupply(
-      overrides?: CallOverrides
-    ): Promise<{
-      0: BigNumber;
-    }>;
-
+    /**
+     * executes a transfer of tokens from msg.sender to recipient
+     * @param amount the amount of tokens being transferred
+     * @param recipient the recipient of the tokens
+     */
     transfer(
       recipient: string,
       amount: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
+    /**
+     * returns the allowance of spender on the tokens owned by owner
+     * @param owner the owner of the tokens
+     * @param spender the user allowed to spend the owner's tokens
+     */
+    allowance(
+      owner: string,
+      spender: string,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
+
+    /**
+     * allows spender to spend the tokens owned by msg.sender
+     * @param spender the user allowed to spend msg.sender tokens
+     */
+    approve(
+      spender: string,
+      amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    /**
+     * executes a transfer of token from sender to recipient, if msg.sender is allowed to do so
+     * @param amount the amount of tokens being transferred
+     * @param recipient the recipient of the tokens
+     * @param sender the owner of the tokens
+     */
     transferFrom(
       sender: string,
       recipient: string,
       amount: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
+
+    /**
+     * increases the allowance of spender to spend msg.sender tokens
+     * @param addedValue the amount being added to the allowance
+     * @param spender the user allowed to spend on behalf of msg.sender
+     */
+    increaseAllowance(
+      spender: string,
+      addedValue: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    /**
+     * decreases the allowance of spender to spend msg.sender tokens
+     * @param spender the user allowed to spend on behalf of msg.sender
+     * @param subtractedValue the amount being subtracted to the allowance
+     */
+    decreaseAllowance(
+      spender: string,
+      subtractedValue: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
   };
 
-  allowance(
-    owner: string,
-    spender: string,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  approve(
-    spender: string,
-    amount: BigNumberish,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-  decimals(overrides?: CallOverrides): Promise<number>;
-
-  decreaseAllowance(
-    spender: string,
-    subtractedValue: BigNumberish,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  increaseAllowance(
-    spender: string,
-    addedValue: BigNumberish,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
+  /**
+   */
   name(overrides?: CallOverrides): Promise<string>;
 
+  /**
+   */
   symbol(overrides?: CallOverrides): Promise<string>;
 
+  /**
+   */
+  decimals(overrides?: CallOverrides): Promise<number>;
+
+  /**
+   */
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
+  /**
+   */
+  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  /**
+   * executes a transfer of tokens from msg.sender to recipient
+   * @param amount the amount of tokens being transferred
+   * @param recipient the recipient of the tokens
+   */
   transfer(
     recipient: string,
     amount: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
+  /**
+   * returns the allowance of spender on the tokens owned by owner
+   * @param owner the owner of the tokens
+   * @param spender the user allowed to spend the owner's tokens
+   */
+  allowance(
+    owner: string,
+    spender: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  /**
+   * allows spender to spend the tokens owned by msg.sender
+   * @param spender the user allowed to spend msg.sender tokens
+   */
+  approve(
+    spender: string,
+    amount: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  /**
+   * executes a transfer of token from sender to recipient, if msg.sender is allowed to do so
+   * @param amount the amount of tokens being transferred
+   * @param recipient the recipient of the tokens
+   * @param sender the owner of the tokens
+   */
   transferFrom(
     sender: string,
     recipient: string,
@@ -229,51 +287,113 @@ export class Erc20 extends Contract {
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
+  /**
+   * increases the allowance of spender to spend msg.sender tokens
+   * @param addedValue the amount being added to the allowance
+   * @param spender the user allowed to spend on behalf of msg.sender
+   */
+  increaseAllowance(
+    spender: string,
+    addedValue: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  /**
+   * decreases the allowance of spender to spend msg.sender tokens
+   * @param spender the user allowed to spend on behalf of msg.sender
+   * @param subtractedValue the amount being subtracted to the allowance
+   */
+  decreaseAllowance(
+    spender: string,
+    subtractedValue: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
   staticCall: {
-    allowance(
-      owner: string,
-      spender: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides
-    ): Promise<boolean>;
-
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    decimals(overrides?: CallOverrides): Promise<number>;
-
-    decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides
-    ): Promise<boolean>;
-
-    increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides
-    ): Promise<boolean>;
-
+    /**
+     */
     name(overrides?: CallOverrides): Promise<string>;
 
+    /**
+     */
     symbol(overrides?: CallOverrides): Promise<string>;
 
+    /**
+     */
+    decimals(overrides?: CallOverrides): Promise<number>;
+
+    /**
+     */
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
+    /**
+     */
+    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    /**
+     * executes a transfer of tokens from msg.sender to recipient
+     * @param amount the amount of tokens being transferred
+     * @param recipient the recipient of the tokens
+     */
     transfer(
       recipient: string,
       amount: BigNumberish,
       overrides?: Overrides
     ): Promise<boolean>;
 
+    /**
+     * returns the allowance of spender on the tokens owned by owner
+     * @param owner the owner of the tokens
+     * @param spender the user allowed to spend the owner's tokens
+     */
+    allowance(
+      owner: string,
+      spender: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    /**
+     * allows spender to spend the tokens owned by msg.sender
+     * @param spender the user allowed to spend msg.sender tokens
+     */
+    approve(
+      spender: string,
+      amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<boolean>;
+
+    /**
+     * executes a transfer of token from sender to recipient, if msg.sender is allowed to do so
+     * @param amount the amount of tokens being transferred
+     * @param recipient the recipient of the tokens
+     * @param sender the owner of the tokens
+     */
     transferFrom(
       sender: string,
       recipient: string,
       amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<boolean>;
+
+    /**
+     * increases the allowance of spender to spend msg.sender tokens
+     * @param addedValue the amount being added to the allowance
+     * @param spender the user allowed to spend on behalf of msg.sender
+     */
+    increaseAllowance(
+      spender: string,
+      addedValue: BigNumberish,
+      overrides?: Overrides
+    ): Promise<boolean>;
+
+    /**
+     * decreases the allowance of spender to spend msg.sender tokens
+     * @param spender the user allowed to spend on behalf of msg.sender
+     * @param subtractedValue the amount being subtracted to the allowance
+     */
+    decreaseAllowance(
+      spender: string,
+      subtractedValue: BigNumberish,
       overrides?: Overrides
     ): Promise<boolean>;
   };
@@ -289,56 +409,56 @@ export class Erc20 extends Contract {
   };
 
   estimateGas: {
-    allowance(owner: string, spender: string): Promise<BigNumber>;
-    approve(spender: string, amount: BigNumberish): Promise<BigNumber>;
-    balanceOf(account: string): Promise<BigNumber>;
-    decimals(): Promise<BigNumber>;
-    decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish
-    ): Promise<BigNumber>;
-    increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish
-    ): Promise<BigNumber>;
     name(): Promise<BigNumber>;
     symbol(): Promise<BigNumber>;
+    decimals(): Promise<BigNumber>;
     totalSupply(): Promise<BigNumber>;
+    balanceOf(account: string): Promise<BigNumber>;
     transfer(recipient: string, amount: BigNumberish): Promise<BigNumber>;
+    allowance(owner: string, spender: string): Promise<BigNumber>;
+    approve(spender: string, amount: BigNumberish): Promise<BigNumber>;
     transferFrom(
       sender: string,
       recipient: string,
       amount: BigNumberish
     ): Promise<BigNumber>;
+    increaseAllowance(
+      spender: string,
+      addedValue: BigNumberish
+    ): Promise<BigNumber>;
+    decreaseAllowance(
+      spender: string,
+      subtractedValue: BigNumberish
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
+    name(): Promise<PopulatedTransaction>;
+    symbol(): Promise<PopulatedTransaction>;
+    decimals(): Promise<PopulatedTransaction>;
+    totalSupply(): Promise<PopulatedTransaction>;
+    balanceOf(account: string): Promise<PopulatedTransaction>;
+    transfer(
+      recipient: string,
+      amount: BigNumberish
+    ): Promise<PopulatedTransaction>;
     allowance(owner: string, spender: string): Promise<PopulatedTransaction>;
     approve(
       spender: string,
       amount: BigNumberish
     ): Promise<PopulatedTransaction>;
-    balanceOf(account: string): Promise<PopulatedTransaction>;
-    decimals(): Promise<PopulatedTransaction>;
-    decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish
+    transferFrom(
+      sender: string,
+      recipient: string,
+      amount: BigNumberish
     ): Promise<PopulatedTransaction>;
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish
     ): Promise<PopulatedTransaction>;
-    name(): Promise<PopulatedTransaction>;
-    symbol(): Promise<PopulatedTransaction>;
-    totalSupply(): Promise<PopulatedTransaction>;
-    transfer(
-      recipient: string,
-      amount: BigNumberish
-    ): Promise<PopulatedTransaction>;
-    transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish
+    decreaseAllowance(
+      spender: string,
+      subtractedValue: BigNumberish
     ): Promise<PopulatedTransaction>;
   };
 }

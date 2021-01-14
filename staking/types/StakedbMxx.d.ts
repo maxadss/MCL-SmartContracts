@@ -19,7 +19,7 @@ import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 
-interface StakedTokenInterface extends ethers.utils.Interface {
+interface StakedbMxxInterface extends ethers.utils.Interface {
   functions: {
     "COOLDOWN_SECONDS()": FunctionFragment;
     "DISTRIBUTION_END()": FunctionFragment;
@@ -37,25 +37,25 @@ interface StakedTokenInterface extends ethers.utils.Interface {
     "approve(address,uint256)": FunctionFragment;
     "assets(address)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
+    "claimRewards(address,uint256)": FunctionFragment;
     "configureAssets(tuple[])": FunctionFragment;
+    "cooldown()": FunctionFragment;
     "decimals()": FunctionFragment;
     "decreaseAllowance(address,uint256)": FunctionFragment;
+    "getNextCooldownTimestamp(uint256,uint256,address,uint256)": FunctionFragment;
+    "getTotalRewardsBalance(address)": FunctionFragment;
     "getUserAssetData(address,address)": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
+    "initialize(address,string,string,uint8)": FunctionFragment;
     "name()": FunctionFragment;
+    "redeem(address,uint256)": FunctionFragment;
+    "stake(address,uint256)": FunctionFragment;
     "stakerRewardsToClaim(address)": FunctionFragment;
     "stakersCooldowns(address)": FunctionFragment;
     "symbol()": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transfer(address,uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
-    "initialize(address,string,string,uint8)": FunctionFragment;
-    "stake(address,uint256)": FunctionFragment;
-    "redeem(address,uint256)": FunctionFragment;
-    "cooldown()": FunctionFragment;
-    "claimRewards(address,uint256)": FunctionFragment;
-    "getNextCooldownTimestamp(uint256,uint256,address,uint256)": FunctionFragment;
-    "getTotalRewardsBalance(address)": FunctionFragment;
   };
 
   encodeFunctionData(
@@ -99,6 +99,10 @@ interface StakedTokenInterface extends ethers.utils.Interface {
   encodeFunctionData(functionFragment: "assets", values: [string]): string;
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
   encodeFunctionData(
+    functionFragment: "claimRewards",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "configureAssets",
     values: [
       {
@@ -108,10 +112,19 @@ interface StakedTokenInterface extends ethers.utils.Interface {
       }[]
     ]
   ): string;
+  encodeFunctionData(functionFragment: "cooldown", values?: void): string;
   encodeFunctionData(functionFragment: "decimals", values?: void): string;
   encodeFunctionData(
     functionFragment: "decreaseAllowance",
     values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getNextCooldownTimestamp",
+    values: [BigNumberish, BigNumberish, string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getTotalRewardsBalance",
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "getUserAssetData",
@@ -121,7 +134,19 @@ interface StakedTokenInterface extends ethers.utils.Interface {
     functionFragment: "increaseAllowance",
     values: [string, BigNumberish]
   ): string;
+  encodeFunctionData(
+    functionFragment: "initialize",
+    values: [string, string, string, BigNumberish]
+  ): string;
   encodeFunctionData(functionFragment: "name", values?: void): string;
+  encodeFunctionData(
+    functionFragment: "redeem",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "stake",
+    values: [string, BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "stakerRewardsToClaim",
     values: [string]
@@ -139,31 +164,6 @@ interface StakedTokenInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "transferFrom",
     values: [string, string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "initialize",
-    values: [string, string, string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "stake",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "redeem",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "cooldown", values?: void): string;
-  encodeFunctionData(
-    functionFragment: "claimRewards",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getNextCooldownTimestamp",
-    values: [BigNumberish, BigNumberish, string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getTotalRewardsBalance",
-    values: [string]
   ): string;
 
   decodeFunctionResult(
@@ -210,12 +210,25 @@ interface StakedTokenInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "assets", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "claimRewards",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "configureAssets",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "cooldown", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "decreaseAllowance",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getNextCooldownTimestamp",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getTotalRewardsBalance",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -226,7 +239,10 @@ interface StakedTokenInterface extends ethers.utils.Interface {
     functionFragment: "increaseAllowance",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "redeem", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "stake", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "stakerRewardsToClaim",
     data: BytesLike
@@ -243,22 +259,6 @@ interface StakedTokenInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "transferFrom",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "stake", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "redeem", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "cooldown", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "claimRewards",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getNextCooldownTimestamp",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getTotalRewardsBalance",
     data: BytesLike
   ): Result;
 
@@ -289,7 +289,7 @@ interface StakedTokenInterface extends ethers.utils.Interface {
   getEvent(nameOrSignatureOrTopic: "UserIndexUpdated"): EventFragment;
 }
 
-export class StakedToken extends Contract {
+export class StakedbMxx extends Contract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -300,7 +300,7 @@ export class StakedToken extends Contract {
   removeAllListeners(eventName: EventFilter | string): this;
   removeListener(eventName: any, listener: Listener): this;
 
-  interface: StakedTokenInterface;
+  interface: StakedbMxxInterface;
 
   functions: {
     COOLDOWN_SECONDS(
@@ -431,6 +431,17 @@ export class StakedToken extends Contract {
       0: BigNumber;
     }>;
 
+    /**
+     * Claims an `amount` of `REWARD_TOKEN` to the address `to`
+     * @param amount Amount to stake*
+     * @param to Address to stake for
+     */
+    claimRewards(
+      to: string,
+      amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
     configureAssets(
       assetsConfigInput: {
         emissionPerSecond: BigNumberish;
@@ -439,6 +450,11 @@ export class StakedToken extends Contract {
       }[],
       overrides?: Overrides
     ): Promise<ContractTransaction>;
+
+    /**
+     * Activates the cooldown period to unstake - It can't be called if the user is not staking*
+     */
+    cooldown(overrides?: Overrides): Promise<ContractTransaction>;
 
     /**
      */
@@ -458,6 +474,32 @@ export class StakedToken extends Contract {
       subtractedValue: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
+
+    /**
+     * Calculates the how is gonna be a new cooldown timestamp depending on the sender/receiver situation  - If the timestamp of the sender is "better" or the timestamp of the recipient is 0, we take the one of the recipient  - Weighted average of from/to cooldown timestamps if:    # The sender doesn't have the cooldown activated (timestamp 0).    # The sender timestamp is expired    # The sender has a "worse" timestamp  - If the receiver's cooldown timestamp expired (too old), the next is 0
+     * @param amountToReceive Amount
+     * @param fromCooldownTimestamp Cooldown timestamp of the sender
+     * @param toAddress Address of the recipient
+     * @param toBalance Current balance of the receiver
+     */
+    getNextCooldownTimestamp(
+      fromCooldownTimestamp: BigNumberish,
+      amountToReceive: BigNumberish,
+      toAddress: string,
+      toBalance: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    /**
+     * Return the total rewards pending to claim by an staker
+     * @param staker The staker address
+     */
+    getTotalRewardsBalance(
+      staker: string,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     /**
      * Returns the data of an user on a distribution
@@ -484,12 +526,40 @@ export class StakedToken extends Contract {
     ): Promise<ContractTransaction>;
 
     /**
+     * Called by the proxy contract*
+     */
+    initialize(
+      bMXXGovernance: string,
+      name: string,
+      symbol: string,
+      decimals: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    /**
      */
     name(
       overrides?: CallOverrides
     ): Promise<{
       0: string;
     }>;
+
+    /**
+     * Redeems staked tokens, and stop earning rewards
+     * @param amount Amount to redeem*
+     * @param to Address to redeem to
+     */
+    redeem(
+      to: string,
+      amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    stake(
+      onBehalfOf: string,
+      amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
 
     stakerRewardsToClaim(
       arg0: string,
@@ -544,76 +614,6 @@ export class StakedToken extends Contract {
       amount: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
-
-    /**
-     * Called by the proxy contract*
-     */
-    initialize(
-      bMXXGovernance: string,
-      name: string,
-      symbol: string,
-      decimals: BigNumberish,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    stake(
-      onBehalfOf: string,
-      amount: BigNumberish,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    /**
-     * Redeems staked tokens, and stop earning rewards
-     * @param amount Amount to redeem*
-     * @param to Address to redeem to
-     */
-    redeem(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    /**
-     * Activates the cooldown period to unstake - It can't be called if the user is not staking*
-     */
-    cooldown(overrides?: Overrides): Promise<ContractTransaction>;
-
-    /**
-     * Claims an `amount` of `REWARD_TOKEN` to the address `to`
-     * @param amount Amount to stake*
-     * @param to Address to stake for
-     */
-    claimRewards(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    /**
-     * Calculates the how is gonna be a new cooldown timestamp depending on the sender/receiver situation  - If the timestamp of the sender is "better" or the timestamp of the recipient is 0, we take the one of the recipient  - Weighted average of from/to cooldown timestamps if:    # The sender doesn't have the cooldown activated (timestamp 0).    # The sender timestamp is expired    # The sender has a "worse" timestamp  - If the receiver's cooldown timestamp expired (too old), the next is 0
-     * @param amountToReceive Amount
-     * @param fromCooldownTimestamp Cooldown timestamp of the sender
-     * @param toAddress Address of the recipient
-     * @param toBalance Current balance of the receiver
-     */
-    getNextCooldownTimestamp(
-      fromCooldownTimestamp: BigNumberish,
-      amountToReceive: BigNumberish,
-      toAddress: string,
-      toBalance: BigNumberish,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    /**
-     * Return the total rewards pending to claim by an staker
-     * @param staker The staker address
-     */
-    getTotalRewardsBalance(
-      staker: string,
-      overrides?: CallOverrides
-    ): Promise<{
-      0: BigNumber;
-    }>;
   };
 
   COOLDOWN_SECONDS(overrides?: CallOverrides): Promise<BigNumber>;
@@ -692,6 +692,17 @@ export class StakedToken extends Contract {
    */
   balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+  /**
+   * Claims an `amount` of `REWARD_TOKEN` to the address `to`
+   * @param amount Amount to stake*
+   * @param to Address to stake for
+   */
+  claimRewards(
+    to: string,
+    amount: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
   configureAssets(
     assetsConfigInput: {
       emissionPerSecond: BigNumberish;
@@ -700,6 +711,11 @@ export class StakedToken extends Contract {
     }[],
     overrides?: Overrides
   ): Promise<ContractTransaction>;
+
+  /**
+   * Activates the cooldown period to unstake - It can't be called if the user is not staking*
+   */
+  cooldown(overrides?: Overrides): Promise<ContractTransaction>;
 
   /**
    */
@@ -715,6 +731,30 @@ export class StakedToken extends Contract {
     subtractedValue: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
+
+  /**
+   * Calculates the how is gonna be a new cooldown timestamp depending on the sender/receiver situation  - If the timestamp of the sender is "better" or the timestamp of the recipient is 0, we take the one of the recipient  - Weighted average of from/to cooldown timestamps if:    # The sender doesn't have the cooldown activated (timestamp 0).    # The sender timestamp is expired    # The sender has a "worse" timestamp  - If the receiver's cooldown timestamp expired (too old), the next is 0
+   * @param amountToReceive Amount
+   * @param fromCooldownTimestamp Cooldown timestamp of the sender
+   * @param toAddress Address of the recipient
+   * @param toBalance Current balance of the receiver
+   */
+  getNextCooldownTimestamp(
+    fromCooldownTimestamp: BigNumberish,
+    amountToReceive: BigNumberish,
+    toAddress: string,
+    toBalance: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  /**
+   * Return the total rewards pending to claim by an staker
+   * @param staker The staker address
+   */
+  getTotalRewardsBalance(
+    staker: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   /**
    * Returns the data of an user on a distribution
@@ -739,8 +779,36 @@ export class StakedToken extends Contract {
   ): Promise<ContractTransaction>;
 
   /**
+   * Called by the proxy contract*
+   */
+  initialize(
+    bMXXGovernance: string,
+    name: string,
+    symbol: string,
+    decimals: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  /**
    */
   name(overrides?: CallOverrides): Promise<string>;
+
+  /**
+   * Redeems staked tokens, and stop earning rewards
+   * @param amount Amount to redeem*
+   * @param to Address to redeem to
+   */
+  redeem(
+    to: string,
+    amount: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  stake(
+    onBehalfOf: string,
+    amount: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
 
   stakerRewardsToClaim(
     arg0: string,
@@ -780,74 +848,6 @@ export class StakedToken extends Contract {
     amount: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
-
-  /**
-   * Called by the proxy contract*
-   */
-  initialize(
-    bMXXGovernance: string,
-    name: string,
-    symbol: string,
-    decimals: BigNumberish,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  stake(
-    onBehalfOf: string,
-    amount: BigNumberish,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  /**
-   * Redeems staked tokens, and stop earning rewards
-   * @param amount Amount to redeem*
-   * @param to Address to redeem to
-   */
-  redeem(
-    to: string,
-    amount: BigNumberish,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  /**
-   * Activates the cooldown period to unstake - It can't be called if the user is not staking*
-   */
-  cooldown(overrides?: Overrides): Promise<ContractTransaction>;
-
-  /**
-   * Claims an `amount` of `REWARD_TOKEN` to the address `to`
-   * @param amount Amount to stake*
-   * @param to Address to stake for
-   */
-  claimRewards(
-    to: string,
-    amount: BigNumberish,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  /**
-   * Calculates the how is gonna be a new cooldown timestamp depending on the sender/receiver situation  - If the timestamp of the sender is "better" or the timestamp of the recipient is 0, we take the one of the recipient  - Weighted average of from/to cooldown timestamps if:    # The sender doesn't have the cooldown activated (timestamp 0).    # The sender timestamp is expired    # The sender has a "worse" timestamp  - If the receiver's cooldown timestamp expired (too old), the next is 0
-   * @param amountToReceive Amount
-   * @param fromCooldownTimestamp Cooldown timestamp of the sender
-   * @param toAddress Address of the recipient
-   * @param toBalance Current balance of the receiver
-   */
-  getNextCooldownTimestamp(
-    fromCooldownTimestamp: BigNumberish,
-    amountToReceive: BigNumberish,
-    toAddress: string,
-    toBalance: BigNumberish,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  /**
-   * Return the total rewards pending to claim by an staker
-   * @param staker The staker address
-   */
-  getTotalRewardsBalance(
-    staker: string,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
 
   staticCall: {
     COOLDOWN_SECONDS(overrides?: CallOverrides): Promise<BigNumber>;
@@ -929,6 +929,17 @@ export class StakedToken extends Contract {
      */
     balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+    /**
+     * Claims an `amount` of `REWARD_TOKEN` to the address `to`
+     * @param amount Amount to stake*
+     * @param to Address to stake for
+     */
+    claimRewards(
+      to: string,
+      amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<void>;
+
     configureAssets(
       assetsConfigInput: {
         emissionPerSecond: BigNumberish;
@@ -937,6 +948,11 @@ export class StakedToken extends Contract {
       }[],
       overrides?: Overrides
     ): Promise<void>;
+
+    /**
+     * Activates the cooldown period to unstake - It can't be called if the user is not staking*
+     */
+    cooldown(overrides?: Overrides): Promise<void>;
 
     /**
      */
@@ -952,6 +968,30 @@ export class StakedToken extends Contract {
       subtractedValue: BigNumberish,
       overrides?: Overrides
     ): Promise<boolean>;
+
+    /**
+     * Calculates the how is gonna be a new cooldown timestamp depending on the sender/receiver situation  - If the timestamp of the sender is "better" or the timestamp of the recipient is 0, we take the one of the recipient  - Weighted average of from/to cooldown timestamps if:    # The sender doesn't have the cooldown activated (timestamp 0).    # The sender timestamp is expired    # The sender has a "worse" timestamp  - If the receiver's cooldown timestamp expired (too old), the next is 0
+     * @param amountToReceive Amount
+     * @param fromCooldownTimestamp Cooldown timestamp of the sender
+     * @param toAddress Address of the recipient
+     * @param toBalance Current balance of the receiver
+     */
+    getNextCooldownTimestamp(
+      fromCooldownTimestamp: BigNumberish,
+      amountToReceive: BigNumberish,
+      toAddress: string,
+      toBalance: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    /**
+     * Return the total rewards pending to claim by an staker
+     * @param staker The staker address
+     */
+    getTotalRewardsBalance(
+      staker: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     /**
      * Returns the data of an user on a distribution
@@ -976,8 +1016,36 @@ export class StakedToken extends Contract {
     ): Promise<boolean>;
 
     /**
+     * Called by the proxy contract*
+     */
+    initialize(
+      bMXXGovernance: string,
+      name: string,
+      symbol: string,
+      decimals: BigNumberish,
+      overrides?: Overrides
+    ): Promise<void>;
+
+    /**
      */
     name(overrides?: CallOverrides): Promise<string>;
+
+    /**
+     * Redeems staked tokens, and stop earning rewards
+     * @param amount Amount to redeem*
+     * @param to Address to redeem to
+     */
+    redeem(
+      to: string,
+      amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<void>;
+
+    stake(
+      onBehalfOf: string,
+      amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<void>;
 
     stakerRewardsToClaim(
       arg0: string,
@@ -1020,74 +1088,6 @@ export class StakedToken extends Contract {
       amount: BigNumberish,
       overrides?: Overrides
     ): Promise<boolean>;
-
-    /**
-     * Called by the proxy contract*
-     */
-    initialize(
-      bMXXGovernance: string,
-      name: string,
-      symbol: string,
-      decimals: BigNumberish,
-      overrides?: Overrides
-    ): Promise<void>;
-
-    stake(
-      onBehalfOf: string,
-      amount: BigNumberish,
-      overrides?: Overrides
-    ): Promise<void>;
-
-    /**
-     * Redeems staked tokens, and stop earning rewards
-     * @param amount Amount to redeem*
-     * @param to Address to redeem to
-     */
-    redeem(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides
-    ): Promise<void>;
-
-    /**
-     * Activates the cooldown period to unstake - It can't be called if the user is not staking*
-     */
-    cooldown(overrides?: Overrides): Promise<void>;
-
-    /**
-     * Claims an `amount` of `REWARD_TOKEN` to the address `to`
-     * @param amount Amount to stake*
-     * @param to Address to stake for
-     */
-    claimRewards(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides
-    ): Promise<void>;
-
-    /**
-     * Calculates the how is gonna be a new cooldown timestamp depending on the sender/receiver situation  - If the timestamp of the sender is "better" or the timestamp of the recipient is 0, we take the one of the recipient  - Weighted average of from/to cooldown timestamps if:    # The sender doesn't have the cooldown activated (timestamp 0).    # The sender timestamp is expired    # The sender has a "worse" timestamp  - If the receiver's cooldown timestamp expired (too old), the next is 0
-     * @param amountToReceive Amount
-     * @param fromCooldownTimestamp Cooldown timestamp of the sender
-     * @param toAddress Address of the recipient
-     * @param toBalance Current balance of the receiver
-     */
-    getNextCooldownTimestamp(
-      fromCooldownTimestamp: BigNumberish,
-      amountToReceive: BigNumberish,
-      toAddress: string,
-      toBalance: BigNumberish,
-      overrides?: Overrides
-    ): Promise<BigNumber>;
-
-    /**
-     * Return the total rewards pending to claim by an staker
-     * @param staker The staker address
-     */
-    getTotalRewardsBalance(
-      staker: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
   };
 
   filters: {
@@ -1147,6 +1147,7 @@ export class StakedToken extends Contract {
     approve(spender: string, amount: BigNumberish): Promise<BigNumber>;
     assets(arg0: string): Promise<BigNumber>;
     balanceOf(account: string): Promise<BigNumber>;
+    claimRewards(to: string, amount: BigNumberish): Promise<BigNumber>;
     configureAssets(
       assetsConfigInput: {
         emissionPerSecond: BigNumberish;
@@ -1154,17 +1155,33 @@ export class StakedToken extends Contract {
         underlyingAsset: string;
       }[]
     ): Promise<BigNumber>;
+    cooldown(): Promise<BigNumber>;
     decimals(): Promise<BigNumber>;
     decreaseAllowance(
       spender: string,
       subtractedValue: BigNumberish
     ): Promise<BigNumber>;
+    getNextCooldownTimestamp(
+      fromCooldownTimestamp: BigNumberish,
+      amountToReceive: BigNumberish,
+      toAddress: string,
+      toBalance: BigNumberish
+    ): Promise<BigNumber>;
+    getTotalRewardsBalance(staker: string): Promise<BigNumber>;
     getUserAssetData(user: string, asset: string): Promise<BigNumber>;
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish
     ): Promise<BigNumber>;
+    initialize(
+      bMXXGovernance: string,
+      name: string,
+      symbol: string,
+      decimals: BigNumberish
+    ): Promise<BigNumber>;
     name(): Promise<BigNumber>;
+    redeem(to: string, amount: BigNumberish): Promise<BigNumber>;
+    stake(onBehalfOf: string, amount: BigNumberish): Promise<BigNumber>;
     stakerRewardsToClaim(arg0: string): Promise<BigNumber>;
     stakersCooldowns(arg0: string): Promise<BigNumber>;
     symbol(): Promise<BigNumber>;
@@ -1175,23 +1192,6 @@ export class StakedToken extends Contract {
       recipient: string,
       amount: BigNumberish
     ): Promise<BigNumber>;
-    initialize(
-      bMXXGovernance: string,
-      name: string,
-      symbol: string,
-      decimals: BigNumberish
-    ): Promise<BigNumber>;
-    stake(onBehalfOf: string, amount: BigNumberish): Promise<BigNumber>;
-    redeem(to: string, amount: BigNumberish): Promise<BigNumber>;
-    cooldown(): Promise<BigNumber>;
-    claimRewards(to: string, amount: BigNumberish): Promise<BigNumber>;
-    getNextCooldownTimestamp(
-      fromCooldownTimestamp: BigNumberish,
-      amountToReceive: BigNumberish,
-      toAddress: string,
-      toBalance: BigNumberish
-    ): Promise<BigNumber>;
-    getTotalRewardsBalance(staker: string): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -1214,6 +1214,10 @@ export class StakedToken extends Contract {
     ): Promise<PopulatedTransaction>;
     assets(arg0: string): Promise<PopulatedTransaction>;
     balanceOf(account: string): Promise<PopulatedTransaction>;
+    claimRewards(
+      to: string,
+      amount: BigNumberish
+    ): Promise<PopulatedTransaction>;
     configureAssets(
       assetsConfigInput: {
         emissionPerSecond: BigNumberish;
@@ -1221,11 +1225,19 @@ export class StakedToken extends Contract {
         underlyingAsset: string;
       }[]
     ): Promise<PopulatedTransaction>;
+    cooldown(): Promise<PopulatedTransaction>;
     decimals(): Promise<PopulatedTransaction>;
     decreaseAllowance(
       spender: string,
       subtractedValue: BigNumberish
     ): Promise<PopulatedTransaction>;
+    getNextCooldownTimestamp(
+      fromCooldownTimestamp: BigNumberish,
+      amountToReceive: BigNumberish,
+      toAddress: string,
+      toBalance: BigNumberish
+    ): Promise<PopulatedTransaction>;
+    getTotalRewardsBalance(staker: string): Promise<PopulatedTransaction>;
     getUserAssetData(
       user: string,
       asset: string
@@ -1234,7 +1246,18 @@ export class StakedToken extends Contract {
       spender: string,
       addedValue: BigNumberish
     ): Promise<PopulatedTransaction>;
+    initialize(
+      bMXXGovernance: string,
+      name: string,
+      symbol: string,
+      decimals: BigNumberish
+    ): Promise<PopulatedTransaction>;
     name(): Promise<PopulatedTransaction>;
+    redeem(to: string, amount: BigNumberish): Promise<PopulatedTransaction>;
+    stake(
+      onBehalfOf: string,
+      amount: BigNumberish
+    ): Promise<PopulatedTransaction>;
     stakerRewardsToClaim(arg0: string): Promise<PopulatedTransaction>;
     stakersCooldowns(arg0: string): Promise<PopulatedTransaction>;
     symbol(): Promise<PopulatedTransaction>;
@@ -1248,28 +1271,5 @@ export class StakedToken extends Contract {
       recipient: string,
       amount: BigNumberish
     ): Promise<PopulatedTransaction>;
-    initialize(
-      bMXXGovernance: string,
-      name: string,
-      symbol: string,
-      decimals: BigNumberish
-    ): Promise<PopulatedTransaction>;
-    stake(
-      onBehalfOf: string,
-      amount: BigNumberish
-    ): Promise<PopulatedTransaction>;
-    redeem(to: string, amount: BigNumberish): Promise<PopulatedTransaction>;
-    cooldown(): Promise<PopulatedTransaction>;
-    claimRewards(
-      to: string,
-      amount: BigNumberish
-    ): Promise<PopulatedTransaction>;
-    getNextCooldownTimestamp(
-      fromCooldownTimestamp: BigNumberish,
-      amountToReceive: BigNumberish,
-      toAddress: string,
-      toBalance: BigNumberish
-    ): Promise<PopulatedTransaction>;
-    getTotalRewardsBalance(staker: string): Promise<PopulatedTransaction>;
   };
 }

@@ -18,7 +18,7 @@ import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 
-interface MockTransferHookInterface extends ethers.utils.Interface {
+interface ITransferHookInterface extends ethers.utils.Interface {
   functions: {
     "onTransfer(address,address,uint256)": FunctionFragment;
   };
@@ -30,14 +30,10 @@ interface MockTransferHookInterface extends ethers.utils.Interface {
 
   decodeFunctionResult(functionFragment: "onTransfer", data: BytesLike): Result;
 
-  events: {
-    "MockHookEvent()": EventFragment;
-  };
-
-  getEvent(nameOrSignatureOrTopic: "MockHookEvent"): EventFragment;
+  events: {};
 }
 
-export class MockTransferHook extends Contract {
+export class ITransferHook extends Contract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -48,7 +44,7 @@ export class MockTransferHook extends Contract {
   removeAllListeners(eventName: EventFilter | string): this;
   removeListener(eventName: any, listener: Listener): this;
 
-  interface: MockTransferHookInterface;
+  interface: ITransferHookInterface;
 
   functions: {
     onTransfer(
@@ -75,9 +71,7 @@ export class MockTransferHook extends Contract {
     ): Promise<void>;
   };
 
-  filters: {
-    MockHookEvent(): EventFilter;
-  };
+  filters: {};
 
   estimateGas: {
     onTransfer(

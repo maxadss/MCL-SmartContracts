@@ -14,7 +14,7 @@ import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 
-interface UpgradeabilityProxyInterface extends ethers.utils.Interface {
+interface BaseUpgradeabilityProxyInterface extends ethers.utils.Interface {
   functions: {};
 
   events: {
@@ -24,7 +24,7 @@ interface UpgradeabilityProxyInterface extends ethers.utils.Interface {
   getEvent(nameOrSignatureOrTopic: "Upgraded"): EventFragment;
 }
 
-export class UpgradeabilityProxy extends Contract {
+export class BaseUpgradeabilityProxy extends Contract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -35,7 +35,7 @@ export class UpgradeabilityProxy extends Contract {
   removeAllListeners(eventName: EventFilter | string): this;
   removeListener(eventName: any, listener: Listener): this;
 
-  interface: UpgradeabilityProxyInterface;
+  interface: BaseUpgradeabilityProxyInterface;
 
   functions: {};
 

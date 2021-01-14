@@ -14,17 +14,13 @@ import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 
-interface UpgradeabilityProxyInterface extends ethers.utils.Interface {
+interface ProxyInterface extends ethers.utils.Interface {
   functions: {};
 
-  events: {
-    "Upgraded(address)": EventFragment;
-  };
-
-  getEvent(nameOrSignatureOrTopic: "Upgraded"): EventFragment;
+  events: {};
 }
 
-export class UpgradeabilityProxy extends Contract {
+export class Proxy extends Contract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -35,15 +31,13 @@ export class UpgradeabilityProxy extends Contract {
   removeAllListeners(eventName: EventFilter | string): this;
   removeListener(eventName: any, listener: Listener): this;
 
-  interface: UpgradeabilityProxyInterface;
+  interface: ProxyInterface;
 
   functions: {};
 
   staticCall: {};
 
-  filters: {
-    Upgraded(implementation: string | null): EventFilter;
-  };
+  filters: {};
 
   estimateGas: {};
 

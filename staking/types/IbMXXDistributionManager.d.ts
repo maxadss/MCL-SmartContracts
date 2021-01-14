@@ -7,18 +7,18 @@ import {
   Signer,
   BigNumber,
   BigNumberish,
-  PopulatedTransaction
+  PopulatedTransaction,
 } from "ethers";
 import {
   Contract,
   ContractTransaction,
-  Overrides
+  Overrides,
 } from "@ethersproject/contracts";
 import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 
-interface IbMXXDistributionManagerInterface extends ethers.utils.Interface {
+interface IbMxxDistributionManagerInterface extends ethers.utils.Interface {
   functions: {
     "configureAssets(tuple[])": FunctionFragment;
   };
@@ -42,7 +42,7 @@ interface IbMXXDistributionManagerInterface extends ethers.utils.Interface {
   events: {};
 }
 
-export class IbMXXDistributionManager extends Contract {
+export class IbMxxDistributionManager extends Contract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -53,7 +53,7 @@ export class IbMXXDistributionManager extends Contract {
   removeAllListeners(eventName: EventFilter | string): this;
   removeListener(eventName: any, listener: Listener): this;
 
-  interface: IbMXXDistributionManagerInterface;
+  interface: IbMxxDistributionManagerInterface;
 
   functions: {
     configureAssets(

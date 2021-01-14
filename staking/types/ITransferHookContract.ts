@@ -4,14 +4,14 @@
 import { Contract, Signer } from "ethers";
 import { Provider } from "@ethersproject/providers";
 
-import { IbToken } from "./IbToken";
+import { ITransferHook } from "./ITransferHook";
 
-export class IbTokenFactory {
+export class ITransferHookFactory {
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
-  ): IbToken {
-    return new Contract(address, _abi, signerOrProvider) as IbToken;
+  ): ITransferHook {
+    return new Contract(address, _abi, signerOrProvider) as ITransferHook;
   }
 }
 
@@ -20,24 +20,23 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
-        name: "user",
+        name: "from",
         type: "address",
       },
-    ],
-    name: "getScaledUserBalanceAndSupply",
-    outputs: [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
+        internalType: "address",
+        name: "to",
+        type: "address",
       },
       {
         internalType: "uint256",
-        name: "",
+        name: "amount",
         type: "uint256",
       },
     ],
-    stateMutability: "view",
+    name: "onTransfer",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
 ];

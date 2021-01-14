@@ -19,37 +19,31 @@ import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 
-interface InitializableAdminUpgradeabilityProxyInterface
-  extends ethers.utils.Interface {
+interface BaseAdminUpgradeabilityProxyInterface extends ethers.utils.Interface {
   functions: {
     "admin()": FunctionFragment;
-    "changeAdmin(address)": FunctionFragment;
     "implementation()": FunctionFragment;
+    "changeAdmin(address)": FunctionFragment;
     "upgradeTo(address)": FunctionFragment;
     "upgradeToAndCall(address,bytes)": FunctionFragment;
-    "initialize(address,address,bytes)": FunctionFragment;
   };
 
   encodeFunctionData(functionFragment: "admin", values?: void): string;
-  encodeFunctionData(functionFragment: "changeAdmin", values: [string]): string;
   encodeFunctionData(functionFragment: "implementation", values?: void): string;
+  encodeFunctionData(functionFragment: "changeAdmin", values: [string]): string;
   encodeFunctionData(functionFragment: "upgradeTo", values: [string]): string;
   encodeFunctionData(
     functionFragment: "upgradeToAndCall",
     values: [string, BytesLike]
   ): string;
-  encodeFunctionData(
-    functionFragment: "initialize",
-    values: [string, string, BytesLike]
-  ): string;
 
   decodeFunctionResult(functionFragment: "admin", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "changeAdmin",
+    functionFragment: "implementation",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "implementation",
+    functionFragment: "changeAdmin",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "upgradeTo", data: BytesLike): Result;
@@ -57,7 +51,6 @@ interface InitializableAdminUpgradeabilityProxyInterface
     functionFragment: "upgradeToAndCall",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
 
   events: {
     "AdminChanged(address,address)": EventFragment;
@@ -68,7 +61,7 @@ interface InitializableAdminUpgradeabilityProxyInterface
   getEvent(nameOrSignatureOrTopic: "Upgraded"): EventFragment;
 }
 
-export class InitializableAdminUpgradeabilityProxy extends Contract {
+export class BaseAdminUpgradeabilityProxy extends Contract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -79,12 +72,16 @@ export class InitializableAdminUpgradeabilityProxy extends Contract {
   removeAllListeners(eventName: EventFilter | string): this;
   removeListener(eventName: any, listener: Listener): this;
 
-  interface: InitializableAdminUpgradeabilityProxyInterface;
+  interface: BaseAdminUpgradeabilityProxyInterface;
 
   functions: {
     /**
      */
     admin(overrides?: Overrides): Promise<ContractTransaction>;
+
+    /**
+     */
+    implementation(overrides?: Overrides): Promise<ContractTransaction>;
 
     /**
      * Changes the admin of the proxy. Only the current admin can call this function.
@@ -94,10 +91,6 @@ export class InitializableAdminUpgradeabilityProxy extends Contract {
       newAdmin: string,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
-
-    /**
-     */
-    implementation(overrides?: Overrides): Promise<ContractTransaction>;
 
     /**
      * Upgrade the backing implementation of the proxy. Only the admin can call this function.
@@ -118,35 +111,15 @@ export class InitializableAdminUpgradeabilityProxy extends Contract {
       data: BytesLike,
       overrides?: PayableOverrides
     ): Promise<ContractTransaction>;
-
-    /**
-     * Contract initializer.
-     * @param _admin Address of the proxy administrator.
-     * @param _data Data to send as msg.data to the implementation to initialize the proxied contract. It should include the signature and the parameters of the function to be called, as described in https://solidity.readthedocs.io/en/v0.4.24/abi-spec.html#function-selector-and-argument-encoding. This parameter is optional, if no data is given the initialization call to proxied contract will be skipped.
-     * @param _logic address of the initial implementation.
-     */
-    "initialize(address,address,bytes)"(
-      _logic: string,
-      _admin: string,
-      _data: BytesLike,
-      overrides?: PayableOverrides
-    ): Promise<ContractTransaction>;
-
-    /**
-     * Contract initializer.
-     * @param _data Data to send as msg.data to the implementation to initialize the proxied contract. It should include the signature and the parameters of the function to be called, as described in https://solidity.readthedocs.io/en/v0.4.24/abi-spec.html#function-selector-and-argument-encoding. This parameter is optional, if no data is given the initialization call to proxied contract will be skipped.
-     * @param _logic Address of the initial implementation.
-     */
-    "initialize(address,bytes)"(
-      _logic: string,
-      _data: BytesLike,
-      overrides?: PayableOverrides
-    ): Promise<ContractTransaction>;
   };
 
   /**
    */
   admin(overrides?: Overrides): Promise<ContractTransaction>;
+
+  /**
+   */
+  implementation(overrides?: Overrides): Promise<ContractTransaction>;
 
   /**
    * Changes the admin of the proxy. Only the current admin can call this function.
@@ -156,10 +129,6 @@ export class InitializableAdminUpgradeabilityProxy extends Contract {
     newAdmin: string,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
-
-  /**
-   */
-  implementation(overrides?: Overrides): Promise<ContractTransaction>;
 
   /**
    * Upgrade the backing implementation of the proxy. Only the admin can call this function.
@@ -181,44 +150,20 @@ export class InitializableAdminUpgradeabilityProxy extends Contract {
     overrides?: PayableOverrides
   ): Promise<ContractTransaction>;
 
-  /**
-   * Contract initializer.
-   * @param _admin Address of the proxy administrator.
-   * @param _data Data to send as msg.data to the implementation to initialize the proxied contract. It should include the signature and the parameters of the function to be called, as described in https://solidity.readthedocs.io/en/v0.4.24/abi-spec.html#function-selector-and-argument-encoding. This parameter is optional, if no data is given the initialization call to proxied contract will be skipped.
-   * @param _logic address of the initial implementation.
-   */
-  "initialize(address,address,bytes)"(
-    _logic: string,
-    _admin: string,
-    _data: BytesLike,
-    overrides?: PayableOverrides
-  ): Promise<ContractTransaction>;
-
-  /**
-   * Contract initializer.
-   * @param _data Data to send as msg.data to the implementation to initialize the proxied contract. It should include the signature and the parameters of the function to be called, as described in https://solidity.readthedocs.io/en/v0.4.24/abi-spec.html#function-selector-and-argument-encoding. This parameter is optional, if no data is given the initialization call to proxied contract will be skipped.
-   * @param _logic Address of the initial implementation.
-   */
-  "initialize(address,bytes)"(
-    _logic: string,
-    _data: BytesLike,
-    overrides?: PayableOverrides
-  ): Promise<ContractTransaction>;
-
   staticCall: {
     /**
      */
     admin(overrides?: Overrides): Promise<string>;
 
     /**
+     */
+    implementation(overrides?: Overrides): Promise<string>;
+
+    /**
      * Changes the admin of the proxy. Only the current admin can call this function.
      * @param newAdmin Address to transfer proxy administration to.
      */
     changeAdmin(newAdmin: string, overrides?: Overrides): Promise<void>;
-
-    /**
-     */
-    implementation(overrides?: Overrides): Promise<string>;
 
     /**
      * Upgrade the backing implementation of the proxy. Only the admin can call this function.
@@ -236,30 +181,6 @@ export class InitializableAdminUpgradeabilityProxy extends Contract {
       data: BytesLike,
       overrides?: PayableOverrides
     ): Promise<void>;
-
-    /**
-     * Contract initializer.
-     * @param _admin Address of the proxy administrator.
-     * @param _data Data to send as msg.data to the implementation to initialize the proxied contract. It should include the signature and the parameters of the function to be called, as described in https://solidity.readthedocs.io/en/v0.4.24/abi-spec.html#function-selector-and-argument-encoding. This parameter is optional, if no data is given the initialization call to proxied contract will be skipped.
-     * @param _logic address of the initial implementation.
-     */
-    "initialize(address,address,bytes)"(
-      _logic: string,
-      _admin: string,
-      _data: BytesLike,
-      overrides?: PayableOverrides
-    ): Promise<void>;
-
-    /**
-     * Contract initializer.
-     * @param _data Data to send as msg.data to the implementation to initialize the proxied contract. It should include the signature and the parameters of the function to be called, as described in https://solidity.readthedocs.io/en/v0.4.24/abi-spec.html#function-selector-and-argument-encoding. This parameter is optional, if no data is given the initialization call to proxied contract will be skipped.
-     * @param _logic Address of the initial implementation.
-     */
-    "initialize(address,bytes)"(
-      _logic: string,
-      _data: BytesLike,
-      overrides?: PayableOverrides
-    ): Promise<void>;
   };
 
   filters: {
@@ -270,33 +191,23 @@ export class InitializableAdminUpgradeabilityProxy extends Contract {
 
   estimateGas: {
     admin(): Promise<BigNumber>;
-    changeAdmin(newAdmin: string): Promise<BigNumber>;
     implementation(): Promise<BigNumber>;
+    changeAdmin(newAdmin: string): Promise<BigNumber>;
     upgradeTo(newImplementation: string): Promise<BigNumber>;
     upgradeToAndCall(
       newImplementation: string,
       data: BytesLike
     ): Promise<BigNumber>;
-    initialize(
-      _logic: string,
-      _admin: string,
-      _data: BytesLike
-    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     admin(): Promise<PopulatedTransaction>;
-    changeAdmin(newAdmin: string): Promise<PopulatedTransaction>;
     implementation(): Promise<PopulatedTransaction>;
+    changeAdmin(newAdmin: string): Promise<PopulatedTransaction>;
     upgradeTo(newImplementation: string): Promise<PopulatedTransaction>;
     upgradeToAndCall(
       newImplementation: string,
       data: BytesLike
-    ): Promise<PopulatedTransaction>;
-    initialize(
-      _logic: string,
-      _admin: string,
-      _data: BytesLike
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -4,14 +4,14 @@
 import { Contract, Signer } from "ethers";
 import { Provider } from "@ethersproject/providers";
 
-import { IStakedbMXX } from "./IStakedbMXX";
+import { IStakedbMxx } from "./IStakedbMxx";
 
-export class IStakedbMXXFactory {
+export class IStakedbMxxFactory {
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
-  ): IStakedbMXX {
-    return new Contract(address, _abi, signerOrProvider) as IStakedbMXX;
+  ): IStakedbMxx {
+    return new Contract(address, _abi, signerOrProvider) as IStakedbMxx;
   }
 }
 
@@ -21,60 +21,60 @@ const _abi = [
       {
         internalType: "address",
         name: "to",
-        type: "address"
+        type: "address",
       },
       {
         internalType: "uint256",
         name: "amount",
-        type: "uint256"
-      }
+        type: "uint256",
+      },
     ],
-    name: "claimRewards",
+    name: "stake",
     outputs: [],
     stateMutability: "nonpayable",
-    type: "function"
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "redeem",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
     inputs: [],
     name: "cooldown",
     outputs: [],
     stateMutability: "nonpayable",
-    type: "function"
+    type: "function",
   },
   {
     inputs: [
       {
         internalType: "address",
         name: "to",
-        type: "address"
+        type: "address",
       },
       {
         internalType: "uint256",
         name: "amount",
-        type: "uint256"
-      }
+        type: "uint256",
+      },
     ],
-    name: "redeem",
+    name: "claimRewards",
     outputs: [],
     stateMutability: "nonpayable",
-    type: "function"
+    type: "function",
   },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "to",
-        type: "address"
-      },
-      {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256"
-      }
-    ],
-    name: "stake",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
-  }
 ];

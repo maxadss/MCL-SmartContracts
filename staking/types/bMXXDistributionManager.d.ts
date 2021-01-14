@@ -7,19 +7,19 @@ import {
   Signer,
   BigNumber,
   BigNumberish,
-  PopulatedTransaction
+  PopulatedTransaction,
 } from "ethers";
 import {
   Contract,
   ContractTransaction,
   Overrides,
-  CallOverrides
+  CallOverrides,
 } from "@ethersproject/contracts";
 import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 
-interface bMXXDistributionManagerInterface extends ethers.utils.Interface {
+interface BMxxDistributionManagerInterface extends ethers.utils.Interface {
   functions: {
     "DISTRIBUTION_END()": FunctionFragment;
     "EMISSION_MANAGER()": FunctionFragment;
@@ -84,7 +84,7 @@ interface bMXXDistributionManagerInterface extends ethers.utils.Interface {
   getEvent(nameOrSignatureOrTopic: "UserIndexUpdated"): EventFragment;
 }
 
-export class bMXXDistributionManager extends Contract {
+export class BMxxDistributionManager extends Contract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -95,7 +95,7 @@ export class bMXXDistributionManager extends Contract {
   removeAllListeners(eventName: EventFilter | string): this;
   removeListener(eventName: any, listener: Listener): this;
 
-  interface: bMXXDistributionManagerInterface;
+  interface: BMxxDistributionManagerInterface;
 
   functions: {
     DISTRIBUTION_END(
@@ -137,6 +137,11 @@ export class bMXXDistributionManager extends Contract {
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
+    /**
+     * Returns the data of an user on a distribution
+     * @param asset The address of the reference asset of the distribution
+     * @param user Address of the user
+     */
     getUserAssetData(
       user: string,
       asset: string,
@@ -173,6 +178,11 @@ export class bMXXDistributionManager extends Contract {
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
+  /**
+   * Returns the data of an user on a distribution
+   * @param asset The address of the reference asset of the distribution
+   * @param user Address of the user
+   */
   getUserAssetData(
     user: string,
     asset: string,
@@ -207,6 +217,11 @@ export class bMXXDistributionManager extends Contract {
       overrides?: Overrides
     ): Promise<void>;
 
+    /**
+     * Returns the data of an user on a distribution
+     * @param asset The address of the reference asset of the distribution
+     * @param user Address of the user
+     */
     getUserAssetData(
       user: string,
       asset: string,

@@ -38,11 +38,11 @@ const _abi = [
       {
         internalType: "contract IbMXXIncentivesController",
         name: "bic",
-        type: "address"
-      }
+        type: "address",
+      },
     ],
     stateMutability: "nonpayable",
-    type: "constructor"
+    type: "constructor",
   },
   {
     anonymous: false,
@@ -51,17 +51,17 @@ const _abi = [
         indexed: true,
         internalType: "address",
         name: "asset",
-        type: "address"
+        type: "address",
       },
       {
         indexed: false,
         internalType: "uint256",
         name: "emission",
-        type: "uint256"
-      }
+        type: "uint256",
+      },
     ],
     name: "AssetConfigUpdated",
-    type: "event"
+    type: "event",
   },
   {
     anonymous: false,
@@ -70,17 +70,17 @@ const _abi = [
         indexed: true,
         internalType: "address",
         name: "asset",
-        type: "address"
+        type: "address",
       },
       {
         indexed: false,
         internalType: "uint256",
         name: "index",
-        type: "uint256"
-      }
+        type: "uint256",
+      },
     ],
     name: "AssetIndexUpdated",
-    type: "event"
+    type: "event",
   },
   {
     anonymous: false,
@@ -89,17 +89,17 @@ const _abi = [
         indexed: true,
         internalType: "address",
         name: "user",
-        type: "address"
+        type: "address",
       },
       {
         indexed: false,
         internalType: "uint256",
         name: "amount",
-        type: "uint256"
-      }
+        type: "uint256",
+      },
     ],
     name: "RewardsAccrued",
-    type: "event"
+    type: "event",
   },
   {
     anonymous: false,
@@ -108,23 +108,23 @@ const _abi = [
         indexed: true,
         internalType: "address",
         name: "user",
-        type: "address"
+        type: "address",
       },
       {
         indexed: true,
         internalType: "address",
         name: "asset",
-        type: "address"
+        type: "address",
       },
       {
         indexed: false,
         internalType: "uint256",
         name: "index",
-        type: "uint256"
-      }
+        type: "uint256",
+      },
     ],
     name: "UserIndexUpdated",
-    type: "event"
+    type: "event",
   },
   {
     inputs: [],
@@ -133,85 +133,85 @@ const _abi = [
       {
         internalType: "contract IbMXXIncentivesController",
         name: "",
-        type: "address"
-      }
+        type: "address",
+      },
     ],
     stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [],
-    name: "cleanUserState",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    type: "function",
   },
   {
     inputs: [
       {
         internalType: "address",
         name: "user",
-        type: "address"
-      }
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "userBalance",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "totalSupply",
+        type: "uint256",
+      },
+    ],
+    name: "handleActionOnBic",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "userBalance",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "totalSupply",
+        type: "uint256",
+      },
+    ],
+    name: "setUserBalanceAndSupply",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
     ],
     name: "getScaledUserBalanceAndSupply",
     outputs: [
       {
         internalType: "uint256",
         name: "",
-        type: "uint256"
+        type: "uint256",
       },
       {
         internalType: "uint256",
         name: "",
-        type: "uint256"
-      }
+        type: "uint256",
+      },
     ],
     stateMutability: "view",
-    type: "function"
+    type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "user",
-        type: "address"
-      },
-      {
-        internalType: "uint256",
-        name: "userBalance",
-        type: "uint256"
-      },
-      {
-        internalType: "uint256",
-        name: "totalSupply",
-        type: "uint256"
-      }
-    ],
-    name: "handleActionOnBic",
+    inputs: [],
+    name: "cleanUserState",
     outputs: [],
     stateMutability: "nonpayable",
-    type: "function"
+    type: "function",
   },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "userBalance",
-        type: "uint256"
-      },
-      {
-        internalType: "uint256",
-        name: "totalSupply",
-        type: "uint256"
-      }
-    ],
-    name: "setUserBalanceAndSupply",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
-  }
 ];
 
 const _bytecode =
-  "0x608060405234801561001057600080fd5b5060405161030438038061030483398101604081905261002f91610054565b600080546001600160a01b0319166001600160a01b0392909216919091179055610082565b600060208284031215610065578081fd5b81516001600160a01b038116811461007b578182fd5b9392505050565b610273806100916000396000f3fe608060405234801561001057600080fd5b50600436106100575760003560e01c80630afbcdc91461005c57806334743e7c14610086578063b39944ba1461009b578063b41c6f98146100a3578063f794ca51146100b8575b600080fd5b61006f61006a366004610184565b6100cb565b60405161007d92919061022f565b60405180910390f35b6100996100943660046101a6565b6100d6565b005b610099610141565b6100ab61014d565b60405161007d919061021b565b6100996100c63660046101d9565b61015c565b600154600254915091565b6000546040516318c39f1760e11b81526001600160a01b03909116906331873e2e9061010a908690869086906004016101fa565b600060405180830381600087803b15801561012457600080fd5b505af1158015610138573d6000803e3d6000fd5b50505050505050565b60006001819055600255565b6000546001600160a01b031681565b600191909155600255565b80356001600160a01b038116811461017e57600080fd5b92915050565b600060208284031215610195578081fd5b61019f8383610167565b9392505050565b6000806000606084860312156101ba578182fd5b6101c48585610167565b95602085013595506040909401359392505050565b600080604083850312156101eb578182fd5b50508035926020909101359150565b6001600160a01b039390931683526020830191909152604082015260600190565b6001600160a01b0391909116815260200190565b91825260208201526040019056fea2646970667358221220dc6ff6e4ed707191e9c24fbbdc18b2c875325f79516e8a1bfbb88e490b96f77e64736f6c634300060c0033";
+  "0x608060405234801561001057600080fd5b506040516105453803806105458339818101604052810190610032919061008d565b806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555050610111565b600081519050610087816100fa565b92915050565b60006020828403121561009f57600080fd5b60006100ad84828501610078565b91505092915050565b60006100c1826100da565b9050919050565b60006100d3826100b6565b9050919050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b610103816100c8565b811461010e57600080fd5b50565b610425806101206000396000f3fe608060405234801561001057600080fd5b50600436106100575760003560e01c80630afbcdc91461005c578063b39944ba1461008d578063cb06001714610097578063d71222ac146100b3578063f794ca51146100d1575b600080fd5b61007660048036038101906100719190610205565b6100ed565b604051610084929190610338565b60405180910390f35b6100956100ff565b005b6100b160048036038101906100ac919061022e565b610111565b005b6100bb6101a5565b6040516100c8919061031d565b60405180910390f35b6100eb60048036038101906100e6919061027d565b6101c9565b005b60008060015460025491509150915091565b60006001819055506000600281905550565b60008054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166331873e2e8484846040518463ffffffff1660e01b815260040161016e939291906102e6565b600060405180830381600087803b15801561018857600080fd5b505af115801561019c573d6000803e3d6000fd5b50505050505050565b60008054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b81600181905550806002819055505050565b6000813590506101ea816103c1565b92915050565b6000813590506101ff816103d8565b92915050565b60006020828403121561021757600080fd5b6000610225848285016101db565b91505092915050565b60008060006060848603121561024357600080fd5b6000610251868287016101db565b9350506020610262868287016101f0565b9250506040610273868287016101f0565b9150509250925092565b6000806040838503121561029057600080fd5b600061029e858286016101f0565b92505060206102af858286016101f0565b9150509250929050565b6102c281610361565b82525050565b6102d18161039d565b82525050565b6102e081610393565b82525050565b60006060820190506102fb60008301866102b9565b61030860208301856102d7565b61031560408301846102d7565b949350505050565b600060208201905061033260008301846102c8565b92915050565b600060408201905061034d60008301856102d7565b61035a60208301846102d7565b9392505050565b600061036c82610373565b9050919050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b6000819050919050565b60006103a8826103af565b9050919050565b60006103ba82610373565b9050919050565b6103ca81610361565b81146103d557600080fd5b50565b6103e181610393565b81146103ec57600080fd5b5056fea2646970667358221220e3f8fd89a9229acb7c53ad364bcf154ae9c0a504bdcc13a982ef2b4b02cf1be164736f6c634300060c0033";

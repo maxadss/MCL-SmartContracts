@@ -18,26 +18,25 @@ import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 
-interface MockTransferHookInterface extends ethers.utils.Interface {
+interface ILendingPoolInterface extends ethers.utils.Interface {
   functions: {
-    "onTransfer(address,address,uint256)": FunctionFragment;
+    "updateGovernanceStakingRewards(address)": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "onTransfer",
-    values: [string, string, BigNumberish]
+    functionFragment: "updateGovernanceStakingRewards",
+    values: [string]
   ): string;
 
-  decodeFunctionResult(functionFragment: "onTransfer", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "updateGovernanceStakingRewards",
+    data: BytesLike
+  ): Result;
 
-  events: {
-    "MockHookEvent()": EventFragment;
-  };
-
-  getEvent(nameOrSignatureOrTopic: "MockHookEvent"): EventFragment;
+  events: {};
 }
 
-export class MockTransferHook extends Contract {
+export class ILendingPool extends Contract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -48,50 +47,36 @@ export class MockTransferHook extends Contract {
   removeAllListeners(eventName: EventFilter | string): this;
   removeListener(eventName: any, listener: Listener): this;
 
-  interface: MockTransferHookInterface;
+  interface: ILendingPoolInterface;
 
   functions: {
-    onTransfer(
-      from: string,
-      to: string,
-      amount: BigNumberish,
+    updateGovernanceStakingRewards(
+      _user: string,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
   };
 
-  onTransfer(
-    from: string,
-    to: string,
-    amount: BigNumberish,
+  updateGovernanceStakingRewards(
+    _user: string,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
   staticCall: {
-    onTransfer(
-      from: string,
-      to: string,
-      amount: BigNumberish,
+    updateGovernanceStakingRewards(
+      _user: string,
       overrides?: Overrides
     ): Promise<void>;
   };
 
-  filters: {
-    MockHookEvent(): EventFilter;
-  };
+  filters: {};
 
   estimateGas: {
-    onTransfer(
-      from: string,
-      to: string,
-      amount: BigNumberish
-    ): Promise<BigNumber>;
+    updateGovernanceStakingRewards(_user: string): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    onTransfer(
-      from: string,
-      to: string,
-      amount: BigNumberish
+    updateGovernanceStakingRewards(
+      _user: string
     ): Promise<PopulatedTransaction>;
   };
 }
