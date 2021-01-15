@@ -34,7 +34,11 @@ interface LendingPoolMockInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
 
-  events: {};
+  events: {
+    "LendingPoolMockEvent()": EventFragment;
+  };
+
+  getEvent(nameOrSignatureOrTopic: "LendingPoolMockEvent"): EventFragment;
 }
 
 export class LendingPoolMock extends Contract {
@@ -69,7 +73,9 @@ export class LendingPoolMock extends Contract {
     ): Promise<void>;
   };
 
-  filters: {};
+  filters: {
+    LendingPoolMockEvent(): EventFilter;
+  };
 
   estimateGas: {
     updateGovernanceStakingRewards(_user: string): Promise<BigNumber>;

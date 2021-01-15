@@ -144,7 +144,7 @@
       ]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/stake/StakedToken.sol": {
-      "lastModificationDate": 1610440987916,
+      "lastModificationDate": 1610703267599,
       "contentHash": "3724b030a8fd073c0cd94b3f71b7d8df",
       "sourceName": "contracts/stake/StakedToken.sol",
       "solcConfig": {
@@ -574,6 +574,42 @@
       ],
       "artifacts": [
         "Address"
+      ]
+    },
+    "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/mocks/LendingPoolMock.sol": {
+      "lastModificationDate": 1610702689555,
+      "contentHash": "1bb1c1b45b2987894a52e5d3367e3f3b",
+      "sourceName": "contracts/mocks/LendingPoolMock.sol",
+      "solcConfig": {
+        "version": "0.6.12",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/ILendingPool.sol"
+      ],
+      "versionPragmas": [
+        "0.6.12"
+      ],
+      "artifacts": [
+        "LendingPoolMock"
       ]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/stake/bMXXIncentivesController.sol": {
@@ -1047,42 +1083,6 @@
       ],
       "artifacts": [
         "MockTransferHook"
-      ]
-    },
-    "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/mocks/LendingPoolMock.sol": {
-      "lastModificationDate": 1610686095100,
-      "contentHash": "b3b33c8e036cd1329ad393343f58e67c",
-      "sourceName": "contracts/mocks/LendingPoolMock.sol",
-      "solcConfig": {
-        "version": "0.6.12",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../interfaces/ILendingPool.sol"
-      ],
-      "versionPragmas": [
-        "0.6.12"
-      ],
-      "artifacts": [
-        "LendingPoolMock"
       ]
     }
   }

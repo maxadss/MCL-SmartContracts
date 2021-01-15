@@ -12,8 +12,9 @@ makeSuite('StakedbMXX. Transfers', (testEnv: TestEnv) => {
     const amount = ethers.utils.parseEther('50');
     const staker = users[1];
 
+    await  mToken.connect(staker.signer).approve(stakedbMXX.address, amount);
     const actions = () => [
-      mToken.connect(staker.signer).approve(stakedbMXX.address, amount),
+      //mToken.connect(staker.signer).approve(stakedbMXX.address, amount),
       stakedbMXX.connect(staker.signer).stake(staker.address, amount),
     ];
 
@@ -63,8 +64,9 @@ makeSuite('StakedbMXX. Transfers', (testEnv: TestEnv) => {
       totalStaked: '0',
     };
 
+    await  mToken.connect(sender.signer).approve(stakedbMXX.address, amount);
     const actions = () => [
-      mToken.connect(sender.signer).approve(stakedbMXX.address, amount),
+      //mToken.connect(sender.signer).approve(stakedbMXX.address, amount),
       stakedbMXX.connect(sender.signer).stake(sender.address, amount),
     ];
 

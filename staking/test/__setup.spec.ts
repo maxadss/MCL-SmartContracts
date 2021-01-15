@@ -74,7 +74,7 @@ const buildTestEnv = async (deployer: Signer, vaultOfRewards: Signer, restWallet
     (1000 * 60 * 60).toString(),
   ]);
 
-  const lp = await deployLendingPool([]);
+  const lp = await deployLendingPool();
 
   const stakedbMXXImpl = await deployStakedbMXX([
     stakedToken,

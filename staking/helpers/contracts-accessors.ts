@@ -128,5 +128,7 @@ export const getIErc20Detailed = getContractFactory<IERC20Detailed>(eContractid.
 
 export const getBTokenMock = getContractFactory<BTokenMock>(eContractid.BTokenMock);
 
-export const deployLendingPool = async ([]: []) =>
+export const deployLendingPool = async () =>
   await deployContract<LendingPoolMock>(eContractid.LendingPoolMock,[]);
+
+export const getLPMock = getContractFactory<LendingPoolMock>(eContractid.LendingPoolMock);

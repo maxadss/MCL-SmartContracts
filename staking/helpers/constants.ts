@@ -5,8 +5,8 @@ export const MAX_UINT_AMOUNT =
   '115792089237316195423570985008687907853269984665640564039457584007913129639935';
 export const MOCK_BNB_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
 export const WAD = Math.pow(10, 18).toString();
-export const COOLDOWN_SECONDS = '259200'; // 3 days in days
-export const UNSTAKE_WINDOW = '86400'; // 1 day in seconds
+export const COOLDOWN_SECONDS = '3600'; // 1 hour in seconds
+export const UNSTAKE_WINDOW = '1800'; // 30 min in seconds
 export const DISTRIBUTION_DURATION = '86400'; // 1 day in seconds
 
 export const STAKED_BMXX_NAME = 'Staked bMXX';

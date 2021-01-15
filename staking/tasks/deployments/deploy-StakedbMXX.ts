@@ -13,7 +13,7 @@ import {
 import {
   deployStakedbMXX,
   deployInitializableAdminUpgradeabilityProxy,
-  deployLendingPool,
+  getLendingPoolMock,
 } from '../../helpers/contracts-accessors';
 import {checkVerification} from '../../helpers/etherscan-verification';
 
@@ -43,7 +43,7 @@ task(`deploy-${StakedbMXX}`, `Deploys the ${StakedbMXX} contract`)
     console.log(`\n- ${StakedbMXX} deployment`);
 
     console.log(`\tDeploying ${StakedbMXX} implementation ...`);
-    const lp = await deployLendingPool([]);
+    const lp = await getLendingPoolMock();
 
     const stakedbMXXImpl = await deployStakedbMXX(
       [

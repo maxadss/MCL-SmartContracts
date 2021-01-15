@@ -67,10 +67,12 @@ makeSuite('StakedbMXX. Basics', (testEnv: TestEnv) => {
     const saveBalanceBefore = new BigNumber(
       (await stakedbMXX.balanceOf(staker.address)).toString()
     );
+    console.log("saveBalanceBefore", saveBalanceBefore);
 
     // Prepare actions for the test case
+    await mToken.connect(staker.signer).approve(stakedbMXX.address, amount)
     const actions = () => [
-      mToken.connect(staker.signer).approve(stakedbMXX.address, amount),
+     // mToken.connect(staker.signer).approve(stakedbMXX.address, amount),
       stakedbMXX.connect(staker.signer).stake(staker.address, amount),
     ];
 
@@ -99,8 +101,9 @@ makeSuite('StakedbMXX. Basics', (testEnv: TestEnv) => {
     const saveBalanceBefore = new BigNumber(
       (await stakedbMXX.balanceOf(staker.address)).toString()
     );
+    await mToken.connect(staker.signer).approve(stakedbMXX.address, amount);
     const actions = () => [
-      mToken.connect(staker.signer).approve(stakedbMXX.address, amount),
+     // mToken.connect(staker.signer).approve(stakedbMXX.address, amount),
       stakedbMXX.connect(staker.signer).stake(staker.address, amount),
     ];
 
@@ -198,10 +201,10 @@ makeSuite('StakedbMXX. Basics', (testEnv: TestEnv) => {
       emissionPerSecond: '0',
       totalStaked: '0',
     };
-
+await mToken.connect(sixStaker.signer).approve(stakedbMXX.address, amount);
     // Checks rewards
     const actions = () => [
-      mToken.connect(sixStaker.signer).approve(stakedbMXX.address, amount),
+      //mToken.connect(sixStaker.signer).approve(stakedbMXX.address, amount),
       stakedbMXX.connect(sixStaker.signer).stake(sixStaker.address, amount),
     ];
 
@@ -232,10 +235,10 @@ makeSuite('StakedbMXX. Basics', (testEnv: TestEnv) => {
       emissionPerSecond: '0',
       totalStaked: '0',
     };
-
+await mToken.connect(sixStaker.signer).approve(stakedbMXX.address, amount);
     // Checks rewards
     const actions = () => [
-      mToken.connect(sixStaker.signer).approve(stakedbMXX.address, amount),
+      //mToken.connect(sixStaker.signer).approve(stakedbMXX.address, amount),
       stakedbMXX.connect(sixStaker.signer).stake(sixStaker.address, amount),
     ];
 
@@ -254,9 +257,10 @@ makeSuite('StakedbMXX. Basics', (testEnv: TestEnv) => {
     const amount2 = ethers.utils.parseEther('20');
     const staker = users[4];
 
+    await mToken.connect(staker.signer).approve(stakedbMXX.address, amount1.add(amount2));
     // Checks rewards
     const actions = () => [
-      mToken.connect(staker.signer).approve(stakedbMXX.address, amount1.add(amount2)),
+     // mToken.connect(staker.signer).approve(stakedbMXX.address, amount1.add(amount2)),
       stakedbMXX.connect(staker.signer).stake(staker.address, amount1),
     ];
 

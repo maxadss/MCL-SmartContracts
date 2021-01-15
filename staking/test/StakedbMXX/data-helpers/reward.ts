@@ -57,6 +57,8 @@ export const compareRewardsAtAction = async (
   const receipts: ethers.ContractReceipt[] = await Promise.all(
     await actions().map(async (action) => waitForTx(await action))
   );
+
+  
   // Get index after actions
   const userIndexAfter = await getUserIndex(stakedbMXX, userAddress, underlyingAsset);
 
