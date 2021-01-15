@@ -1,4 +1,4 @@
-import {task} from '@nomiclabs/buidler/config';
+import {task} from 'hardhat/config';
 import {eContractid} from '../../helpers/types';
 import {waitForTx} from '../../helpers/misc-utils';
 import {

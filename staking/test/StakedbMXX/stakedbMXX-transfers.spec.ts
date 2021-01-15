@@ -2,7 +2,7 @@ import {makeSuite, TestEnv} from '../helpers/make-suite';
 import {ethers} from 'ethers';
 import {compareRewardsAtAction, compareRewardsAtTransfer} from './data-helpers/reward';
 import {timeLatest, increaseTimeAndMine, increaseTime} from '../../helpers/misc-utils';
-import {COOLDOWN_DAYS, UNSTAKE_WINDOW} from '../../helpers/constants';
+import {COOLDOWN_SECONDS, UNSTAKE_WINDOW} from '../../helpers/constants';
 
 const {expect} = require('chai');
 
@@ -123,7 +123,7 @@ makeSuite('StakedbMXX. Transfers', (testEnv: TestEnv) => {
 
     // Increase time to an invalid time for cooldown
     await increaseTimeAndMine(
-      receiverCooldown.add(COOLDOWN_DAYS).add(UNSTAKE_WINDOW).add(1).toNumber()
+      receiverCooldown.add(COOLDOWN_SECONDS).add(UNSTAKE_WINDOW).add(1).toNumber()
     );
     // Transfer staked bMXX from sender to receiver, it will also transfer the cooldown status from sender to the receiver
     await compareRewardsAtTransfer(stakedbMXX, sender, receiver, amount, false, false, assetConfig);

@@ -1,6 +1,6 @@
 import {makeSuite, TestEnv} from '../helpers/make-suite';
 import {
-  COOLDOWN_DAYS,
+  COOLDOWN_SECONDS,
   UNSTAKE_WINDOW,
   MAX_UINT_AMOUNT,
   STAKED_BMXX_NAME,
@@ -27,7 +27,7 @@ makeSuite('StakedbMXX. Basics', (testEnv: TestEnv) => {
     expect(await stakedbMXX.REVISION()).to.be.equal(1);
     expect(await stakedbMXX.STAKED_TOKEN()).to.be.equal(mToken.address);
     expect(await stakedbMXX.REWARD_TOKEN()).to.be.equal(mToken.address);
-    expect((await stakedbMXX.COOLDOWN_DAYS()).toString()).to.be.equal(COOLDOWN_DAYS);
+    expect((await stakedbMXX.COOLDOWN_SECONDS()).toString()).to.be.equal(COOLDOWN_SECONDS);
     expect((await stakedbMXX.UNSTAKE_WINDOW()).toString()).to.be.equal(UNSTAKE_WINDOW);
     expect(await stakedbMXX.REWARDS_VAULT()).to.be.equal(rewardsVault.address);
   });
@@ -267,7 +267,7 @@ makeSuite('StakedbMXX. Basics', (testEnv: TestEnv) => {
     const cooldownActivationTimestamp = await timeLatest();
 
     await advanceBlock(
-      cooldownActivationTimestamp.plus(new BigNumber(COOLDOWN_DAYS).plus(1000)).toNumber()
+      cooldownActivationTimestamp.plus(new BigNumber(COOLDOWN_SECONDS).plus(1000)).toNumber()
     ); // We fast-forward time to just after the unstake window
 
     const stakerCooldownTimestampBefore = new BigNumber(

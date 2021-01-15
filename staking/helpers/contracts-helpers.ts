@@ -2,11 +2,11 @@ import {Contract, Signer, utils} from 'ethers';
 
 import {BRE, getDb} from './misc-utils';
 import {eContractid, tEthereumAddress} from './types';
-import {Artifact} from '@nomiclabs/buidler/types';
+import {Artifact} from 'hardhat/types';
 
 export const registerContractInJsonDb = async (contractId: string, contractInstance: Contract) => {
   const currentNetwork = BRE.network.name;
-  if (currentNetwork !== 'buidlerevm' && currentNetwork !== 'soliditycoverage') {
+  if (currentNetwork !== 'hardhat' && currentNetwork !== 'soliditycoverage') {
     console.log(`*** ${contractId} ***\n`);
     console.log(`Network: ${currentNetwork}`);
     console.log(`tx: ${contractInstance.deployTransaction.hash}`);

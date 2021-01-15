@@ -1,4 +1,4 @@
-import {task} from '@nomiclabs/buidler/config';
+import {task} from 'hardhat/config';
 
 import {eContractid, eEthereumNetwork, tEthereumAddress} from '../../helpers/types';
 import {registerContractInJsonDb} from '../../helpers/contracts-helpers';
@@ -13,6 +13,7 @@ import {
 import {
   deployStakedbMXX,
   deployInitializableAdminUpgradeabilityProxy,
+  deployLendingPool,
 } from '../../helpers/contracts-accessors';
 import {checkVerification} from '../../helpers/etherscan-verification';
 
@@ -42,6 +43,8 @@ task(`deploy-${StakedbMXX}`, `Deploys the ${StakedbMXX} contract`)
     console.log(`\n- ${StakedbMXX} deployment`);
 
     console.log(`\tDeploying ${StakedbMXX} implementation ...`);
+    const lp = await deployLendingPool([]);
+
     const stakedbMXXImpl = await deployStakedbMXX(
       [
         bMXXAddress || getmTokenPerNetwork(network),
@@ -51,6 +54,7 @@ task(`deploy-${StakedbMXX}`, `Deploys the ${StakedbMXX} contract`)
         vaultAddress || getbMXXIncentivesVaultPerNetwork(network),
         getbMXXAdminPerNetwork(network),
         getDistributionDurationPerNetwork(network),
+        lp.address,
       ],
       false // disable verify due not supported by current buidler etherscan plugin
     );

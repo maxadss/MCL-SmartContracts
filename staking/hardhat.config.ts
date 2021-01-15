@@ -1,23 +1,26 @@
-import {usePlugin} from '@nomiclabs/buidler/config';
+// import {usePlugin} from '@nomiclabs/hardhat/config';
+import { HardhatUserConfig } from "hardhat/types";
 import path from 'path';
 import fs from 'fs';
 
 import {accounts} from './test-wallets';
 import {eEthereumNetwork} from './helpers/types';
 
-usePlugin('@nomiclabs/buidler-ethers');
-usePlugin('buidler-typechain');
-usePlugin('solidity-coverage');
-usePlugin('@nomiclabs/buidler-waffle');
-usePlugin('@nomiclabs/buidler-etherscan');
-usePlugin('solidity-coverage');
+import "@nomiclabs/hardhat-ethers";
+import "hardhat-typechain";
+import "solidity-coverage";
+import "@nomiclabs/hardhat-waffle";
+import "@nomiclabs/hardhat-etherscan";
+import "@nomiclabs/hardhat-ganache";
+import "solidity-coverage";
+
 
 ['misc', 'deployments', 'migrations'].forEach((folder) => {
   const tasksPath = path.join(__dirname, 'tasks', folder);
   fs.readdirSync(tasksPath).forEach((task) => require(`${tasksPath}/${task}`));
 });
 
-export const BUIDLEREVM_CHAIN_ID = 31337;
+export const HARDHATEVM_CHAIN_ID = 31337;
 const DEFAULT_BLOCK_GAS_LIMIT = 12500000;
 const DEFAULT_GAS_PRICE = 50000000000; // 50 gwei
 const HARDFORK = 'istanbul';
@@ -46,20 +49,15 @@ const getCommonNetworkConfig = (networkName: eEthereumNetwork, networkId: number
   };
 };
 
-const config = {
-  solc: {
-    version: '0.6.12',
-    optimizer: {enabled: true, runs: 200},
-    evmVersion: 'istanbul',
+const config: HardhatUserConfig = {
+  solidity: {
+    compilers: [{ version: "0.6.12", settings: { optimizer:{ enabled:true, runs:200}} }],
   },
   typechain: {
     outDir: 'types',
-    target: 'ethers-v4',
+    target: 'ethers-v5',
   },
-  etherscan: {
-    apiKey: ETHERSCAN_KEY,
-  },
-  defaultNetwork: 'buidlerevm',
+  defaultNetwork: 'hardhat',
   mocha: {
     timeout: 0,
   },
@@ -67,18 +65,7 @@ const config = {
     kovan: getCommonNetworkConfig(eEthereumNetwork.kovan, 42),
     ropsten: getCommonNetworkConfig(eEthereumNetwork.ropsten, 3),
     main: getCommonNetworkConfig(eEthereumNetwork.main, 1),
-    buidlerevm: {
-      hardfork: 'istanbul',
-      blockGasLimit: DEFAULT_BLOCK_GAS_LIMIT,
-      gas: DEFAULT_BLOCK_GAS_LIMIT,
-      gasPrice: DEFAULT_GAS_PRICE,
-      chainId: BUIDLEREVM_CHAIN_ID,
-      throwOnTransactionFailures: true,
-      throwOnCallFailures: true,
-      accounts: accounts.map(({secretKey, balance}: {secretKey: string; balance: string}) => ({
-        privateKey: secretKey,
-        balance,
-      })),
+    hardhat: {
     },
     ganache: {
       url: 'http://ganache:8545',
