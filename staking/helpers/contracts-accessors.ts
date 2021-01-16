@@ -130,5 +130,3 @@ export const getBTokenMock = getContractFactory<BTokenMock>(eContractid.BTokenMo
 
 export const deployLendingPool = async () =>
   await deployContract<LendingPoolMock>(eContractid.LendingPoolMock,[]);
-
-export const getLPMock = getContractFactory<LendingPoolMock>(eContractid.LendingPoolMock);

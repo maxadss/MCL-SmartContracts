@@ -91,6 +91,7 @@ const buildTestEnv = async (deployer: Signer, vaultOfRewards: Signer, restWallet
 
   const stakedbMXXEncodedInitialize = stakedbMXXImpl.interface.encodeFunctionData('initialize', [
     mockTransferHook.address,
+    lp.address,
     STAKED_BMXX_NAME,
     STAKED_BMXX_SYMBOL,
     STAKED_BMXX_DECIMALS,

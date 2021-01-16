@@ -47,7 +47,7 @@ interface StakedbMXXInterface extends ethers.utils.Interface {
     "getTotalRewardsBalance(address)": FunctionFragment;
     "getUserAssetData(address,address)": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
-    "initialize(address,string,string,uint8)": FunctionFragment;
+    "initialize(address,address,string,string,uint8)": FunctionFragment;
     "name()": FunctionFragment;
     "redeem(address,uint256)": FunctionFragment;
     "stake(address,uint256)": FunctionFragment;
@@ -137,7 +137,7 @@ interface StakedbMXXInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "initialize",
-    values: [string, string, string, BigNumberish]
+    values: [string, string, string, string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: void): string;
   encodeFunctionData(
@@ -475,6 +475,7 @@ export class StakedbMXX extends Contract {
 
     initialize(
       bMXXGovernance: string,
+      poolAddress: string,
       name: string,
       symbol: string,
       decimals: BigNumberish,
@@ -650,6 +651,7 @@ export class StakedbMXX extends Contract {
 
   initialize(
     bMXXGovernance: string,
+    poolAddress: string,
     name: string,
     symbol: string,
     decimals: BigNumberish,
@@ -809,6 +811,7 @@ export class StakedbMXX extends Contract {
 
     initialize(
       bMXXGovernance: string,
+      poolAddress: string,
       name: string,
       symbol: string,
       decimals: BigNumberish,
@@ -942,6 +945,7 @@ export class StakedbMXX extends Contract {
     ): Promise<BigNumber>;
     initialize(
       bMXXGovernance: string,
+      poolAddress: string,
       name: string,
       symbol: string,
       decimals: BigNumberish
@@ -1015,6 +1019,7 @@ export class StakedbMXX extends Contract {
     ): Promise<PopulatedTransaction>;
     initialize(
       bMXXGovernance: string,
+      poolAddress: string,
       name: string,
       symbol: string,
       decimals: BigNumberish

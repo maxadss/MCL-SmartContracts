@@ -91,6 +91,7 @@ contract StakedToken is
      **/
     function initialize(
         ITransferHook bMXXGovernance,
+        address poolAddress,
         string calldata name,
         string calldata symbol,
         uint8 decimals
@@ -99,6 +100,7 @@ contract StakedToken is
         _setSymbol(symbol);
         _setDecimals(decimals);
         _setbMXXGovernance(bMXXGovernance);
+        POOL = ILendingPool(poolAddress); 
     }
 
     function stake(address onBehalfOf, uint256 amount) external override {
