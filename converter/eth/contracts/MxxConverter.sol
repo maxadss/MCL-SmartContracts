@@ -70,16 +70,16 @@ contract MxxConverter is Ownable, ReentrancyGuard {
     event ConversionRefunded(uint256 id);
 
     /**
-     * @dev - Constant variable to store Official MXX ERC20 token address
+     * @dev - Variable to store Official MXX ERC20 token address
      */
     address
-        public constant MXX_ADDRESS = 0x8F1E37Afacdc033dC2c0BF2BD116eaa558eFCdE8; // TEST // 0x8a6f3BF52A26a21531514E23016eEAe8Ba7e7018;
+        public  MXX_ADDRESS = 0x8F1E37Afacdc033dC2c0BF2BD116eaa558eFCdE8;
 
     /**
-     * @dev - Constant address to store the Official MXX Burn Address
+     * @dev - Address to store the Official MXX Burn Address
      */
     address
-        public constant BURN_ADDRESS = 0x1f31541E77cAC6BFAE2FBdA66a2085e6C137871e; // TEST  // 0x19B292c1a84379Aab41564283e7f75bF20e45f91;
+        public  BURN_ADDRESS = 0x1f31541E77cAC6BFAE2FBdA66a2085e6C137871e;
 
     /**
      * @dev - The grand total number of Mxx that can be converted to BSC.
@@ -94,8 +94,10 @@ contract MxxConverter is Ownable, ReentrancyGuard {
 
     uint256 public feePcnt = 1_000_000;
 
-    constructor() public Ownable() {
+    constructor(address mxx, address burnAddress) public Ownable() {
         availableMxxAmt = MAX_CONVERTABLE;
+        MXX_ADDRESS = mxx;
+        BURN_ADDRESS = burnAddress;
     }
 
     function depositForConversion(address _toBscAddress, uint256 _amount)

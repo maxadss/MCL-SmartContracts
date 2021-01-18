@@ -1,7 +1,7 @@
 import {BigNumber} from 'ethers';
-import {BMxxDistributionManager} from '../../../types/BMxxDistributionManager';
-import {StakedbMxx} from '../../../types/StakedbMXX';
-import {BMxxIncentivesController} from '../../../types/BMxxIncentivesController';
+import {BMXXDistributionManager} from '../../../types/BMxxDistributionManager';
+import {StakedbMXX} from '../../../types/StakedbMXX';
+import {BMXXIncentivesController} from '../../../types/BMxxIncentivesController';
 
 export type UserStakeInput = {
   underlyingAsset: string;
@@ -13,7 +13,7 @@ export type UserPositionUpdate = UserStakeInput & {
   user: string;
 };
 export async function getUserIndex(
-  distributionManager: BMxxDistributionManager | BMxxIncentivesController | StakedbMxx,
+  distributionManager: BMXXDistributionManager | BMXXIncentivesController | StakedbMXX,
   user: string,
   asset: string
 ): Promise<BigNumber> {

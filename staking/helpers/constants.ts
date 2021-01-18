@@ -5,8 +5,8 @@ export const MAX_UINT_AMOUNT =
   '115792089237316195423570985008687907853269984665640564039457584007913129639935';
 export const MOCK_BNB_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
 export const WAD = Math.pow(10, 18).toString();
-export const COOLDOWN_DAYS = '3'; // 3 days in days
-export const UNSTAKE_WINDOW = '86400'; // 1 day in seconds
+export const COOLDOWN_SECONDS = '3600'; // 1 hour in seconds
+export const UNSTAKE_WINDOW = '1800'; // 30 min in seconds
 export const DISTRIBUTION_DURATION = '86400'; // 1 day in seconds
 
 export const STAKED_BMXX_NAME = 'Staked bMXX';
@@ -38,7 +38,7 @@ export const getmTokenPerNetwork = (network: eEthereumNetwork): tEthereumAddress
   getParamPerNetwork<tEthereumAddress>(
     {
       [eEthereumNetwork.coverage]: ZERO_ADDRESS,
-      [eEthereumNetwork.buidlerevm]: ZERO_ADDRESS,
+      [eEthereumNetwork.hardhat]: ZERO_ADDRESS,
       [eEthereumNetwork.kovan]: '0xe4483afcf0d612c011679C76B61F5b0d27bAF93C',
       [eEthereumNetwork.ropsten]: '0x74dA004A1B81b4d0C79F5820f9FF22647cb1dD95',
       [eEthereumNetwork.main]: '0x9c0435779F5E52CEC404D957C9bAa6f7d674C8bA',
@@ -49,8 +49,8 @@ export const getmTokenPerNetwork = (network: eEthereumNetwork): tEthereumAddress
 export const getCooldownDaysPerNetwork = (network: eEthereumNetwork): tEthereumAddress =>
   getParamPerNetwork<string>(
     {
-      [eEthereumNetwork.coverage]: COOLDOWN_DAYS,
-      [eEthereumNetwork.buidlerevm]: COOLDOWN_DAYS,
+      [eEthereumNetwork.coverage]: COOLDOWN_SECONDS,
+      [eEthereumNetwork.hardhat]: COOLDOWN_SECONDS,
       [eEthereumNetwork.kovan]: '21600', // 8h
       [eEthereumNetwork.ropsten]: '21600', // 8h
       [eEthereumNetwork.main]: '864000', // 10d
@@ -62,7 +62,7 @@ export const getUnstakeWindowPerNetwork = (network: eEthereumNetwork): tEthereum
   getParamPerNetwork<string>(
     {
       [eEthereumNetwork.coverage]: UNSTAKE_WINDOW,
-      [eEthereumNetwork.buidlerevm]: UNSTAKE_WINDOW,
+      [eEthereumNetwork.hardhat]: UNSTAKE_WINDOW,
       [eEthereumNetwork.kovan]: '10800', // 4h
       [eEthereumNetwork.ropsten]: '10800', // 4h
       [eEthereumNetwork.main]: '172800', // 2d
@@ -74,7 +74,7 @@ export const getbMXXAdminPerNetwork = (network: eEthereumNetwork): tEthereumAddr
   getParamPerNetwork<tEthereumAddress>(
     {
       [eEthereumNetwork.coverage]: ZERO_ADDRESS,
-      [eEthereumNetwork.buidlerevm]: ZERO_ADDRESS,
+      [eEthereumNetwork.hardhat]: ZERO_ADDRESS,
       [eEthereumNetwork.kovan]: '0x6940B44a8eFBc625e1309d79F8dea34f155D4330', // bMXX Governance
       [eEthereumNetwork.ropsten]: '0xEd93e49A2d75beA505fD4D1A0Dff745f69F2E997', // bMXX Governance
       [eEthereumNetwork.main]: '0x8a2Efd9A790199F4c94c6effE210fce0B4724f52', // bMXX Governance
@@ -86,7 +86,7 @@ export const getDistributionDurationPerNetwork = (network: eEthereumNetwork): tE
   getParamPerNetwork<tEthereumAddress>(
     {
       [eEthereumNetwork.coverage]: DISTRIBUTION_DURATION,
-      [eEthereumNetwork.buidlerevm]: DISTRIBUTION_DURATION,
+      [eEthereumNetwork.hardhat]: DISTRIBUTION_DURATION,
       [eEthereumNetwork.kovan]: '864000',
       [eEthereumNetwork.ropsten]: '864000',
       [eEthereumNetwork.main]: '12960000', // 5 months (30 days) in seconds
@@ -98,7 +98,7 @@ export const getbMXXIncentivesVaultPerNetwork = (network: eEthereumNetwork): tEt
   getParamPerNetwork<tEthereumAddress>(
     {
       [eEthereumNetwork.coverage]: '',
-      [eEthereumNetwork.buidlerevm]: '',
+      [eEthereumNetwork.hardhat]: '',
       [eEthereumNetwork.kovan]: '',
       [eEthereumNetwork.ropsten]: '',
       [eEthereumNetwork.main]: '0x253f7b06c1d60c1fbbc9d82c301327eb86e3ba81',

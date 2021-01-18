@@ -335,7 +335,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'COOLDOWN_DAYS',
+    name: 'COOLDOWN_SECONDS',
     outputs: [
       {
         internalType: 'uint256',

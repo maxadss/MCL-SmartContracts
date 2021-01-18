@@ -6,7 +6,7 @@ const ChaiBigNumber = require('chai-bignumber');
 
 import {ethers, ContractTransaction, BigNumberish} from 'ethers';
 
-import {StakedbMxx} from '../../../types/StakedbMXX';
+import {StakedbMXX} from '../../../types/StakedbMXX';
 
 import {getRewards} from '../../DistributionManager/data-helpers/base-math';
 import {getUserIndex} from '../../DistributionManager/data-helpers/asset-user-data';
@@ -22,7 +22,7 @@ type AssetConfig = {
 };
 
 export const compareRewardsAtAction = async (
-  stakedbMXX: StakedbMxx,
+  stakedbMXX: StakedbMXX,
   userAddress: string,
   actions: () => Promise<ContractTransaction>[],
   shouldReward?: boolean,
@@ -57,6 +57,8 @@ export const compareRewardsAtAction = async (
   const receipts: ethers.ContractReceipt[] = await Promise.all(
     await actions().map(async (action) => waitForTx(await action))
   );
+
+  
   // Get index after actions
   const userIndexAfter = await getUserIndex(stakedbMXX, userAddress, underlyingAsset);
 
@@ -92,7 +94,7 @@ export const compareRewardsAtAction = async (
 };
 
 export const compareRewardsAtTransfer = async (
-  stakedbMXX: StakedbMxx,
+  stakedbMXX: StakedbMXX,
   from: SignerWithAddress,
   to: SignerWithAddress,
   amount: BigNumberish,

@@ -21,3 +21,5 @@ coverage.json
 coverage/*
 node_modules
 build
+.DS_Store
+artifacts
