@@ -20,7 +20,7 @@ contract Deed is ERC20Detailed, ERC20Mintable {
     /**
      * @dev - The max supply of deed tokens.
      */
-    uint256 internal constant MAX_SUPPLY = 4_130_000e18;
+    uint256 internal constant MAX_SUPPLY = 4_150_000e18;
 
     address bMxxAddress;
     address deedHolder;

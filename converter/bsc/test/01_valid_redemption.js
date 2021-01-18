@@ -156,6 +156,64 @@ contract("01_valid_redemption", function (accounts) {
     );
   });
 
+
+  it("should be able to convert == MAX_AVAIL_BMXX_FOR_CONVERSION", async () => {
+    const mxxToConvert = INTIAL_AVAILABLE_BMXX;
+    const expectedBMXXReceiveUnshifted =
+      mxxToConvert * CONVERT_RATIO * (1 - CONVERTER_FEE);
+    const expectedBMXXReceive = new BigNumber(
+      expectedBMXXReceiveUnshifted
+    ).shiftedBy(BMXX_DECIMAL);
+
+    /**
+     * @dev List params:
+     * @param _id
+     * @param _fromAddress
+     * @param _toBscAddress
+     * @param _mxxAmt
+     * @param _feePcnt
+     */
+    await converterInstance.redeem(
+      Date.now(),
+      user1,
+      user2,
+      new BigNumber(mxxToConvert).shiftedBy(MXX_DECIMAL).toString(),
+      new BigNumber(CONVERTER_FEE).shiftedBy(PERCENTAGE_DECIMAL)
+    );
+    const balanceAfter = (await bMxxInstance.balanceOf(user2)).toString();
+    const balanceDiff = expectedBMXXReceive.minus(balanceAfter).toNumber();
+
+    // console.debug({
+    //   balanceBefore,
+    //   balanceAfter,
+    //   expectedBMXXReceive: expectedBMXXReceive.toString()
+    // })
+
+    const converterAvailableBMxx = (
+      await converterInstance.availablebMxxAmt()
+    ).toString();
+
+    const expectedAvailableBMxx = new BigNumber(INTIAL_AVAILABLE_BMXX)
+      .minus(mxxToConvert * CONVERT_RATIO)
+      .shiftedBy(BMXX_DECIMAL);
+    const availableBMxxDiff = expectedAvailableBMxx
+      .minus(converterAvailableBMxx)
+      .toNumber();
+
+    // console.debug({
+    //   converterAvailableBMxx,
+    //   expectedConverterBalance: expectedAvailableBMxx.toString()
+    // })
+
+    assert.equal(balanceDiff, 0, "user2 balance is incorrect");
+    assert.equal(
+      availableBMxxDiff,
+      0,
+      "converter available BMXX after redeem is incorrect"
+    );
+  });
+
+
   it("should emit event RedeemedSuccess", async () => {
     const mxxToConvert = 100;
     const _id = Date.now();
