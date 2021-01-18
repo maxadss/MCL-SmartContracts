@@ -1,4 +1,4 @@
-import { convertToCurrencyDecimals } from "../../utils/misc-utils";
+// import { convertToCurrencyDecimals } from "../../utils/misc-utils";
 import {
   LendingPoolInstance,
   LendingPoolCoreInstance,
@@ -9,8 +9,8 @@ import {
   MintableERC20Instance,
 } from "../../utils/typechain-types/truffle-contracts";
 import BigNumber from "bignumber.js";
-import { getTruffleContractInstance } from "../../utils/truffle/truffle-core-utils";
-import { ContractId } from "../../utils/types";
+import { getTruffleContractInstance} from "../utils/truffle/truffle-core-utils"
+import { ContractId } from "../utils/types";
 import {
   calcExpectedReserveDataAfterDeposit,
   calcExpectedReserveDataAfterRedeem,
@@ -33,8 +33,10 @@ import {
   getUserData,
 } from "../utils/helpers";
 import { UserReserveData, ReserveData } from "../utils/interfaces";
-import { ONE_YEAR, MAX_UINT_AMOUNT, NIL_ADDRESS } from "../../utils/constants";
+// import { ONE_YEAR, MAX_UINT_AMOUNT, NIL_ADDRESS } from "../../utils/constants";
 import { TransactionObject } from "web3/eth/types";
+import { convertToCurrencyDecimals } from "../utils/misc-utils";
+import { MAX_UINT_AMOUNT, NIL_ADDRESS, ONE_YEAR } from "../utils/constants";
 
 const { time, expectRevert } = require("@openzeppelin/test-helpers");
 
