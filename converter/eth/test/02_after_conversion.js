@@ -13,13 +13,9 @@ BigNumber.set({
 contract("02_after_conversion", function (accounts) {
   const owner = accounts[0];
   const user = accounts[1];
-  const bscUser = accounts[2];
   const burner = accounts[5];
   const MXX_DECIMAL = 8;
   const PERCENTAGE_DECIMAL = 8;
-  const CONVERTER_FEE = 0.01;
-  const CONVERT_RATIO = 0.01;
-  const INTIAL_AVAILABLE_MXX = 415_000_000;
   let converterInstance;
   let mxxInstance;
 
