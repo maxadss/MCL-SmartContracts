@@ -1,60 +1,62 @@
-import { testEnvProvider } from "../utils/truffle/dlp-tests-env";
+import { initializeMakeSuite } from "./helpers/make-suite";
 import { ContractsInstancesOrigin, ITestEnv } from "../utils/types";
-import {
-  LendingPoolInstance,
-  LendingPoolAddressesProviderInstance,
-  LendingPoolCoreInstance,
-  LendingPoolConfiguratorInstance,
-  LendingPoolDataProviderInstance,
-  LendingRateOracleInstance,
-  FeeProviderInstance,
-  ChainlinkProxyPriceProviderInstance,
-} from "../utils/typechain-types/truffle-contracts";
+// import {
+//   LendingPoolInstance,
+//   LendingPoolAddressesProviderInstance,
+//   LendingPoolCoreInstance,
+//   LendingPoolConfiguratorInstance,
+//   LendingPoolDataProviderInstance,
+//   LendingRateOracleInstance,
+//   FeeProviderInstance,
+//   ChainlinkProxyPriceProviderInstance,
+// } from "../utils/typechain-types/truffle-contracts";
 import BigNumber from "bignumber.js";
 
 const expectRevert = require("@openzeppelin/test-helpers").expectRevert;
 
 contract("LendingPoolAddressesProvider", async (accounts) => {
-  let _testEnvProvider: ITestEnv;
-  let _addressesProviderInstance: LendingPoolAddressesProviderInstance;
-  let _lendingPoolInstance: LendingPoolInstance;
-  let _lendingPoolCoreInstance: LendingPoolCoreInstance;
-  let _lendingPoolConfiguratorInstance: LendingPoolConfiguratorInstance;
-  let _lendingPoolManagerAddress: string;
-  let _lendingPoolDataProviderInstance: LendingPoolDataProviderInstance;
-  let _lendingRateOracleInstance: LendingRateOracleInstance;
-  let _feeProviderInstance: FeeProviderInstance;
-  let _chainlinkProxyPriceProviderInstance: ChainlinkProxyPriceProviderInstance;
+  // let _testEnvProvider: ITestEnv;
+  // let _addressesProviderInstance: LendingPoolAddressesProviderInstance;
+  // let _lendingPoolInstance: LendingPoolInstance;
+  // let _lendingPoolCoreInstance: LendingPoolCoreInstance;
+  // let _lendingPoolConfiguratorInstance: LendingPoolConfiguratorInstance;
+  // let _lendingPoolManagerAddress: string;
+  // let _lendingPoolDataProviderInstance: LendingPoolDataProviderInstance;
+  // let _lendingRateOracleInstance: LendingRateOracleInstance;
+  // let _feeProviderInstance: FeeProviderInstance;
+  // let _chainlinkProxyPriceProviderInstance: ChainlinkProxyPriceProviderInstance;
 
   before("Initializing AddressesProvider test variables", async () => {
-    _testEnvProvider = await testEnvProvider(
-      artifacts,
-      accounts,
-      ContractsInstancesOrigin.TruffleArtifacts
-    );
+    // _testEnvProvider = await testEnvProvider(
+    //   artifacts,
+    //   accounts,
+    //   ContractsInstancesOrigin.TruffleArtifacts
+    // );
 
-    const {
-      deployedInstances: {
-        lendingPoolInstance,
-        lendingPoolAddressesProviderInstance,
-        lendingPoolCoreInstance,
-        lendingPoolConfiguratorInstance,
-        lendingPoolDataProviderInstance,
-        lendingRateOracleInstance,
-        feeProviderInstance,
-        chainlinkProxyPriceProviderInstance,
-      },
-      getGenesisLendingPoolManagerAddress,
-    } = _testEnvProvider;
-    _addressesProviderInstance = lendingPoolAddressesProviderInstance;
-    _lendingPoolInstance = lendingPoolInstance;
-    _lendingPoolCoreInstance = lendingPoolCoreInstance;
-    _lendingPoolConfiguratorInstance = lendingPoolConfiguratorInstance;
-    _lendingPoolDataProviderInstance = lendingPoolDataProviderInstance;
-    _lendingRateOracleInstance = lendingRateOracleInstance;
-    _feeProviderInstance = feeProviderInstance;
-    _lendingPoolManagerAddress = await getGenesisLendingPoolManagerAddress();
-    _chainlinkProxyPriceProviderInstance = chainlinkProxyPriceProviderInstance;
+    // const {
+    //   deployedInstances: {
+    //     lendingPoolInstance,
+    //     lendingPoolAddressesProviderInstance,
+    //     lendingPoolCoreInstance,
+    //     lendingPoolConfiguratorInstance,
+    //     lendingPoolDataProviderInstance,
+    //     lendingRateOracleInstance,
+    //     feeProviderInstance,
+    //     chainlinkProxyPriceProviderInstance,
+    //   },
+    //   getGenesisLendingPoolManagerAddress,
+    // } = _testEnvProvider;
+    // _addressesProviderInstance = lendingPoolAddressesProviderInstance;
+    // _lendingPoolInstance = lendingPoolInstance;
+    // _lendingPoolCoreInstance = lendingPoolCoreInstance;
+    // _lendingPoolConfiguratorInstance = lendingPoolConfiguratorInstance;
+    // _lendingPoolDataProviderInstance = lendingPoolDataProviderInstance;
+    // _lendingRateOracleInstance = lendingRateOracleInstance;
+    // _feeProviderInstance = feeProviderInstance;
+    // _lendingPoolManagerAddress = await getGenesisLendingPoolManagerAddress();
+    // _chainlinkProxyPriceProviderInstance = chainlinkProxyPriceProviderInstance;
+
+    await initializeMakeSuite();
   });
 
   const testParamConsistency = <TBaseValue extends string | number | BigNumber>(
