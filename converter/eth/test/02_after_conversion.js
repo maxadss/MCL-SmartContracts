@@ -33,22 +33,26 @@ contract("02_after_conversion", function (accounts) {
   });
 
   it("should be able to set fee", async () => {
-    const feeToSet = new BigNumber(0.05).shiftedBy(PERCENTAGE_DECIMAL).toString();
-    await converterInstance.setFee(
-      feeToSet
-    );
+    const feeToSet = new BigNumber(0.05)
+      .shiftedBy(PERCENTAGE_DECIMAL)
+      .toString();
+    await converterInstance.setFee(feeToSet);
 
     const feeAfter = Number(await converterInstance.feePcnt());
-  
-    await assert.equal(feeAfter, Number(feeToSet))
+
+    await assert.equal(feeAfter, Number(feeToSet));
   });
 
   it("should be able to call completeConversion with existed conversion", async () => {
-    const amountToDeposit = new BigNumber(100).shiftedBy(MXX_DECIMAL).toString();
+    const amountToDeposit = new BigNumber(100)
+      .shiftedBy(MXX_DECIMAL)
+      .toString();
     // ? Prepare MXX to deposit
-    await mxxInstance.mint(user, amountToDeposit, {from: owner});
+    await mxxInstance.mint(user, amountToDeposit, { from: owner });
     // ? Approve MXX to Converter
-    await mxxInstance.approve(converterInstance.address, amountToDeposit, {from: user});
+    await mxxInstance.approve(converterInstance.address, amountToDeposit, {
+      from: user,
+    });
 
     const deposit = await converterInstance.depositForConversion(
       user,
@@ -60,30 +64,34 @@ contract("02_after_conversion", function (accounts) {
 
     let _index;
 
-    truffleAssert.eventEmitted(deposit, 'NewConversion', (event) => {
+    truffleAssert.eventEmitted(deposit, "NewConversion", (event) => {
       const { index } = event;
       _index = index;
 
-      return !(new BigNumber(index).isNaN());
+      return !new BigNumber(index).isNaN();
     });
 
     await converterInstance.completeConversion(_index);
 
-    await assert.isTrue(true, 'completeConversion is not success');
+    await assert.isTrue(true, "completeConversion is not success");
   });
 
   it("should throw if index is invalid", async () => {
     const complete = converterInstance.completeConversion(10);
 
-    await truffleAssert.reverts(complete, 'Index out of range');
+    await truffleAssert.reverts(complete, "Index out of range");
   });
 
   it("should throw if conversion status is not New/Pending", async () => {
-    const amountToDeposit = new BigNumber(100).shiftedBy(MXX_DECIMAL).toString();
+    const amountToDeposit = new BigNumber(100)
+      .shiftedBy(MXX_DECIMAL)
+      .toString();
     // ? Prepare MXX to deposit
-    await mxxInstance.mint(user, amountToDeposit, {from: owner});
+    await mxxInstance.mint(user, amountToDeposit, { from: owner });
     // ? Approve MXX to Converter
-    await mxxInstance.approve(converterInstance.address, amountToDeposit, {from: user});
+    await mxxInstance.approve(converterInstance.address, amountToDeposit, {
+      from: user,
+    });
 
     const deposit = await converterInstance.depositForConversion(
       user,
@@ -95,26 +103,30 @@ contract("02_after_conversion", function (accounts) {
 
     let _index;
 
-    truffleAssert.eventEmitted(deposit, 'NewConversion', (event) => {
+    truffleAssert.eventEmitted(deposit, "NewConversion", (event) => {
       const { index } = event;
       _index = index;
 
-      return !(new BigNumber(index).isNaN());
+      return !new BigNumber(index).isNaN();
     });
 
     await converterInstance.completeConversion(_index);
 
     const complete = converterInstance.completeConversion(_index);
 
-    await truffleAssert.reverts(complete, 'Invalid Status');
+    await truffleAssert.reverts(complete, "Invalid Status");
   });
 
   it("should emit valid ConversionCompleted event after completeConversion", async () => {
-    const amountToDeposit = new BigNumber(100).shiftedBy(MXX_DECIMAL).toString();
+    const amountToDeposit = new BigNumber(100)
+      .shiftedBy(MXX_DECIMAL)
+      .toString();
     // ? Prepare MXX to deposit
-    await mxxInstance.mint(user, amountToDeposit, {from: owner});
+    await mxxInstance.mint(user, amountToDeposit, { from: owner });
     // ? Approve MXX to Converter
-    await mxxInstance.approve(converterInstance.address, amountToDeposit, {from: user});
+    await mxxInstance.approve(converterInstance.address, amountToDeposit, {
+      from: user,
+    });
 
     const deposit = await converterInstance.depositForConversion(
       user,
@@ -126,27 +138,134 @@ contract("02_after_conversion", function (accounts) {
 
     let _index;
 
-    truffleAssert.eventEmitted(deposit, 'NewConversion', (event) => {
+    truffleAssert.eventEmitted(deposit, "NewConversion", (event) => {
       const { index } = event;
       _index = index;
 
-      return !(new BigNumber(index).isNaN());
+      return !new BigNumber(index).isNaN();
     });
 
     const completeResult = await converterInstance.completeConversion(_index);
 
-    truffleAssert.eventEmitted(completeResult, 'ConversionCompleted', (event) => {
+    truffleAssert.eventEmitted(
+      completeResult,
+      "ConversionCompleted",
+      (event) => {
+        const { index } = event;
+        _index = index;
+
+        return index === _index;
+      }
+    );
+  });
+
+  it("should be able to refund", async () => {
+    const amountToDeposit = new BigNumber(100)
+      .shiftedBy(MXX_DECIMAL)
+      .toString();
+    // ? Prepare MXX to deposit
+    await mxxInstance.mint(user, amountToDeposit, { from: owner });
+    // ? Approve MXX to Converter
+    await mxxInstance.approve(converterInstance.address, amountToDeposit, {
+      from: user,
+    });
+
+    const deposit = await converterInstance.depositForConversion(
+      user,
+      amountToDeposit,
+      {
+        from: user,
+      }
+    );
+
+    let _index;
+
+    truffleAssert.eventEmitted(deposit, "NewConversion", (event) => {
       const { index } = event;
       _index = index;
 
-      return index === _index;
+      return !new BigNumber(index).isNaN();
     });
 
+    await converterInstance.refund(_index);
+
+    await assert.isTrue(true, "refund is not success");
   });
 
-  /**
-   * ! Refund testcases:
-   * - 
-   */
-  
+  it("should emit valid event ConversionRefunded after refund", async () => {
+    const amountToDeposit = new BigNumber(100)
+      .shiftedBy(MXX_DECIMAL)
+      .toString();
+    // ? Prepare MXX to deposit
+    await mxxInstance.mint(user, amountToDeposit, { from: owner });
+    // ? Approve MXX to Converter
+    await mxxInstance.approve(converterInstance.address, amountToDeposit, {
+      from: user,
+    });
+
+    const deposit = await converterInstance.depositForConversion(
+      user,
+      amountToDeposit,
+      {
+        from: user,
+      }
+    );
+
+    let _index;
+
+    truffleAssert.eventEmitted(deposit, "NewConversion", (event) => {
+      const { index } = event;
+      _index = index;
+
+      return !new BigNumber(index).isNaN();
+    });
+
+    const refundResult = await converterInstance.refund(_index);
+
+    truffleAssert.eventEmitted(refundResult, "ConversionRefunded", (event) => {
+      const { id } = event;
+      return Number(id) === Number(_index);
+    });
+  });
+
+  it("should fail when refund ID is invalid", async () => {
+    const refund = converterInstance.refund(3);
+
+    truffleAssert.reverts(refund, "Index out of range");
+  });
+
+  it("should fail when refund a conversion which has status != NEW", async () => {
+    const amountToDeposit = new BigNumber(100)
+      .shiftedBy(MXX_DECIMAL)
+      .toString();
+    // ? Prepare MXX to deposit
+    await mxxInstance.mint(user, amountToDeposit, { from: owner });
+    // ? Approve MXX to Converter
+    await mxxInstance.approve(converterInstance.address, amountToDeposit, {
+      from: user,
+    });
+
+    const deposit = await converterInstance.depositForConversion(
+      user,
+      amountToDeposit,
+      {
+        from: user,
+      }
+    );
+
+    let _index;
+
+    truffleAssert.eventEmitted(deposit, "NewConversion", (event) => {
+      const { index } = event;
+      _index = index;
+
+      return !new BigNumber(index).isNaN();
+    });
+
+    await converterInstance.completeConversion(_index);
+
+    const refund = converterInstance.refund(_index);
+
+    truffleAssert.reverts(refund, "Invalid Status");
+  });
 });
