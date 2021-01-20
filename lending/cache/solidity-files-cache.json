@@ -9,9 +9,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -20,32 +21,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
       "imports": [],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "AddressStorage"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["AddressStorage"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/configuration/LendingPoolAddressesProvider.sol": {
-      "lastModificationDate": 1610596707152,
+      "lastModificationDate": 1611053228317,
       "contentHash": "7e93b7977e91f770f71e6d6966216e92",
       "sourceName": "contracts/configuration/LendingPoolAddressesProvider.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -54,9 +50,7 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
@@ -67,24 +61,21 @@
         "./AddressStorage.sol",
         "../interfaces/ILendingPoolAddressesProvider.sol"
       ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "LendingPoolAddressesProvider"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["LendingPoolAddressesProvider"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/node_modules/openzeppelin-solidity/contracts/ownership/Ownable.sol": {
-      "lastModificationDate": 1610707818110,
+      "lastModificationDate": 1611122132319,
       "contentHash": "3ef838761bd8d0900247fe606eae2083",
       "sourceName": "openzeppelin-solidity/contracts/ownership/Ownable.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -93,22 +84,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "../GSN/Context.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "Ownable"
-      ]
+      "imports": ["../GSN/Context.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["Ownable"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/libraries/openzeppelin-upgradeability/InitializableAdminUpgradeabilityProxy.sol": {
       "lastModificationDate": 1610440987895,
@@ -118,9 +101,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -129,9 +113,7 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
@@ -140,12 +122,8 @@
         "./BaseAdminUpgradeabilityProxy.sol",
         "./InitializableUpgradeabilityProxy.sol"
       ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "InitializableAdminUpgradeabilityProxy"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["InitializableAdminUpgradeabilityProxy"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/interfaces/ILendingPoolAddressesProvider.sol": {
       "lastModificationDate": 1610440987892,
@@ -155,9 +133,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -166,32 +145,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
       "imports": [],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "ILendingPoolAddressesProvider"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["ILendingPoolAddressesProvider"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/node_modules/openzeppelin-solidity/contracts/GSN/Context.sol": {
-      "lastModificationDate": 1610707818089,
+      "lastModificationDate": 1611122132272,
       "contentHash": "32a66f6f4d0584b403f26f8e5e4d17b5",
       "sourceName": "openzeppelin-solidity/contracts/GSN/Context.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -200,20 +174,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
       "imports": [],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "Context"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["Context"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/libraries/openzeppelin-upgradeability/BaseAdminUpgradeabilityProxy.sol": {
       "lastModificationDate": 1610440987895,
@@ -223,9 +191,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -234,22 +203,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./UpgradeabilityProxy.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "BaseAdminUpgradeabilityProxy"
-      ]
+      "imports": ["./UpgradeabilityProxy.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["BaseAdminUpgradeabilityProxy"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/libraries/openzeppelin-upgradeability/InitializableUpgradeabilityProxy.sol": {
       "lastModificationDate": 1610440987896,
@@ -259,9 +220,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -270,22 +232,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./BaseUpgradeabilityProxy.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "InitializableUpgradeabilityProxy"
-      ]
+      "imports": ["./BaseUpgradeabilityProxy.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["InitializableUpgradeabilityProxy"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/libraries/openzeppelin-upgradeability/UpgradeabilityProxy.sol": {
       "lastModificationDate": 1610440987896,
@@ -295,9 +249,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -306,34 +261,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./BaseUpgradeabilityProxy.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "UpgradeabilityProxy"
-      ]
+      "imports": ["./BaseUpgradeabilityProxy.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["UpgradeabilityProxy"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/libraries/openzeppelin-upgradeability/BaseUpgradeabilityProxy.sol": {
-      "lastModificationDate": 1610596707154,
+      "lastModificationDate": 1611053228321,
       "contentHash": "59b4b1e9b471c4344d95a087209f2e48",
       "sourceName": "contracts/libraries/openzeppelin-upgradeability/BaseUpgradeabilityProxy.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -342,9 +290,7 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
@@ -353,12 +299,8 @@
         "./Proxy.sol",
         "openzeppelin-solidity/contracts/utils/Address.sol"
       ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "BaseUpgradeabilityProxy"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["BaseUpgradeabilityProxy"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/libraries/openzeppelin-upgradeability/Proxy.sol": {
       "lastModificationDate": 1610440987896,
@@ -368,9 +310,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -379,32 +322,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
       "imports": [],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "Proxy"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["Proxy"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/node_modules/openzeppelin-solidity/contracts/utils/Address.sol": {
-      "lastModificationDate": 1610707818151,
+      "lastModificationDate": 1611122132319,
       "contentHash": "fa0cfc6e9682e94f6adb13d86ee8a66f",
       "sourceName": "openzeppelin-solidity/contracts/utils/Address.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -413,32 +351,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
       "imports": [],
-      "versionPragmas": [
-        "^0.5.5"
-      ],
-      "artifacts": [
-        "Address"
-      ]
+      "versionPragmas": ["^0.5.5"],
+      "artifacts": ["Address"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/upgradeability/MockLendingPoolCore.sol": {
-      "lastModificationDate": 1610596707156,
+      "lastModificationDate": 1611053228323,
       "contentHash": "93fd7ff7365dae07751ddb12a1a9b9b9",
       "sourceName": "contracts/mocks/upgradeability/MockLendingPoolCore.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -447,9 +380,7 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
@@ -467,24 +398,21 @@
         "../../libraries/WadRayMath.sol",
         "../../lendingpool/LendingPoolCore.sol"
       ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockLendingPoolCore"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockLendingPoolCore"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol": {
-      "lastModificationDate": 1610707818107,
+      "lastModificationDate": 1611122132319,
       "contentHash": "d208da96b6f6c1d204ee8248087cf2d7",
       "sourceName": "openzeppelin-solidity/contracts/math/SafeMath.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -493,32 +421,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
       "imports": [],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "SafeMath"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["SafeMath"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/node_modules/openzeppelin-solidity/contracts/token/ERC20/SafeERC20.sol": {
-      "lastModificationDate": 1610707818135,
+      "lastModificationDate": 1611122132348,
       "contentHash": "83fbce907d2b44fae67a751b83804e02",
       "sourceName": "openzeppelin-solidity/contracts/token/ERC20/SafeERC20.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -527,9 +450,7 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
@@ -539,24 +460,21 @@
         "../../math/SafeMath.sol",
         "../../utils/Address.sol"
       ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "SafeERC20"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["SafeERC20"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/node_modules/openzeppelin-solidity/contracts/token/ERC20/ERC20.sol": {
-      "lastModificationDate": 1610707818129,
+      "lastModificationDate": 1611122132348,
       "contentHash": "0f93a7a0c39ccbd2872674e4de5d63a3",
       "sourceName": "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -565,9 +483,7 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
@@ -577,12 +493,8 @@
         "./IERC20.sol",
         "../../math/SafeMath.sol"
       ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "ERC20"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["ERC20"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/libraries/openzeppelin-upgradeability/VersionedInitializable.sol": {
       "lastModificationDate": 1610440987896,
@@ -592,9 +504,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -603,32 +516,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
       "imports": [],
-      "versionPragmas": [
-        ">=0.4.24 <0.6.0"
-      ],
-      "artifacts": [
-        "VersionedInitializable"
-      ]
+      "versionPragmas": [">=0.4.24 <0.6.0"],
+      "artifacts": ["VersionedInitializable"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/libraries/CoreLibrary.sol": {
-      "lastModificationDate": 1610596707154,
+      "lastModificationDate": 1611053228321,
       "contentHash": "5567398207e752fde482f56748ba8397",
       "sourceName": "contracts/libraries/CoreLibrary.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -637,9 +545,7 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
@@ -648,12 +554,8 @@
         "openzeppelin-solidity/contracts/math/SafeMath.sol",
         "./WadRayMath.sol"
       ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "CoreLibrary"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["CoreLibrary"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/interfaces/ILendingRateOracle.sol": {
       "lastModificationDate": 1610440987892,
@@ -663,9 +565,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -674,20 +577,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
       "imports": [],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "ILendingRateOracle"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["ILendingRateOracle"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/interfaces/IReserveInterestRateStrategy.sol": {
       "lastModificationDate": 1610440987893,
@@ -697,9 +594,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -708,32 +606,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
       "imports": [],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "IReserveInterestRateStrategy"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["IReserveInterestRateStrategy"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/libraries/WadRayMath.sol": {
-      "lastModificationDate": 1610596707154,
+      "lastModificationDate": 1611053228323,
       "contentHash": "732b4add380d0ef0cb312d906d7908c6",
       "sourceName": "contracts/libraries/WadRayMath.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -742,34 +635,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "openzeppelin-solidity/contracts/math/SafeMath.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "WadRayMath"
-      ]
+      "imports": ["openzeppelin-solidity/contracts/math/SafeMath.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["WadRayMath"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/lendingpool/LendingPoolCore.sol": {
-      "lastModificationDate": 1610596707153,
+      "lastModificationDate": 1611053228320,
       "contentHash": "b40a840e0ea738bacda5bb3086ff8862",
       "sourceName": "contracts/lendingpool/LendingPoolCore.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -778,9 +664,7 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
@@ -802,24 +686,21 @@
         "../libraries/BscAddressLib.sol",
         "../rewards/RewardsManager.sol"
       ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "LendingPoolCore"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["LendingPoolCore"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/node_modules/openzeppelin-solidity/contracts/token/ERC20/IERC20.sol": {
-      "lastModificationDate": 1610707818133,
+      "lastModificationDate": 1611122132348,
       "contentHash": "183ff1f5e5f04bcfa85cee597bcb0236",
       "sourceName": "openzeppelin-solidity/contracts/token/ERC20/IERC20.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -828,20 +709,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
       "imports": [],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "IERC20"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["IERC20"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/configuration/LendingPoolParametersProvider.sol": {
       "lastModificationDate": 1610440987890,
@@ -851,9 +726,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -862,22 +738,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./UintStorage.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "LendingPoolParametersProvider"
-      ]
+      "imports": ["./UintStorage.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["LendingPoolParametersProvider"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/fees/FeeProvider.sol": {
       "lastModificationDate": 1610440987891,
@@ -887,9 +755,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -898,9 +767,7 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
@@ -910,24 +777,21 @@
         "../interfaces/IFeeProvider.sol",
         "../libraries/WadRayMath.sol"
       ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "FeeProvider"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["FeeProvider"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/tokenization/MToken.sol": {
-      "lastModificationDate": 1610596707157,
+      "lastModificationDate": 1611053228324,
       "contentHash": "fb57808e4799dfa9a50cfc5711a811a9",
       "sourceName": "contracts/tokenization/MToken.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -936,9 +800,7 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
@@ -952,12 +814,8 @@
         "../lendingpool/LendingPoolCore.sol",
         "../libraries/WadRayMath.sol"
       ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "mToken"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["mToken"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/libraries/BscAddressLib.sol": {
       "lastModificationDate": 1610440987894,
@@ -967,9 +825,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -978,32 +837,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
       "imports": [],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "BscAddressLib"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["BscAddressLib"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/rewards/RewardsManager.sol": {
-      "lastModificationDate": 1610596707157,
+      "lastModificationDate": 1611053228324,
       "contentHash": "33728a23407a7395bab01cb2ee7b6f8a",
       "sourceName": "contracts/rewards/RewardsManager.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1012,9 +866,7 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
@@ -1028,12 +880,8 @@
         "../libraries/WadRayMath.sol",
         "../interfaces/IRewardVault.sol"
       ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "RewardsManager"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["RewardsManager"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/configuration/UintStorage.sol": {
       "lastModificationDate": 1610440987891,
@@ -1043,9 +891,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1054,20 +903,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
       "imports": [],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "UintStorage"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["UintStorage"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/interfaces/IFeeProvider.sol": {
       "lastModificationDate": 1610440987892,
@@ -1077,9 +920,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1088,32 +932,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
       "imports": [],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "IFeeProvider"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["IFeeProvider"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/node_modules/openzeppelin-solidity/contracts/token/ERC20/ERC20Detailed.sol": {
-      "lastModificationDate": 1610707818131,
+      "lastModificationDate": 1611122132348,
       "contentHash": "a1a39233394f3c0a00ce348c61433faa",
       "sourceName": "openzeppelin-solidity/contracts/token/ERC20/ERC20Detailed.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1122,34 +961,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./IERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "ERC20Detailed"
-      ]
+      "imports": ["./IERC20.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["ERC20Detailed"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/lendingpool/LendingPool.sol": {
-      "lastModificationDate": 1610596707153,
+      "lastModificationDate": 1611053228319,
       "contentHash": "6c16c8ac7e23a30d7b8418a64fe3cfbf",
       "sourceName": "contracts/lendingpool/LendingPool.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1158,9 +990,7 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
@@ -1184,24 +1014,21 @@
         "./LendingPoolLiquidationManager.sol",
         "../libraries/BscAddressLib.sol"
       ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "LendingPool"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["LendingPool"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/lendingpool/LendingPoolDataProvider.sol": {
-      "lastModificationDate": 1610596707153,
+      "lastModificationDate": 1611053228320,
       "contentHash": "aa09787791f2f9d0d98502b80d6253cc",
       "sourceName": "contracts/lendingpool/LendingPoolDataProvider.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1210,9 +1037,7 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
@@ -1228,24 +1053,21 @@
         "../tokenization/MToken.sol",
         "./LendingPoolCore.sol"
       ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "LendingPoolDataProvider"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["LendingPoolDataProvider"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/node_modules/openzeppelin-solidity/contracts/utils/ReentrancyGuard.sol": {
-      "lastModificationDate": 1610707818153,
+      "lastModificationDate": 1611122132319,
       "contentHash": "7ae0ee21725cef16bf751ea0a41a202e",
       "sourceName": "openzeppelin-solidity/contracts/utils/ReentrancyGuard.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1254,20 +1076,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
       "imports": [],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "ReentrancyGuard"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["ReentrancyGuard"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/flashloan/interfaces/IFlashLoanReceiver.sol": {
       "lastModificationDate": 1610440987892,
@@ -1277,9 +1093,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1288,32 +1105,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
       "imports": [],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "IFlashLoanReceiver"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["IFlashLoanReceiver"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/lendingpool/LendingPoolLiquidationManager.sol": {
-      "lastModificationDate": 1610596707154,
+      "lastModificationDate": 1611053228319,
       "contentHash": "1472a93833dd8ea6e75b49500e64b88a",
       "sourceName": "contracts/lendingpool/LendingPoolLiquidationManager.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1322,9 +1134,7 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
@@ -1343,12 +1153,8 @@
         "../interfaces/IPriceOracleGetter.sol",
         "../configuration/LendingPoolParametersProvider.sol"
       ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "LendingPoolLiquidationManager"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["LendingPoolLiquidationManager"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/interfaces/IPriceOracleGetter.sol": {
       "lastModificationDate": 1610440987893,
@@ -1358,9 +1164,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1369,20 +1176,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
       "imports": [],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "IPriceOracleGetter"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["IPriceOracleGetter"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/interfaces/IRewardVault.sol": {
       "lastModificationDate": 1610440987893,
@@ -1392,9 +1193,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1403,32 +1205,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
       "imports": [],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "IRewardVault"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["IRewardVault"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/misc/WalletBalanceProvider.sol": {
-      "lastModificationDate": 1610596707155,
+      "lastModificationDate": 1611053228322,
       "contentHash": "a1ec88eb5389b336600a3a072975543b",
       "sourceName": "contracts/misc/WalletBalanceProvider.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1437,9 +1234,7 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
@@ -1451,24 +1246,21 @@
         "../lendingpool/LendingPoolCore.sol",
         "../libraries/BscAddressLib.sol"
       ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "WalletBalanceProvider"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["WalletBalanceProvider"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/vaults/RewardVault.sol": {
-      "lastModificationDate": 1610596707157,
+      "lastModificationDate": 1611053228323,
       "contentHash": "0ce08a9fbdaa45dccf96e7c89594fae3",
       "sourceName": "contracts/vaults/RewardVault.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1477,9 +1269,7 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
@@ -1493,24 +1283,21 @@
         "../libraries/BscAddressLib.sol",
         "../interfaces/IRewardVault.sol"
       ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "RewardVault"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["RewardVault"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/lendingpool/LendingPoolConfigurator.sol": {
-      "lastModificationDate": 1610596707153,
+      "lastModificationDate": 1611053228321,
       "contentHash": "9395e28a9b36ea9a0c61a17f0de3e533",
       "sourceName": "contracts/lendingpool/LendingPoolConfigurator.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1519,9 +1306,7 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
@@ -1534,24 +1319,21 @@
         "./LendingPoolCore.sol",
         "../tokenization/MToken.sol"
       ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "LendingPoolConfigurator"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["LendingPoolConfigurator"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/tokens/MintableERC20.sol": {
-      "lastModificationDate": 1610596707156,
+      "lastModificationDate": 1611122243883,
       "contentHash": "c73e66b395b61482a72f582ab5a59c23",
       "sourceName": "contracts/mocks/tokens/MintableERC20.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1560,34 +1342,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MintableERC20"
-      ]
+      "imports": ["openzeppelin-solidity/contracts/token/ERC20/ERC20.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MintableERC20"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/tokens/MockZRX.sol": {
-      "lastModificationDate": 1610440987905,
+      "lastModificationDate": 1611122250763,
       "contentHash": "872bb0815bc2d63c0140111721a0b24c",
       "sourceName": "contracts/mocks/tokens/MockZRX.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1596,34 +1371,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MintableERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockZRX"
-      ]
+      "imports": ["./MintableERC20.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockZRX"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/tokens/MockWBTC.sol": {
-      "lastModificationDate": 1610440987904,
+      "lastModificationDate": 1611122250762,
       "contentHash": "03247cd6cb05dbac26192df590f9777f",
       "sourceName": "contracts/mocks/tokens/MockWBTC.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1632,34 +1400,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MintableERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockWBTC"
-      ]
+      "imports": ["./MintableERC20.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockWBTC"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/tokens/MockUSDT.sol": {
-      "lastModificationDate": 1610440987904,
+      "lastModificationDate": 1611122250762,
       "contentHash": "7cb90857c6d85dc0ee40baa28b9a08d2",
       "sourceName": "contracts/mocks/tokens/MockUSDT.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1668,34 +1429,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MintableERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockUSDT"
-      ]
+      "imports": ["./MintableERC20.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockUSDT"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/tokens/MockUSDC.sol": {
-      "lastModificationDate": 1610440987904,
+      "lastModificationDate": 1611122250762,
       "contentHash": "82e24953ea925a09d0a345ddfd8e5658",
       "sourceName": "contracts/mocks/tokens/MockUSDC.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1704,34 +1458,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MintableERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockUSDC"
-      ]
+      "imports": ["./MintableERC20.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockUSDC"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/tokens/MockTUSD.sol": {
-      "lastModificationDate": 1610440987904,
+      "lastModificationDate": 1611122250761,
       "contentHash": "34eb2da0369ff97a3570bff3afd76754",
       "sourceName": "contracts/mocks/tokens/MockTUSD.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1740,34 +1487,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MintableERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockTUSD"
-      ]
+      "imports": ["./MintableERC20.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockTUSD"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/tokens/MockSUSD.sol": {
-      "lastModificationDate": 1610440987904,
+      "lastModificationDate": 1611122250761,
       "contentHash": "e4a2971c5edb7c1d77ef7b1c93fcb201",
       "sourceName": "contracts/mocks/tokens/MockSUSD.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1776,34 +1516,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MintableERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockSUSD"
-      ]
+      "imports": ["./MintableERC20.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockSUSD"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/tokens/MockREP.sol": {
-      "lastModificationDate": 1610440987903,
+      "lastModificationDate": 1611122250760,
       "contentHash": "a5d243ef91233722168f31714b7dd4d6",
       "sourceName": "contracts/mocks/tokens/MockREP.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1812,34 +1545,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MintableERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockREP"
-      ]
+      "imports": ["./MintableERC20.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockREP"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/tokens/MockMKR.sol": {
-      "lastModificationDate": 1610440987903,
+      "lastModificationDate": 1611122250759,
       "contentHash": "bf20993093f9e9812ac3169db057afef",
       "sourceName": "contracts/mocks/tokens/MockMKR.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1848,34 +1574,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MintableERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockMKR"
-      ]
+      "imports": ["./MintableERC20.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockMKR"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/tokens/MockMANA.sol": {
-      "lastModificationDate": 1610440987903,
+      "lastModificationDate": 1611122243885,
       "contentHash": "ace3656f7845f9d924ada71212d561de",
       "sourceName": "contracts/mocks/tokens/MockMANA.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1884,34 +1603,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MintableERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockMANA"
-      ]
+      "imports": ["./MintableERC20.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockMANA"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/tokens/MockLINK.sol": {
-      "lastModificationDate": 1610440987903,
+      "lastModificationDate": 1611122243885,
       "contentHash": "bf086c45f23257e1f59b6613cf96e937",
       "sourceName": "contracts/mocks/tokens/MockLINK.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1920,34 +1632,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MintableERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockLINK"
-      ]
+      "imports": ["./MintableERC20.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockLINK"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/tokens/MockLEND.sol": {
-      "lastModificationDate": 1610440987903,
+      "lastModificationDate": 1611122243885,
       "contentHash": "600bd1596737bcde69cca6e7507531d0",
       "sourceName": "contracts/mocks/tokens/MockLEND.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1956,34 +1661,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MintableERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockLEND"
-      ]
+      "imports": ["./MintableERC20.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockLEND"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/tokens/MockKNC.sol": {
-      "lastModificationDate": 1610440987903,
+      "lastModificationDate": 1611122243884,
       "contentHash": "ecb0bbc78f7f0123c1be854087a81f25",
       "sourceName": "contracts/mocks/tokens/MockKNC.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -1992,34 +1690,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MintableERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockKNC"
-      ]
+      "imports": ["./MintableERC20.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockKNC"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/tokens/MockDAI.sol": {
-      "lastModificationDate": 1610440987903,
+      "lastModificationDate": 1611122243884,
       "contentHash": "6b0c37eae6e05c31628eaaed5e7bd308",
       "sourceName": "contracts/mocks/tokens/MockDAI.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2028,34 +1719,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MintableERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockDAI"
-      ]
+      "imports": ["./MintableERC20.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockDAI"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/tokens/MockBAT.sol": {
-      "lastModificationDate": 1610440987902,
+      "lastModificationDate": 1611122243884,
       "contentHash": "1e017cab43c7e86d659f6de2f259db96",
       "sourceName": "contracts/mocks/tokens/MockBAT.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2064,34 +1748,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MintableERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockBAT"
-      ]
+      "imports": ["./MintableERC20.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockBAT"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/flashloan/MockFlashLoanReceiver.sol": {
-      "lastModificationDate": 1610596707155,
+      "lastModificationDate": 1611122231559,
       "contentHash": "8e2e8c4ea9497fb1e25afb40a0761f57",
       "sourceName": "contracts/mocks/flashloan/MockFlashLoanReceiver.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2100,9 +1777,7 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
@@ -2112,24 +1787,21 @@
         "../../flashloan/base/FlashLoanReceiverBase.sol",
         "../tokens/MintableERC20.sol"
       ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockFlashLoanReceiver"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockFlashLoanReceiver"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/flashloan/base/FlashLoanReceiverBase.sol": {
-      "lastModificationDate": 1610596707152,
+      "lastModificationDate": 1611053228318,
       "contentHash": "6edfff045619b6166eb5a9183549e928",
       "sourceName": "contracts/flashloan/base/FlashLoanReceiverBase.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2138,9 +1810,7 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
@@ -2153,12 +1823,8 @@
         "../../interfaces/ILendingPoolAddressesProvider.sol",
         "../../libraries/BscAddressLib.sol"
       ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "FlashLoanReceiverBase"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["FlashLoanReceiverBase"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/libraries/openzeppelin-upgradeability/AdminUpgradeabilityProxy.sol": {
       "lastModificationDate": 1610440987895,
@@ -2168,9 +1834,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2179,34 +1846,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./BaseAdminUpgradeabilityProxy.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "AdminUpgradeabilityProxy"
-      ]
+      "imports": ["./BaseAdminUpgradeabilityProxy.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["AdminUpgradeabilityProxy"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/lendingpool/DefaultReserveInterestRateStrategy.sol": {
-      "lastModificationDate": 1610596707152,
+      "lastModificationDate": 1611053228319,
       "contentHash": "fff7d81eda1995f963c6f405259cf01b",
       "sourceName": "contracts/lendingpool/DefaultReserveInterestRateStrategy.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2215,9 +1875,7 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
@@ -2230,12 +1888,8 @@
         "./LendingPoolCore.sol",
         "../interfaces/ILendingRateOracle.sol"
       ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "DefaultReserveInterestRateStrategy"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["DefaultReserveInterestRateStrategy"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/oracle/LendingRateOracle.sol": {
       "lastModificationDate": 1610440987902,
@@ -2245,9 +1899,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2256,34 +1911,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "../../interfaces/ILendingRateOracle.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "LendingRateOracle"
-      ]
+      "imports": ["../../interfaces/ILendingRateOracle.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["LendingRateOracle"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/misc/ChainlinkProxyPriceProvider.sol": {
-      "lastModificationDate": 1610596707155,
+      "lastModificationDate": 1611053228322,
       "contentHash": "5b63936f67a12d28a43fa2c62a5dbd78",
       "sourceName": "contracts/misc/ChainlinkProxyPriceProvider.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2292,9 +1940,7 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
@@ -2305,12 +1951,8 @@
         "../interfaces/IChainlinkAggregator.sol",
         "../libraries/BscAddressLib.sol"
       ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "ChainlinkProxyPriceProvider"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["ChainlinkProxyPriceProvider"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/interfaces/IChainlinkAggregator.sol": {
       "lastModificationDate": 1610440987892,
@@ -2320,9 +1962,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2331,32 +1974,27 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
       "imports": [],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "IChainlinkAggregator"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["IChainlinkAggregator"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/interfaces/IKyberNetworkProxyInterface.sol": {
-      "lastModificationDate": 1610596707152,
+      "lastModificationDate": 1611053228317,
       "contentHash": "82bcf2a765ff90344bdd9564f91cfc77",
       "sourceName": "contracts/interfaces/IKyberNetworkProxyInterface.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2365,22 +2003,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "openzeppelin-solidity/contracts/token/ERC20/IERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "IKyberNetworkProxyInterface"
-      ]
+      "imports": ["openzeppelin-solidity/contracts/token/ERC20/IERC20.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["IKyberNetworkProxyInterface"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/interfaces/IPriceOracle.sol": {
       "lastModificationDate": 1610440987893,
@@ -2390,9 +2020,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2401,20 +2032,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
       "imports": [],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "IPriceOracle"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["IPriceOracle"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/oracle/PriceOracle.sol": {
       "lastModificationDate": 1610440987902,
@@ -2424,9 +2049,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2435,22 +2061,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "../../interfaces/IPriceOracle.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "PriceOracle"
-      ]
+      "imports": ["../../interfaces/IPriceOracle.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["PriceOracle"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/libraries/openzeppelin-upgradeability/Initializable.sol": {
       "lastModificationDate": 1610440987895,
@@ -2460,9 +2078,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2471,20 +2090,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
       "imports": [],
-      "versionPragmas": [
-        ">=0.4.24 <0.6.0"
-      ],
-      "artifacts": [
-        "Initializable"
-      ]
+      "versionPragmas": [">=0.4.24 <0.6.0"],
+      "artifacts": ["Initializable"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/misc/IERC20DetailedBytes.sol": {
       "lastModificationDate": 1610440987897,
@@ -2494,9 +2107,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2505,20 +2119,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
       "imports": [],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "IERC20DetailedBytes"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["IERC20DetailedBytes"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/oracle/CLAggregators/MockAggregatorBase.sol": {
       "lastModificationDate": 1610440987899,
@@ -2528,9 +2136,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2539,20 +2148,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
       "imports": [],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockAggregatorBase"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockAggregatorBase"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/oracle/CLAggregators/MockAggregatorZRX.sol": {
       "lastModificationDate": 1610440987902,
@@ -2562,9 +2165,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2573,22 +2177,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MockAggregatorBase.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockAggregatorZRX"
-      ]
+      "imports": ["./MockAggregatorBase.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockAggregatorZRX"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/oracle/CLAggregators/MockAggregatorWBTC.sol": {
       "lastModificationDate": 1610440987901,
@@ -2598,9 +2194,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2609,22 +2206,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MockAggregatorBase.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockAggregatorWBTC"
-      ]
+      "imports": ["./MockAggregatorBase.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockAggregatorWBTC"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/oracle/CLAggregators/MockAggregatorUSDT.sol": {
       "lastModificationDate": 1610440987901,
@@ -2634,9 +2223,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2645,22 +2235,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MockAggregatorBase.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockAggregatorUSDT"
-      ]
+      "imports": ["./MockAggregatorBase.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockAggregatorUSDT"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/oracle/CLAggregators/MockAggregatorUSDC.sol": {
       "lastModificationDate": 1610440987901,
@@ -2670,9 +2252,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2681,22 +2264,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MockAggregatorBase.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockAggregatorUSDC"
-      ]
+      "imports": ["./MockAggregatorBase.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockAggregatorUSDC"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/oracle/CLAggregators/MockAggregatorTUSD.sol": {
       "lastModificationDate": 1610440987901,
@@ -2706,9 +2281,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2717,22 +2293,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MockAggregatorBase.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockAggregatorTUSD"
-      ]
+      "imports": ["./MockAggregatorBase.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockAggregatorTUSD"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/oracle/CLAggregators/MockAggregatorSUSD.sol": {
       "lastModificationDate": 1610440987901,
@@ -2742,9 +2310,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2753,22 +2322,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MockAggregatorBase.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockAggregatorSUSD"
-      ]
+      "imports": ["./MockAggregatorBase.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockAggregatorSUSD"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/oracle/CLAggregators/MockAggregatorREP.sol": {
       "lastModificationDate": 1610440987901,
@@ -2778,9 +2339,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2789,22 +2351,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MockAggregatorBase.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockAggregatorREP"
-      ]
+      "imports": ["./MockAggregatorBase.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockAggregatorREP"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/oracle/CLAggregators/MockAggregatorMKR.sol": {
       "lastModificationDate": 1610440987900,
@@ -2814,9 +2368,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2825,22 +2380,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MockAggregatorBase.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockAggregatorMKR"
-      ]
+      "imports": ["./MockAggregatorBase.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockAggregatorMKR"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/oracle/CLAggregators/MockAggregatorMANA.sol": {
       "lastModificationDate": 1610440987900,
@@ -2850,9 +2397,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2861,22 +2409,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MockAggregatorBase.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockAggregatorMANA"
-      ]
+      "imports": ["./MockAggregatorBase.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockAggregatorMANA"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/oracle/CLAggregators/MockAggregatorLINK.sol": {
       "lastModificationDate": 1610440987900,
@@ -2886,9 +2426,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2897,22 +2438,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MockAggregatorBase.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockAggregatorLINK"
-      ]
+      "imports": ["./MockAggregatorBase.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockAggregatorLINK"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/oracle/CLAggregators/MockAggregatorLEND.sol": {
       "lastModificationDate": 1610440987900,
@@ -2922,9 +2455,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2933,22 +2467,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MockAggregatorBase.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockAggregatorLEND"
-      ]
+      "imports": ["./MockAggregatorBase.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockAggregatorLEND"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/oracle/CLAggregators/MockAggregatorKNC.sol": {
       "lastModificationDate": 1610440987900,
@@ -2958,9 +2484,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -2969,22 +2496,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MockAggregatorBase.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockAggregatorKNC"
-      ]
+      "imports": ["./MockAggregatorBase.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockAggregatorKNC"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/oracle/CLAggregators/MockAggregatorDAI.sol": {
       "lastModificationDate": 1610440987899,
@@ -2994,9 +2513,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -3005,22 +2525,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MockAggregatorBase.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockAggregatorDAI"
-      ]
+      "imports": ["./MockAggregatorBase.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockAggregatorDAI"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/oracle/CLAggregators/MockAggregatorBAT.sol": {
       "lastModificationDate": 1610440987899,
@@ -3030,9 +2542,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -3041,22 +2554,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./MockAggregatorBase.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "MockAggregatorBAT"
-      ]
+      "imports": ["./MockAggregatorBase.sol"],
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["MockAggregatorBAT"]
     },
     "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/mocks/oracle/GenericOracleI.sol": {
       "lastModificationDate": 1610440987902,
@@ -3066,9 +2571,10 @@
         "version": "0.5.17",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
+          "evmVersion": "istanbul",
           "outputSelection": {
             "*": {
               "*": [
@@ -3077,20 +2583,14 @@
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
       "imports": [],
-      "versionPragmas": [
-        "^0.5.0"
-      ],
-      "artifacts": [
-        "GenericOracleI"
-      ]
+      "versionPragmas": ["^0.5.0"],
+      "artifacts": ["GenericOracleI"]
     }
   }
 }
