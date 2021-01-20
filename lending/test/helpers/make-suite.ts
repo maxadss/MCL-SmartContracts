@@ -115,7 +115,6 @@ export async function initializeMakeSuite() {
 
   testEnv.dataProvider = await getAaveProtocolDataProvider();
   testEnv.feeProvider = await getFeeProvider();
-  //console.log(testEnv.addressesProvider.address);
 
   if (process.env.MAINNET_FORK === "true") {
     // testEnv.registry = await getLendingPoolAddressesProviderRegistry(

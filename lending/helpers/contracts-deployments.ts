@@ -61,8 +61,7 @@ import {
 ///import { MintableDelegationERC20 } from '../types/MintableDelegationERC20';
 import { readArtifact as buidlerReadArtifact } from "@nomiclabs/buidler/plugins";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
-//import { LendingPoolLibraryAddresses } from '../types/factories/LendingPoolFactory';
-//import { LendingPoolLibraryAddresses } from '../types/LendingPoolFactory';
+import { LendingPoolCoreLibraryAddresses } from "../types/factories/LendingPoolCoreFactory";
 
 const readArtifact = async (id: string) => {
   if (DRE.network.name === eEthereumNetwork.buidlerevm) {
@@ -165,31 +164,29 @@ export const deployValidationLogic = async (
   );
 };
 
-// export const deployAaveLibraries = async (
-//   verify?: boolean
-// ): Promise<LendingPoolLibraryAddresses> => {
-//   const reserveLogic = await deployReserveLogicLibrary(verify);
-//   const genericLogic = await deployGenericLogic(reserveLogic, verify);
-//   const validationLogic = await deployValidationLogic(reserveLogic, genericLogic, verify);
+export const deployAaveLibraries = async (
+  verify?: boolean
+): Promise<LendingPoolCoreLibraryAddresses> => {
+  // const reserveLogic = await deployReserveLogicLibrary(verify);
+  // const genericLogic = await deployGenericLogic(reserveLogic, verify);
+  // const validationLogic = await deployValidationLogic(reserveLogic, genericLogic, verify);
 
-//   // Hardcoded solidity placeholders, if any library changes path this will fail.
-//   // The '__$PLACEHOLDER$__ can be calculated via solidity keccak, but the LendingPoolLibraryAddresses Type seems to
-//   // require a hardcoded string.
-//   //
-//   //  how-to:
-//   //  1. PLACEHOLDER = solidityKeccak256(['string'], `${libPath}:${libName}`).slice(2, 36)
-//   //  2. LIB_PLACEHOLDER = `__$${PLACEHOLDER}$__`
-//   // or grab placeholdes from LendingPoolLibraryAddresses at Typechain generation.
-//   //
-//   // libPath example: contracts/libraries/logic/GenericLogic.sol
-//   // libName example: GenericLogic
-//   return {
-//     ["__$de8c0cf1a7d7c36c802af9a64fb9d86036$__"]: validationLogic.address,
-//     ["__$22cd43a9dda9ce44e9b92ba393b88fb9ac$__"]: reserveLogic.address,
-//   };
-// };
-// ["__$de8c0cf1a7d7c36c802af9a64fb9d86036$__"]: string;
-//   ["__$22cd43a9dda9ce44e9b92ba393b88fb9ac$__"]: string;
+  // Hardcoded solidity placeholders, if any library changes path this will fail.
+  // The '__$PLACEHOLDER$__ can be calculated via solidity keccak, but the LendingPoolLibraryAddresses Type seems to
+  // require a hardcoded string.
+  //
+  //  how-to:
+  //  1. PLACEHOLDER = solidityKeccak256(['string'], `${libPath}:${libName}`).slice(2, 36)
+  //  2. LIB_PLACEHOLDER = `__$${PLACEHOLDER}$__`
+  // or grab placeholdes from LendingPoolLibraryAddresses at Typechain generation.
+  //
+  // libPath example: contracts/libraries/logic/GenericLogic.sol
+  // libName example: GenericLogic
+  return {
+    ["__$2ec35834968386f54fa313129cf94664e4$__"]: "",
+  };
+};
+
 export const deployLendingPool = async (verify?: boolean) => {
   //const libraries = await deployAaveLibraries(verify);
   const lendingPoolImpl = await new LendingPoolFactory(
@@ -258,11 +255,10 @@ export const deployLendingPoolCollateralManager = async (verify?: boolean) => {
   );
 };
 
-export const deployLendingPoolCore = async (verify?: boolean) => {
-  const addressLib = await new MockLendingPoolCoreFactory(
-    await getFirstSigner()
-  ).deploy();
-
+export const deployLendingPoolCore = async (
+  addressLib: LendingPoolCoreLibraryAddresses,
+  verify?: boolean
+) => {
   const collateralManagerImpl = await new LendingPoolCoreFactory(
     addressLib,
     await getFirstSigner()
@@ -309,6 +305,7 @@ export const deployFeeProvider = async (verify?: boolean) => {
   //   [],
   //   verify
   // );
+  return collateralManagerImpl;
 };
 
 export const deployInitializableAdminUpgradeabilityProxy = async (

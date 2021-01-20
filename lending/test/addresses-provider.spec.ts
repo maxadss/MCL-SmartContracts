@@ -9,6 +9,7 @@ import {
   LendingPoolCore,
   LendingPoolDataProvider,
   LendingRateOracle,
+  PriceOracle,
 } from "../types";
 import { makeSuite, TestEnv } from "./helpers/make-suite";
 
@@ -22,17 +23,7 @@ makeSuite("AddressesProviderRegistry", (testEnv: TestEnv) => {
   let _lendingPoolDataProviderInstance: LendingPoolDataProvider;
   let _lendingRateOracleInstance: LendingRateOracle;
   let _feeProviderInstance: FeeProvider;
-  let _chainlinkProxyPriceProviderInstance: ChainlinkProxyPriceProvider;
-
-  // _addressesProviderInstance = testEnv;
-  // _lendingPoolInstance = lendingPoolInstance;
-  // _lendingPoolCoreInstance = lendingPoolCoreInstance;
-  // _lendingPoolConfiguratorInstance = lendingPoolConfiguratorInstance;
-  // _lendingPoolDataProviderInstance = lendingPoolDataProviderInstance;
-  // _lendingRateOracleInstance = lendingRateOracleInstance;
-  // _feeProviderInstance = feeProviderInstance;
-  // _lendingPoolManagerAddress = await getGenesisLendingPoolManagerAddress();
-  // _chainlinkProxyPriceProviderInstance = chainlinkProxyPriceProviderInstance;
+  let _chainlinkProxyPriceProviderInstance: PriceOracle;
 
   const testParamConsistency = <TBaseValue extends string | number | BigNumber>(
     baseSourceName: string,
@@ -49,6 +40,16 @@ makeSuite("AddressesProviderRegistry", (testEnv: TestEnv) => {
   it("Tests the Lending Pool address consistency in the LendingPoolAddressesProvider", async () => {
     _addressesProviderInstance = testEnv.addressesProvider;
     _lendingPoolInstance = testEnv.pool;
+    _lendingPoolCoreInstance = testEnv.core;
+    _lendingPoolDataProviderInstance = testEnv.dataProvider;
+    _lendingRateOracleInstance = testEnv.rateOracle;
+    _feeProviderInstance = testEnv.feeProvider;
+    _lendingPoolConfiguratorInstance = testEnv.configurator;
+
+    _chainlinkProxyPriceProviderInstance = testEnv.oracle;
+
+    _addressesProviderInstance = testEnv.addressesProvider;
+    _lendingPoolInstance = testEnv.pool;
     testParamConsistency(
       "Lending Pool",
       "LendingPoolAddressesProvider",
@@ -58,7 +59,6 @@ makeSuite("AddressesProviderRegistry", (testEnv: TestEnv) => {
   });
 
   it("Tests the Lending Pool Core address consistency in the LendingPoolAddressesProvider", async () => {
-    _lendingPoolCoreInstance = testEnv.core;
     testParamConsistency(
       "Lending Pool Core",
       "LendingPoolAddressesProvider",
@@ -76,14 +76,15 @@ makeSuite("AddressesProviderRegistry", (testEnv: TestEnv) => {
     );
   });
 
-  it("Tests the Lending Pool Manager address consistency in the LendingPoolAddressesProvider", async () => {
-    testParamConsistency(
-      "Lending Pool Manager",
-      "LendingPoolAddressesProvider",
-      _lendingPoolManagerAddress,
-      await _addressesProviderInstance.getLendingPoolManager()
-    );
-  });
+  // it("Tests the Lending Pool Manager address consistency in the LendingPoolAddressesProvider", async () => {
+  //     _lendingPoolManagerAddress = await getGenesisLendingPoolManagerAddress();
+  //   testParamConsistency(
+  //     "Lending Pool Manager",
+  //     "LendingPoolAddressesProvider",
+  //     _lendingPoolManagerAddress,
+  //     await _addressesProviderInstance.getLendingPoolManager()
+  //   );
+  // });
 
   it("Tests the Lending Pool Data Provider address consistency in the LendingPoolAddressesProvider", async () => {
     testParamConsistency(
@@ -121,54 +122,61 @@ makeSuite("AddressesProviderRegistry", (testEnv: TestEnv) => {
     );
   });
 
-  // it("Test the accessibility of the LendingPoolAddressesProvider", async () => {
-  //   //transfers ownership to another account
-  //   await _addressesProviderInstance.transferOwnership(accounts[2]);
+  it("Test the accessibility of the LendingPoolAddressesProvider", async () => {
+    const accounts = testEnv.users;
+    //transfers ownership to another account
+    await _addressesProviderInstance.transferOwnership(accounts[2].address);
 
-  //   //checks execution of the setters on LendingPoolAddressesProvider
+    //checks execution of the setters on LendingPoolAddressesProvider
 
-  //   await expectRevert(
-  //     _addressesProviderInstance.setFeeProviderImpl(accounts[0]),
-  //     "Ownable: caller is not the owner"
-  //   );
-  //   await expectRevert(
-  //     _addressesProviderInstance.setLendingPoolImpl(accounts[0]),
-  //     "Ownable: caller is not the owner"
-  //   );
-  //   await expectRevert(
-  //     _addressesProviderInstance.setLendingPoolConfiguratorImpl(accounts[0]),
-  //     "Ownable: caller is not the owner"
-  //   );
-  //   await expectRevert(
-  //     _addressesProviderInstance.setLendingPoolCoreImpl(accounts[0]),
-  //     "Ownable: caller is not the owner"
-  //   );
-  //   await expectRevert(
-  //     _addressesProviderInstance.setLendingPoolDataProviderImpl(accounts[0]),
-  //     "Ownable: caller is not the owner"
-  //   );
-  //   await expectRevert(
-  //     _addressesProviderInstance.setLendingPoolLiquidationManager(accounts[0]),
-  //     "Ownable: caller is not the owner"
-  //   );
-  //   await expectRevert(
-  //     _addressesProviderInstance.setLendingPoolManager(accounts[0]),
-  //     "Ownable: caller is not the owner"
-  //   );
-  //   await expectRevert(
-  //     _addressesProviderInstance.setLendingPoolParametersProvider(
-  //       accounts[0]
-  //     ),
-  //     "Ownable: caller is not the owner"
-  //   );
-  //   await expectRevert(
-  //     _addressesProviderInstance.setLendingRateOracle(accounts[0]),
-  //     "Ownable: caller is not the owner"
-  //   );
+    await expectRevert(
+      _addressesProviderInstance.setFeeProviderImpl(accounts[0].address),
+      "Ownable: caller is not the owner"
+    );
+    await expectRevert(
+      _addressesProviderInstance.setLendingPoolImpl(accounts[0].address),
+      "Ownable: caller is not the owner"
+    );
+    await expectRevert(
+      _addressesProviderInstance.setLendingPoolConfiguratorImpl(
+        accounts[0].address
+      ),
+      "Ownable: caller is not the owner"
+    );
+    await expectRevert(
+      _addressesProviderInstance.setLendingPoolCoreImpl(accounts[0].address),
+      "Ownable: caller is not the owner"
+    );
+    await expectRevert(
+      _addressesProviderInstance.setLendingPoolDataProviderImpl(
+        accounts[0].address
+      ),
+      "Ownable: caller is not the owner"
+    );
+    await expectRevert(
+      _addressesProviderInstance.setLendingPoolLiquidationManager(
+        accounts[0].address
+      ),
+      "Ownable: caller is not the owner"
+    );
+    await expectRevert(
+      _addressesProviderInstance.setLendingPoolManager(accounts[0].address),
+      "Ownable: caller is not the owner"
+    );
+    await expectRevert(
+      _addressesProviderInstance.setLendingPoolParametersProvider(
+        accounts[0].address
+      ),
+      "Ownable: caller is not the owner"
+    );
+    await expectRevert(
+      _addressesProviderInstance.setLendingRateOracle(accounts[0].address),
+      "Ownable: caller is not the owner"
+    );
 
-  //   await expectRevert(
-  //     _addressesProviderInstance.setPriceOracle(accounts[0]),
-  //     "Ownable: caller is not the owner"
-  //   );
-  // });
+    await expectRevert(
+      _addressesProviderInstance.setPriceOracle(accounts[0].address),
+      "Ownable: caller is not the owner"
+    );
+  });
 });

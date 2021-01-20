@@ -19,6 +19,7 @@ import {
   deployFeeProvider,
   deployLendingPoolParameter,
   deployLendingPoolCore,
+  deployAaveLibraries,
 } from "../helpers/contracts-deployments";
 import { Signer } from "ethers";
 import {
@@ -52,6 +53,7 @@ import {
   getLendingPool,
   getLendingPoolConfiguratorProxy,
   getPairsTokenAggregator,
+  getLendingPoolDataProviderProxy,
 } from "../helpers/contracts-getters";
 //import { WETH9Mocked } from '../types/WETH9Mocked';
 
@@ -120,12 +122,10 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   // );
 
   //fee
-  const feeProviderIml = await deployFeeProvider();
+  const feeProviderImpl = await deployFeeProvider();
 
   await waitForTx(
-    await addressesProvider["setFeeProviderImpl(address)"](
-      feeProviderIml.address
-    )
+    await addressesProvider.setFeeProviderImpl(feeProviderImpl.address)
   );
 
   //param
@@ -145,6 +145,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
       lendingPoolConfiguratorImpl.address
     )
   );
+  console.log("normal:  ", lendingPoolConfiguratorImpl.address);
   const lendingPoolConfiguratorProxy = await getLendingPoolConfiguratorProxy(
     await addressesProvider.getLendingPoolConfigurator()
   );
@@ -152,10 +153,13 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     eContractid.LendingPoolConfigurator,
     lendingPoolConfiguratorProxy.address
   );
+  console.log("proxy:  ", lendingPoolConfiguratorProxy.address);
   //
 
   //core
-  const lendingCoreImpl = await deployLendingPoolCore();
+  const lib = await deployAaveLibraries();
+
+  const lendingCoreImpl = await deployLendingPoolCore(lib);
 
   await waitForTx(
     await addressesProvider.setLendingPoolCoreImpl(lendingCoreImpl.address)
@@ -169,12 +173,27 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     lendingCoreProxy.address
   );
 
-  //param
-
-  const dataProvider = await deployAaveProtocolDataProvider();
+  //Data Provider
+  const dataProvider = await deployAaveProtocolDataProvider(
+    addressesProvider.address
+  );
 
   await waitForTx(
-    await addressesProvider.setLendingPoolDatatProvider(dataProvider.address)
+    await addressesProvider.setLendingPoolDataProviderImpl(dataProvider.address)
+  );
+
+  const dataProviderProxy = await addressesProvider.getLendingPoolDataProvider();
+
+  await insertContractAddressInDb(
+    eContractid.AaveProtocolDataProvider,
+    dataProviderProxy
+  );
+
+  //liquidation
+
+  const liq = await deployLendingPoolCollateralManager();
+  await waitForTx(
+    await addressesProvider.setLendingPoolLiquidationManager(liq.address)
   );
 
   //LP
@@ -274,14 +293,6 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
 
   const reservesParams = getReservesConfigByPool(AavePools.proto);
 
-  const testHelpers = await deployAaveProtocolDataProvider(
-    addressesProvider.address
-  );
-
-  await insertContractAddressInDb(
-    eContractid.AaveProtocolDataProvider,
-    testHelpers.address
-  );
   const admin = await deployer.getAddress();
 
   console.log("Initialize configuration");
