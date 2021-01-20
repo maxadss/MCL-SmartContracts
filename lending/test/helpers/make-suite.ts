@@ -10,6 +10,7 @@ import {
   getPriceOracle,
   getLendingPoolCoreProxy,
   getFeeProvider,
+  getLendingRateOracle,
   //getLendingPoolAddressesProviderRegistry,
   //getWETHMocked,
   //getWETHGateway,
@@ -114,7 +115,10 @@ export async function initializeMakeSuite() {
   testEnv.core = await getLendingPoolCoreProxy();
 
   testEnv.dataProvider = await getAaveProtocolDataProvider();
+
   testEnv.feeProvider = await getFeeProvider();
+
+  testEnv.rateOracle = await getLendingRateOracle();
 
   if (process.env.MAINNET_FORK === "true") {
     // testEnv.registry = await getLendingPoolAddressesProviderRegistry(

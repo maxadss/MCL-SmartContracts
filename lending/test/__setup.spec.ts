@@ -54,6 +54,7 @@ import {
   getLendingPoolConfiguratorProxy,
   getPairsTokenAggregator,
   getLendingPoolDataProviderProxy,
+  getLendingPoolParameterProxy,
 } from "../helpers/contracts-getters";
 //import { WETH9Mocked } from '../types/WETH9Mocked';
 
@@ -128,6 +129,12 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     await addressesProvider.setFeeProviderImpl(feeProviderImpl.address)
   );
 
+  const feeProviderImplProxy = await addressesProvider.getFeeProvider();
+  await insertContractAddressInDb(
+    eContractid.FeeProvider,
+    feeProviderImplProxy
+  );
+
   //param
 
   const parametersProvider = await deployLendingPoolParameter();
@@ -138,6 +145,14 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     )
   );
 
+  const parametersProviderProxy = await getLendingPoolParameterProxy(
+    await addressesProvider.getLendingPoolParametersProvider()
+  );
+  await insertContractAddressInDb(
+    eContractid.LendingPoolConfigurator,
+    parametersProviderProxy.address
+  );
+
   //config
   const lendingPoolConfiguratorImpl = await deployLendingPoolConfigurator();
   await waitForTx(
@@ -145,7 +160,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
       lendingPoolConfiguratorImpl.address
     )
   );
-  console.log("normal:  ", lendingPoolConfiguratorImpl.address);
+  //console.log("normal:  ", lendingPoolConfiguratorImpl.address);
   const lendingPoolConfiguratorProxy = await getLendingPoolConfiguratorProxy(
     await addressesProvider.getLendingPoolConfigurator()
   );
@@ -153,7 +168,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     eContractid.LendingPoolConfigurator,
     lendingPoolConfiguratorProxy.address
   );
-  console.log("proxy:  ", lendingPoolConfiguratorProxy.address);
+  //console.log("proxy:  ", lendingPoolConfiguratorProxy.address);
   //
 
   //core
@@ -273,7 +288,10 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   // const [tokens, aggregators] = getPairsTokenAggregator(allTokenAddresses, allAggregatorsAddresses);
 
   // await deployAaveOracle([tokens, aggregators, fallbackOracle.address, mockTokens.WETH.address]);
-  // await waitForTx(await addressesProvider.setPriceOracle(fallbackOracle.address));
+
+  await waitForTx(
+    await addressesProvider.setPriceOracle(fallbackOracle.address)
+  );
 
   const lendingRateOracle = await deployLendingRateOracle();
   await waitForTx(

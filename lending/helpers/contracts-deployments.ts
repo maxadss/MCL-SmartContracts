@@ -182,9 +182,22 @@ export const deployAaveLibraries = async (
   //
   // libPath example: contracts/libraries/logic/GenericLogic.sol
   // libName example: GenericLogic
+  const reserveLogic = await deployGenericLogic1(verify);
   return {
-    ["__$2ec35834968386f54fa313129cf94664e4$__"]: "",
+    ["__$2ec35834968386f54fa313129cf94664e4$__"]: reserveLogic.address,
   };
+};
+
+export const deployGenericLogic1 = async (verify?: boolean) => {
+  //const genericLogicArtifact = await readArtifact("contracts/libraries/CoreLibrary.sol:CoreLibrary");
+  //console.log(genericLogicArtifact);
+  const genericLogicFactory = await DRE.ethers.getContractFactory(
+    eContractid.CoreLibrary
+  );
+  //console.log(genericLogicArtifact.abi);
+
+  const genericLogic = await (await genericLogicFactory.deploy()).deployed();
+  return withSaveAndVerify(genericLogic, eContractid.CoreLibrary, [], verify);
 };
 
 export const deployLendingPool = async (verify?: boolean) => {

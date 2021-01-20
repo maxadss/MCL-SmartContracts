@@ -71,6 +71,7 @@ export enum eContractid {
   LendingPoolCoreImpl = "LendingPoolCoreImpl",
   LendingPoolParameterImpl = "LendingPoolParameterImpl",
   FeeProviderImpl = "FeeProviderImpl",
+  CoreLibrary = "CoreLibrary",
 }
 
 /*

@@ -28,6 +28,7 @@ import {
   ERC20DetailedFactory,
   LendingPoolCoreFactory,
   FeeProviderFactory,
+  LendingPoolParametersProviderFactory,
   //WETH9MockedFactory,
   //WETHGatewayFactory,
   //IERC20DetailedFactory,
@@ -94,6 +95,22 @@ export const getLendingPoolDataProviderProxy = async (
         await getDb()
           .get(
             `${eContractid.LendingPoolAddressesProvider}.${DRE.network.name}`
+          )
+          .value()
+      ).address,
+    await getFirstSigner()
+  );
+};
+
+export const getLendingPoolParameterProxy = async (
+  address?: tEthereumAddress
+) => {
+  return await LendingPoolParametersProviderFactory.connect(
+    address ||
+      (
+        await getDb()
+          .get(
+            `${eContractid.LendingPoolParametersProvider}.${DRE.network.name}`
           )
           .value()
       ).address,
@@ -448,7 +465,7 @@ export const getFeeProvider = async (address?: tEthereumAddress) =>
     address ||
       (
         await getDb()
-          .get(`${eContractid.FeeProviderImpl}.${DRE.network.name}`)
+          .get(`${eContractid.FeeProvider}.${DRE.network.name}`)
           .value()
       ).address,
     await getFirstSigner()
