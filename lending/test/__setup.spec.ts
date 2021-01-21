@@ -53,7 +53,7 @@ import {
   //configureReservesByHelper,
 } from "../helpers/init-helpers";
 import AaveConfig from "../markets/aave";
-import { ZERO_ADDRESS } from "../helpers/constants";
+import { ETHEREUM_ADDRESS, ZERO_ADDRESS } from "../helpers/constants";
 import {
   getLendingPool,
   getLendingPoolConfiguratorProxy,
@@ -63,6 +63,8 @@ import {
   getMockDAI,
   getRewardManager,
   getMintableErc20,
+  getLendingPoolProxy,
+  getLendingPoolCoreProxy,
 } from "../helpers/contracts-getters";
 //import { WETH9Mocked } from '../types/WETH9Mocked';
 
@@ -182,7 +184,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   );
 
   const lendingCoreAddress = await addressesProvider.getLendingPoolCore();
-  const lendingCoreProxy = await getLendingPool(lendingCoreAddress);
+  const lendingCoreProxy = await getLendingPoolCoreProxy(lendingCoreAddress);
 
   await insertContractAddressInDb(
     eContractid.LendingPoolCore,
@@ -223,7 +225,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   );
 
   const lendingPoolAddress = await addressesProvider.getLendingPool();
-  const lendingPoolProxy = await getLendingPool(lendingPoolAddress);
+  const lendingPoolProxy = await getLendingPoolProxy(lendingPoolAddress);
 
   await insertContractAddressInDb(
     eContractid.LendingPool,
@@ -234,58 +236,6 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
 
   const fallbackOracle = await deployPriceOracle();
   await waitForTx(await fallbackOracle.setEthUsdPrice(MOCK_USD_PRICE_IN_WEI));
-  await setInitialAssetPricesInOracle(
-    ALL_ASSETS_INITIAL_PRICES,
-    {
-      WETH: mockTokens.WETH.address,
-      DAI: mockTokens.DAI.address,
-      TUSD: mockTokens.TUSD.address,
-      USDC: mockTokens.USDC.address,
-      USDT: mockTokens.USDT.address,
-      SUSD: mockTokens.SUSD.address,
-      AAVE: mockTokens.AAVE.address,
-      BAT: mockTokens.BAT.address,
-      MKR: mockTokens.MKR.address,
-      LINK: mockTokens.LINK.address,
-      KNC: mockTokens.KNC.address,
-      WBTC: mockTokens.WBTC.address,
-      MANA: mockTokens.MANA.address,
-      ZRX: mockTokens.ZRX.address,
-      SNX: mockTokens.SNX.address,
-      BUSD: mockTokens.BUSD.address,
-      YFI: mockTokens.BUSD.address,
-      REN: mockTokens.REN.address,
-      UNI: mockTokens.UNI.address,
-      ENJ: mockTokens.ENJ.address,
-      USD: USD_ADDRESS,
-    },
-    fallbackOracle
-  );
-
-  //const mockAggregators = await deployAllMockAggregators(MOCK_CHAINLINK_AGGREGATORS_PRICES);
-
-  const allTokenAddresses = Object.entries(mockTokens).reduce(
-    (
-      accum: { [tokenSymbol: string]: tEthereumAddress },
-      [tokenSymbol, tokenContract]
-    ) => ({
-      ...accum,
-      [tokenSymbol]: tokenContract.address,
-    }),
-    {}
-  );
-  // const allAggregatorsAddresses = Object.entries(mockAggregators).reduce(
-  //   (accum: { [tokenSymbol: string]: tEthereumAddress }, [tokenSymbol, aggregator]) => ({
-  //     ...accum,
-  //     [tokenSymbol]: aggregator.address,
-  //   }),
-  //   {}
-  // );
-
-  // const [tokens, aggregators] = getPairsTokenAggregator(allTokenAddresses, allAggregatorsAddresses);
-
-  // await deployAaveOracle([tokens, aggregators, fallbackOracle.address, mockTokens.WETH.address]);
-
   await waitForTx(
     await addressesProvider.setPriceOracle(fallbackOracle.address)
   );
@@ -295,35 +245,11 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     await addressesProvider.setLendingRateOracle(lendingRateOracle.address)
   );
 
-  const { USD, ...tokensAddressesWithoutUsd } = allTokenAddresses;
-  const allReservesAddresses = {
-    ...tokensAddressesWithoutUsd,
-  };
-  // await setInitialMarketRatesInRatesOracleByHelper(
-  //   LENDING_RATE_ORACLE_RATES_COMMON,
-  //   allReservesAddresses,
-  //   lendingRateOracle,
-  //   aaveAdmin
-  // );
-
   const reservesParams = getReservesConfigByPool(AavePools.proto);
 
   const admin = await deployer.getAddress();
 
-  //console.log("Initialize configuration");
-
-  // const config = loadPoolConfig(ConfigNames.Aave);
-
-  // const treasuryAddress = await getTreasuryAddress(config);
-
-  // await initReservesByHelper(
-  //   reservesParams,
-  //   allReservesAddresses,
-  //   admin,
-  //   treasuryAddress,
-  //   ZERO_ADDRESS,
-  //   false
-  // );
+  console.log("Initialize configuration");
 
   const mockFlashLoanReceiver = await deployMockFlashLoanReceiver(
     addressesProvider.address
@@ -349,17 +275,29 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     ],
     false
   );
+
   await lendingPoolConfiguratorProxy.initReserve(
     dai.address,
     18,
     daiInterest.address
   );
+  console.log("DAI daiInterest ", daiInterest.address);
   await lendingPoolConfiguratorProxy.activateReserve(dai.address);
+  await lendingPoolConfiguratorProxy.enableBorrowingOnReserve(
+    dai.address,
+    true
+  );
+  await lendingPoolConfiguratorProxy.enableReserveAsCollateral(
+    dai.address,
+    "70",
+    "80",
+    "110"
+  );
+  await lendingPoolConfiguratorProxy.enableReserveStableBorrowRate(dai.address);
 
-  const ethAddress = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
   const ethInterest = await deployDefaultReserveInterestRateStrategy(
     [
-      ethAddress,
+      ETHEREUM_ADDRESS,
       addressesProvider.address,
       "0",
       "80000000000000000000000000",
@@ -371,13 +309,26 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   );
 
   await lendingPoolConfiguratorProxy.initReserveWithData(
-    ethAddress,
+    ETHEREUM_ADDRESS,
     "mETH",
     "mETH",
     18,
     ethInterest.address
   );
-  await lendingPoolConfiguratorProxy.activateReserve(ethAddress);
+  await lendingPoolConfiguratorProxy.activateReserve(ETHEREUM_ADDRESS);
+  await lendingPoolConfiguratorProxy.enableBorrowingOnReserve(
+    ETHEREUM_ADDRESS,
+    true
+  );
+  await lendingPoolConfiguratorProxy.enableReserveAsCollateral(
+    ETHEREUM_ADDRESS,
+    "70",
+    "80",
+    "110"
+  );
+  await lendingPoolConfiguratorProxy.enableReserveStableBorrowRate(
+    ETHEREUM_ADDRESS
+  );
 
   await lendingPoolConfiguratorProxy.refreshLendingPoolCoreConfiguration();
 
@@ -414,8 +365,17 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
 
   await deployWalletBalancerProvider(addressesProvider.address);
 
-  // await deployWETHGateway([mockTokens.WETH.address, lendingPoolAddress]);
-
+  await waitForTx(
+    await fallbackOracle.setAssetPrice(dai.address, "50000000000000000") //0.05 BNB
+  );
+  await waitForTx(
+    await fallbackOracle.setAssetPrice(ETHEREUM_ADDRESS, "1000000000000000000") //1 BNB
+  );
+  console.log(
+    "dai price:",
+    (await fallbackOracle.getAssetPrice(dai.address)).toString()
+  );
+  //fallbackOracle.getAssetPrice()
   console.timeEnd("setup");
 };
 

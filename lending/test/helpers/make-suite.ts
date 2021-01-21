@@ -13,6 +13,7 @@ import {
   getLendingRateOracle,
   getMockDAI,
   getMDAI,
+  getLendingPoolProxy,
   //getLendingPoolAddressesProviderRegistry,
   //getWETHMocked,
   //getWETHGateway,
@@ -30,13 +31,10 @@ import bignumberChai from "chai-bignumber";
 import { almostEqual } from "./almost-equal";
 import { PriceOracle } from "../../types/PriceOracle";
 import { LendingPoolAddressesProvider } from "../../types/LendingPoolAddressesProvider";
-// import { LendingPoolAddressesProviderRegistry } from '../../types/LendingPoolAddressesProviderRegistry';
 import {
   getEthersSigners,
   getParamPerNetwork,
 } from "../../helpers/contracts-helpers";
-// import { WETH9Mocked } from '../../types/WETH9Mocked';
-// import { WETHGateway } from '../../types/WETHGateway';
 import { solidity } from "ethereum-waffle";
 import { AaveConfig } from "../../markets/aave";
 import {
@@ -44,6 +42,8 @@ import {
   LendingPoolCore,
   LendingPoolLiquidationManager,
   LendingRateOracle,
+  MockDAI,
+  MockDAIFactory,
 } from "../../types";
 
 chai.use(bignumberChai());
@@ -61,6 +61,7 @@ export interface TestEnv {
   configurator: LendingPoolConfigurator;
   oracle: PriceOracle;
   rateOracle: LendingRateOracle;
+  dai: MintableERC20;
   usdc: MintableERC20;
   aave: MintableERC20;
   addressesProvider: LendingPoolAddressesProvider;
@@ -110,7 +111,7 @@ export async function initializeMakeSuite() {
     });
   }
   testEnv.deployer = deployer;
-  testEnv.pool = await getLendingPool();
+  testEnv.pool = await getLendingPoolProxy();
 
   testEnv.configurator = await getLendingPoolConfiguratorProxy();
 
@@ -162,7 +163,7 @@ export async function initializeMakeSuite() {
   // testEnv.aave = await getMintableERC20(aaveAddress);
   // testEnv.weth = await getWETHMocked(wethAddress);
   // testEnv.wethGateway = await getWETHGateway();
-
+  testEnv.dai = await getMockDAI();
   testEnv.mDAI = await getMDAI();
 }
 

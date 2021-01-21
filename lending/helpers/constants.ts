@@ -28,3 +28,16 @@ export const TOKEN_DISTRIBUTOR_PERCENTAGE_BASE = "10000";
 export const MOCK_USD_PRICE_IN_WEI = "5848466240000000";
 export const USD_ADDRESS = "0x10F7Fc1F91Ba351f9C629c5947AD69bD03C05b96";
 export const AAVE_REFERRAL = "0";
+
+// exports.WAD = Math.pow(10, 18).toString();
+// exports.HALF_WAD = new bignumber_js_1.default(Math.pow(10, 18)).multipliedBy(0.5).toString();
+// exports.RAY = new bignumber_js_1.default(10).exponentiatedBy(27).toFixed();
+// export const ONE_YEAR = "31536000";
+// export const MAX_UINT_AMOUNT = "115792089237316195423570985008687907853269984665640564039457584007913129639935";
+// exports.oneEther = new bignumber_js_1.default(Math.pow(10, 18));
+// exports.oneRay = new bignumber_js_1.default(Math.pow(10, 27));
+export const RATEMODE_FIXED = "0";
+export const RATEMODE_VARIABLE = "1";
+export const NIL_ADDRESS = "0x0000000000000000000000000000000000000000";
+export const APPROVAL_AMOUNT_LENDING_POOL_CORE = "1000000000000000000000000000";
+export const ETHEREUM_ADDRESS = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";

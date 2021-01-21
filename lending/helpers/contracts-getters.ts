@@ -89,6 +89,18 @@ export const getLendingPoolCoreProxy = async (address?: tEthereumAddress) => {
   );
 };
 
+export const getLendingPoolProxy = async (address?: tEthereumAddress) => {
+  return await LendingPoolFactory.connect(
+    address ||
+      (
+        await getDb()
+          .get(`${eContractid.LendingPool}.${DRE.network.name}`)
+          .value()
+      ).address,
+    await getFirstSigner()
+  );
+};
+
 export const getLendingPoolDataProviderProxy = async (
   address?: tEthereumAddress
 ) => {
