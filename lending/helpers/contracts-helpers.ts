@@ -18,6 +18,7 @@ import { Artifact as BuidlerArtifact } from "@nomiclabs/buidler/types";
 import { verifyContract } from "./etherscan-verification";
 import { getIErc20Detailed } from "./contracts-getters";
 import { MintableERC20 } from "../types/MintableErc20";
+import { ETHEREUM_ADDRESS } from "./constants";
 
 export type MockTokenMap = { [symbol: string]: MintableERC20 };
 
@@ -203,6 +204,9 @@ export const convertToCurrencyDecimals = async (
   tokenAddress: tEthereumAddress,
   amount: string
 ) => {
+  if (tokenAddress == ETHEREUM_ADDRESS) {
+    return ethers.utils.parseUnits(amount, 18);
+  }
   const token = await getIErc20Detailed(tokenAddress);
   let decimals = (await token.decimals()).toString();
 

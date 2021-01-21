@@ -251,14 +251,6 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
 
   console.log("Initialize configuration");
 
-  const mockFlashLoanReceiver = await deployMockFlashLoanReceiver(
-    addressesProvider.address
-  );
-  await insertContractAddressInDb(
-    eContractid.MockFlashLoanReceiver,
-    mockFlashLoanReceiver.address
-  );
-
   //Interest
   //deploy dai
   await deployMockDAI();
@@ -376,6 +368,15 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     (await fallbackOracle.getAssetPrice(dai.address)).toString()
   );
   //fallbackOracle.getAssetPrice()
+
+  const mockFlashLoanReceiver = await deployMockFlashLoanReceiver(
+    addressesProvider.address
+  );
+  await insertContractAddressInDb(
+    eContractid.MockFlashLoanReceiver,
+    mockFlashLoanReceiver.address
+  );
+
   console.timeEnd("setup");
 };
 
