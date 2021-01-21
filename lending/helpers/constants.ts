@@ -38,6 +38,7 @@ export const AAVE_REFERRAL = "0";
 // exports.oneRay = new bignumber_js_1.default(Math.pow(10, 27));
 export const RATEMODE_FIXED = "0";
 export const RATEMODE_VARIABLE = "1";
+export const RATEMODE_STABLE = "0";
 export const NIL_ADDRESS = "0x0000000000000000000000000000000000000000";
 export const APPROVAL_AMOUNT_LENDING_POOL_CORE = "1000000000000000000000000000";
 export const ETHEREUM_ADDRESS = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";

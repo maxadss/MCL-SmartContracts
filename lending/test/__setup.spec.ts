@@ -69,12 +69,6 @@ import {
 //import { WETH9Mocked } from '../types/WETH9Mocked';
 
 const MOCK_USD_PRICE_IN_WEI = AaveConfig.ProtocolGlobalParams.MockUsdPriceInWei;
-const ALL_ASSETS_INITIAL_PRICES = AaveConfig.Mocks.AllAssetsInitialPrices;
-const USD_ADDRESS = AaveConfig.ProtocolGlobalParams.UsdAddress;
-const MOCK_CHAINLINK_AGGREGATORS_PRICES =
-  AaveConfig.Mocks.AllAssetsInitialPrices;
-const LENDING_RATE_ORACLE_RATES_COMMON =
-  AaveConfig.LendingRateOracleRatesCommon;
 
 const deployAllMockTokens = async (deployer: Signer) => {
   const tokens: { [symbol: string]: MockContract | MintableERC20 } = {};
@@ -82,11 +76,6 @@ const deployAllMockTokens = async (deployer: Signer) => {
   const protoConfigData = getReservesConfigByPool(AavePools.proto);
 
   for (const tokenSymbol of Object.keys(TokenContractId)) {
-    // if (tokenSymbol === 'WETH') {
-    //   tokens[tokenSymbol] = await deployWETHMocked();
-    //   await registerContractInJsonDb(tokenSymbol.toUpperCase(), tokens[tokenSymbol]);
-    //   continue;
-    // }
     let decimals = 18;
 
     let configData = (<any>protoConfigData)[tokenSymbol];

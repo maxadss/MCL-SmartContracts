@@ -105,48 +105,48 @@ makeSuite("LendingPool FlashLoan function", (testEnv: TestEnv) => {
     //expect(tokenDistributorBalance.toString()).to.be.equal("840000000000000");
   });
 
-  // it("Takes an ETH flashloan as big as the available liquidity", async () => {
-  //   const {deployer, users} = testEnv
-  //   //move funds to the MockFlashLoanReceiver contract
+  it("Takes an ETH flashloan as big as the available liquidity", async () => {
+    const { deployer, users } = testEnv;
+    //move funds to the MockFlashLoanReceiver contract
 
-  //   // await _lendingPoolInstance
-  //   // .connect(users[1].signer)
-  //   // .deposit(ETHEREUM_ADDRESS, web3.utils.toWei("1", "ether"), "0", {
-  //   //   // from: users[0],
-  //   // });
+    // await _lendingPoolInstance
+    // .connect(users[1].signer)
+    // .deposit(ETHEREUM_ADDRESS, web3.utils.toWei("1", "ether"), "0", {
+    //   // from: users[0],
+    // });
 
-  //   let send = web3.eth.sendTransaction({
-  //     from: deployer.address,
-  //     to: _mockFlasLoanReceiverInstance.address,
-  //     value: web3.utils.toWei("0.5", "ether"),
-  //   });
+    let send = web3.eth.sendTransaction({
+      from: deployer.address,
+      to: _mockFlasLoanReceiverInstance.address,
+      value: web3.utils.toWei("0.5", "ether"),
+    });
 
-  //   const txResult = await _lendingPoolInstance.flashLoan(
-  //     _mockFlasLoanReceiverInstance.address,
-  //     ETHEREUM_ADDRESS,
-  //     "1000000000000000000",
-  //     "0x10"
-  //   );
+    const txResult = await _lendingPoolInstance.flashLoan(
+      _mockFlasLoanReceiverInstance.address,
+      ETHEREUM_ADDRESS,
+      "1000000000000000000",
+      "0x10"
+    );
 
-  //   const reserveData: any = await _lendingPoolInstance.getReserveData(
-  //     ETHEREUM_ADDRESS
-  //   );
-  //   // const tokenDistributorBalance = await _web3.eth.getBalance(
-  //   //   _tokenDistributor.address
-  //   // );
+    const reserveData: any = await _lendingPoolInstance.getReserveData(
+      ETHEREUM_ADDRESS
+    );
+    // const tokenDistributorBalance = await _web3.eth.getBalance(
+    //   _tokenDistributor.address
+    // );
 
-  //   const currentLiqudityRate = reserveData.liquidityRate;
-  //   const currentLiquidityIndex = reserveData.liquidityIndex;
+    const currentLiqudityRate = reserveData.liquidityRate;
+    const currentLiquidityIndex = reserveData.liquidityIndex;
 
-  //   expect(reserveData.totalLiquidity.toString()).to.be.equal(
-  //     "1001960000000000000"
-  //   );
-  //   expect(currentLiqudityRate.toString()).to.be.equal("0");
-  //   // expect(currentLiquidityIndex.toString()).to.be.equal(
-  //   //   "1004414802000000000000000000"
-  //   // );
-  //  // expect(tokenDistributorBalance.toString()).to.be.equal("1892058000000000");
-  // });
+    expect(reserveData.totalLiquidity.toString()).to.be.equal(
+      "1000000000000000000"
+    );
+    expect(currentLiqudityRate.toString()).to.be.equal("0");
+    // expect(currentLiquidityIndex.toString()).to.be.equal(
+    //   "1004414802000000000000000000"
+    // );
+    // expect(tokenDistributorBalance.toString()).to.be.equal("1892058000000000");
+  });
 
   it("Takes ETH flashloan, does not return the funds (revert expected)", async () => {
     const { deployer } = testEnv;
@@ -253,6 +253,12 @@ makeSuite("LendingPool FlashLoan function", (testEnv: TestEnv) => {
     //const { DAI: daiInstance } = _tokenInstances;
 
     const { deployer, users, dai } = testEnv;
+
+    let send = web3.eth.sendTransaction({
+      from: deployer.address,
+      to: _mockFlasLoanReceiverInstance.address,
+      value: web3.utils.toWei("1", "ether"),
+    });
 
     await dai
       .connect(users[1].signer)
