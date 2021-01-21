@@ -3,7 +3,7 @@ import {
   deployLendingPoolCollateralManager,
   deployMockFlashLoanReceiver,
   deployWalletBalancerProvider,
-  deployAaveProtocolDataProvider,
+  deployLengindPoolDataProvider,
   // deployWETHGateway,
 } from "../../helpers/contracts-deployments";
 import {
@@ -49,7 +49,7 @@ task("dev:initialize-lending-pool", "Initialize lending pool configuration.")
       filterMapBy(allTokenAddresses, (key: string) => !key.includes("UNI_"))
     );
 
-    const testHelpers = await deployAaveProtocolDataProvider(
+    const testHelpers = await deployLengindPoolDataProvider(
       addressesProvider.address,
       verify
     );

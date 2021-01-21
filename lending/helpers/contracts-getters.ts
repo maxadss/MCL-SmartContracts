@@ -29,6 +29,9 @@ import {
   LendingPoolCoreFactory,
   FeeProviderFactory,
   LendingPoolParametersProviderFactory,
+  MockDAIFactory,
+  RewardsManagerFactory,
+  RewardVaultFactory,
   //WETH9MockedFactory,
   //WETHGatewayFactory,
   //IERC20DetailedFactory,
@@ -93,9 +96,7 @@ export const getLendingPoolDataProviderProxy = async (
     address ||
       (
         await getDb()
-          .get(
-            `${eContractid.LendingPoolAddressesProvider}.${DRE.network.name}`
-          )
+          .get(`${eContractid.LendingPoolDataProvider}.${DRE.network.name}`)
           .value()
       ).address,
     await getFirstSigner()
@@ -162,7 +163,7 @@ export const getAToken = async (address?: tEthereumAddress) =>
 //     await getFirstSigner()
 //   );
 
-export const getMintableErc20 = async (address: tEthereumAddress) =>
+export const getMintableErc20 = async (address?: tEthereumAddress) =>
   await MintableERC20Factory.connect(
     address ||
       (
@@ -348,11 +349,21 @@ export const getPairsTokenAggregator = (
 //     await getFirstSigner()
 //   );
 
-// export const getMockAToken = async (address?: tEthereumAddress) =>
-//   await MockATokenFactory.connect(
-//     address || (await getDb().get(`${eContractid.MockAToken}.${DRE.network.name}`).value()).address,
-//     await getFirstSigner()
-//   );
+export const getMDAI = async (address?: tEthereumAddress) =>
+  await MTokenFactory.connect(
+    address ||
+      (await getDb().get(`${eContractid.aDAI}.${DRE.network.name}`).value())
+        .address,
+    await getFirstSigner()
+  );
+
+export const getMockDAI = async (address?: tEthereumAddress) =>
+  await MockDAIFactory.connect(
+    address ||
+      (await getDb().get(`${eContractid.MockDAI}.${DRE.network.name}`).value())
+        .address,
+    await getFirstSigner()
+  );
 
 // export const getMockVariableDebtToken = async (address?: tEthereumAddress) =>
 //   await MockVariableDebtTokenFactory.connect(
@@ -468,5 +479,22 @@ export const getFeeProvider = async (address?: tEthereumAddress) =>
           .get(`${eContractid.FeeProvider}.${DRE.network.name}`)
           .value()
       ).address,
+    await getFirstSigner()
+  );
+
+export const getRewardManager = async (address?: tEthereumAddress) =>
+  await RewardsManagerFactory.connect(
+    address ||
+      (
+        await getDb()
+          .get(`${eContractid.RewardsManager}.${DRE.network.name}`)
+          .value()
+      ).address,
+    await getFirstSigner()
+  );
+
+export const getVault = async (id: string, address?: tEthereumAddress) =>
+  await RewardVaultFactory.connect(
+    address || (await getDb().get(`${id}.${DRE.network.name}`).value()).address,
     await getFirstSigner()
   );

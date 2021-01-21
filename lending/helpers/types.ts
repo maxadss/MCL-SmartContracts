@@ -27,6 +27,7 @@ export enum AavePools {
 export enum eContractid {
   Example = "Example",
   LendingPoolAddressesProvider = "LendingPoolAddressesProvider",
+  LendingPoolDataProvider = "LendingPoolDataProvider",
   MintableErc20 = "MintableErc20",
   MintableDelegationERC20 = "MintableDelegationERC20",
   LendingPoolAddressesProviderRegistry = "LendingPoolAddressesProviderRegistry",
@@ -72,6 +73,12 @@ export enum eContractid {
   LendingPoolParameterImpl = "LendingPoolParameterImpl",
   FeeProviderImpl = "FeeProviderImpl",
   CoreLibrary = "CoreLibrary",
+  RewardsManager = "RewardsManager",
+  aDAI = "aDAI",
+  MockDAI = "MockDAI",
+  RewardVault1 = "RewardVault1",
+  RewardVault2 = "RewardVault2",
+  RewardVault3 = "RewardVault",
 }
 
 /*

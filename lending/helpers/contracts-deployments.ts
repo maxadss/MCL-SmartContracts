@@ -1,4 +1,4 @@
-import { Contract } from "ethers";
+import { BigNumberish, Contract } from "ethers";
 import { DRE } from "./misc-utils";
 import {
   tEthereumAddress,
@@ -47,6 +47,10 @@ import {
   LendingPoolCoreFactory,
   LendingPoolParametersProviderFactory,
   FeeProviderFactory,
+  MockDAIFactory,
+  RewardsManagerFactory,
+  IRewardVaultFactory,
+  RewardVaultFactory,
   //WETH9MockedFactory,
   //WETHGatewayFactory,
   //StableAndVariableTokensHelperFactory,
@@ -359,13 +363,13 @@ export const deployWalletBalancerProvider = async (
     verify
   );
 
-export const deployAaveProtocolDataProvider = async (
+export const deployLengindPoolDataProvider = async (
   addressesProvider: tEthereumAddress,
   verify?: boolean
 ) =>
   withSaveAndVerify(
     await new LendingPoolDataProviderFactory(await getFirstSigner()).deploy(),
-    eContractid.AaveProtocolDataProvider,
+    eContractid.LendingPoolDataProvider,
     [addressesProvider],
     verify
   );
@@ -612,3 +616,45 @@ export const deployMockTokens = async (
 //     [],
 //     verify
 //   );
+
+export const deployRewardManager = async (
+  address: tEthereumAddress,
+  verify?: boolean
+) =>
+  withSaveAndVerify(
+    await new RewardsManagerFactory(await getFirstSigner()).deploy(address),
+    eContractid.RewardsManager,
+    [],
+    verify
+  );
+
+export const deployRewardVault = async (
+  address: tEthereumAddress,
+  id: string,
+  verify?: boolean
+) =>
+  withSaveAndVerify(
+    await new RewardVaultFactory(await getFirstSigner()).deploy(address),
+    id,
+    [],
+    verify
+  );
+
+export const deployMDAI = async (
+  args: [tEthereumAddress, string, BigNumberish, string, string],
+  verify?: boolean
+) =>
+  withSaveAndVerify(
+    await new MTokenFactory(await getFirstSigner()).deploy(...args),
+    eContractid.aDAI,
+    [],
+    verify
+  );
+
+export const deployMockDAI = async (verify?: boolean) =>
+  withSaveAndVerify(
+    await new MockDAIFactory(await getFirstSigner()).deploy(),
+    eContractid.MockDAI,
+    [],
+    verify
+  );

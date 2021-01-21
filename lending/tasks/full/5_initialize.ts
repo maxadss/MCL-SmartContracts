@@ -3,7 +3,7 @@ import { getParamPerNetwork } from "../../helpers/contracts-helpers";
 import {
   deployLendingPoolCollateralManager,
   deployWalletBalancerProvider,
-  deployAaveProtocolDataProvider,
+  deployLengindPoolDataProvider,
   // deployWETHGateway,
 } from "../../helpers/contracts-deployments";
 import {

@@ -11,6 +11,8 @@ import {
   getLendingPoolCoreProxy,
   getFeeProvider,
   getLendingRateOracle,
+  getMockDAI,
+  getMDAI,
   //getLendingPoolAddressesProviderRegistry,
   //getWETHMocked,
   //getWETHGateway,
@@ -66,6 +68,7 @@ export interface TestEnv {
   feeProvider: FeeProvider;
   liqManager: LendingPoolLiquidationManager;
   dataProvider: LendingPoolDataProvider;
+  mDAI: MToken;
 }
 
 let buidlerevmSnapshotId: string = "0x1";
@@ -90,6 +93,7 @@ const testEnv: TestEnv = {
   feeProvider: {} as FeeProvider,
   liqManager: {} as LendingPoolLiquidationManager,
   dataProvider: {} as LendingPoolDataProvider,
+  mDAI: {} as MToken,
 } as TestEnv;
 
 export async function initializeMakeSuite() {
@@ -158,6 +162,8 @@ export async function initializeMakeSuite() {
   // testEnv.aave = await getMintableERC20(aaveAddress);
   // testEnv.weth = await getWETHMocked(wethAddress);
   // testEnv.wethGateway = await getWETHGateway();
+
+  testEnv.mDAI = await getMDAI();
 }
 
 export function makeSuite(name: string, tests: (testEnv: TestEnv) => void) {

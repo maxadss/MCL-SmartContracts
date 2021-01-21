@@ -13,13 +13,18 @@ import {
   deployLendingPoolCollateralManager,
   deployMockFlashLoanReceiver,
   deployWalletBalancerProvider,
-  deployAaveProtocolDataProvider,
+  deployLengindPoolDataProvider,
   deployLendingRateOracle,
   deployMintableErc20,
   deployFeeProvider,
   deployLendingPoolParameter,
   deployLendingPoolCore,
   deployAaveLibraries,
+  deployDefaultReserveInterestRateStrategy,
+  deployMDAI,
+  deployMockDAI,
+  deployRewardManager,
+  deployRewardVault,
 } from "../helpers/contracts-deployments";
 import { Signer } from "ethers";
 import {
@@ -55,6 +60,9 @@ import {
   getPairsTokenAggregator,
   getLendingPoolDataProviderProxy,
   getLendingPoolParameterProxy,
+  getMockDAI,
+  getRewardManager,
+  getMintableErc20,
 } from "../helpers/contracts-getters";
 //import { WETH9Mocked } from '../types/WETH9Mocked';
 
@@ -114,13 +122,6 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   const addressList = await Promise.all(
     (await DRE.ethers.getSigners()).map((signer) => signer.getAddress())
   );
-
-  //await waitForTx(await addressesProvider.setEmergencyAdmin(addressList[2]));
-
-  // const addressesProviderRegistry = await deployLendingPoolAddressesProviderRegistry();
-  // await waitForTx(
-  //   await addressesProviderRegistry.registerAddressesProvider(addressesProvider.address, 1)
-  // );
 
   //fee
   const feeProviderImpl = await deployFeeProvider();
@@ -189,7 +190,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   );
 
   //Data Provider
-  const dataProvider = await deployAaveProtocolDataProvider(
+  const dataProvider = await deployLengindPoolDataProvider(
     addressesProvider.address
   );
 
@@ -197,11 +198,13 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     await addressesProvider.setLendingPoolDataProviderImpl(dataProvider.address)
   );
 
-  const dataProviderProxy = await addressesProvider.getLendingPoolDataProvider();
+  const dataProviderProxy = await getLendingPoolDataProviderProxy(
+    await addressesProvider.getLendingPoolDataProvider()
+  );
 
   await insertContractAddressInDb(
     eContractid.AaveProtocolDataProvider,
-    dataProviderProxy
+    dataProviderProxy.address
   );
 
   //liquidation
@@ -227,13 +230,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     lendingPoolProxy.address
   );
 
-  // Deploy deployment helpers
-  // await deployStableAndVariableTokensHelper([lendingPoolProxy.address, addressesProvider.address]);
-  // await deployATokensAndRatesHelper([
-  //   lendingPoolProxy.address,
-  //   addressesProvider.address,
-  //   lendingPoolConfiguratorProxy.address,
-  // ]);
+  //price oracle
 
   const fallbackOracle = await deployPriceOracle();
   await waitForTx(await fallbackOracle.setEthUsdPrice(MOCK_USD_PRICE_IN_WEI));
@@ -313,30 +310,19 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
 
   const admin = await deployer.getAddress();
 
-  console.log("Initialize configuration");
+  //console.log("Initialize configuration");
 
-  const config = loadPoolConfig(ConfigNames.Aave);
+  // const config = loadPoolConfig(ConfigNames.Aave);
 
-  const treasuryAddress = await getTreasuryAddress(config);
+  // const treasuryAddress = await getTreasuryAddress(config);
 
-  await initReservesByHelper(
-    reservesParams,
-    allReservesAddresses,
-    admin,
-    treasuryAddress,
-    ZERO_ADDRESS,
-    false
-  );
-  // await configureReservesByHelper(
+  // await initReservesByHelper(
   //   reservesParams,
   //   allReservesAddresses,
-  //   testHelpers,
-  //   admin
-  // );
-
-  // const collateralManager = await deployLendingPoolCollateralManager();
-  // await waitForTx(
-  //   await addressesProvider.setLendingPoolCollateralManager(collateralManager.address)
+  //   admin,
+  //   treasuryAddress,
+  //   ZERO_ADDRESS,
+  //   false
   // );
 
   const mockFlashLoanReceiver = await deployMockFlashLoanReceiver(
@@ -347,7 +333,86 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     mockFlashLoanReceiver.address
   );
 
-  // await deployWalletBalancerProvider();
+  //Interest
+  //deploy dai
+  await deployMockDAI();
+  const dai = await getMockDAI();
+  const daiInterest = await deployDefaultReserveInterestRateStrategy(
+    [
+      dai.address,
+      addressesProvider.address,
+      "10000000000000000000000000",
+      "70000000000000000000000000",
+      "1500000000000000000000000000",
+      "60000000000000000000000000",
+      "1500000000000000000000000000",
+    ],
+    false
+  );
+  await lendingPoolConfiguratorProxy.initReserve(
+    dai.address,
+    18,
+    daiInterest.address
+  );
+  await lendingPoolConfiguratorProxy.activateReserve(dai.address);
+
+  const ethAddress = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
+  const ethInterest = await deployDefaultReserveInterestRateStrategy(
+    [
+      ethAddress,
+      addressesProvider.address,
+      "0",
+      "80000000000000000000000000",
+      "1000000000000000000000000000",
+      "100000000000000000000000000",
+      "1000000000000000000000000000",
+    ],
+    false
+  );
+
+  await lendingPoolConfiguratorProxy.initReserveWithData(
+    ethAddress,
+    "mETH",
+    "mETH",
+    18,
+    ethInterest.address
+  );
+  await lendingPoolConfiguratorProxy.activateReserve(ethAddress);
+
+  await lendingPoolConfiguratorProxy.refreshLendingPoolCoreConfiguration();
+
+  const daiReserve = await dataProviderProxy.getReserveData(dai.address);
+
+  await insertContractAddressInDb(
+    eContractid.aDAI,
+    daiReserve.bMXXTokenAddress
+  );
+
+  //staking address
+
+  await deployMintableErc20(["stkMXX", "stkMXX", "18"]);
+
+  const stkMXX = await getMintableErc20();
+
+  await waitForTx(await addressesProvider.setStakingToken(stkMXX.address));
+
+  //deploy reward manager
+  await deployRewardManager(addressesProvider.address);
+
+  const rewardsManager = await getRewardManager();
+  await waitForTx(
+    await addressesProvider.setRewardManager(rewardsManager.address)
+  );
+
+  //deploy 3 vaults
+  await deployRewardVault(rewardsManager.address, eContractid.RewardVault1);
+  await deployRewardVault(rewardsManager.address, eContractid.RewardVault2);
+  await deployRewardVault(rewardsManager.address, eContractid.RewardVault3);
+
+  //register reward
+  await waitForTx(await lendingPoolProxy.registerAllPoolsForReward());
+
+  await deployWalletBalancerProvider(addressesProvider.address);
 
   // await deployWETHGateway([mockTokens.WETH.address, lendingPoolAddress]);
 
