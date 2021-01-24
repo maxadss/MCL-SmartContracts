@@ -198,7 +198,7 @@ makeSuite("LendingPool - stable rate economy tests", (testEnv: TestEnv) => {
 
     const aDAIBalance = await mDAI.balanceOf(user.address);
 
-    await mDAI.transfer(users[3].address, aDAIBalance, {
+    await mDAI.connect(user.signer).transfer(users[3].address, aDAIBalance, {
       //from: user,
     });
 
