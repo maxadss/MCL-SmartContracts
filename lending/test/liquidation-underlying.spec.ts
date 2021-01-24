@@ -1,4 +1,20 @@
-import { makeSuite } from "./helpers/make-suite";
+import BigNumber from "bignumber.js";
+import { web3 } from "hardhat";
+import {
+  APPROVAL_AMOUNT_LENDING_POOL_CORE,
+  ETHEREUM_ADDRESS,
+  oneEther,
+  RATEMODE_STABLE,
+  RATEMODE_VARIABLE,
+} from "../helpers/constants";
+import { convertToCurrencyDecimals } from "../helpers/contracts-helpers";
+import {
+  LendingPool,
+  LendingPoolAddressesProvider,
+  LendingPoolCore,
+  PriceOracle,
+} from "../types";
+import { makeSuite, TestEnv } from "./helpers/make-suite";
 
 const { expect } = require("chai");
 
@@ -37,91 +53,67 @@ makeSuite(
     //   "LendingPool liquidation - liquidator receiving underlying asset",
     //   async ([deployer, ...users]) => {
     // let _testEnvProvider: ITestEnv;
-    let _lendingPoolInstance: LendingPoolInstance;
-    let _lendingPoolCoreInstance: LendingPoolCoreInstance;
-    let _priceOracleInstance: IPriceOracleInstance;
-    let _mTokenInstances: ImTokenInstances;
-    let _tokenInstances: ITokenInstances;
-    let _lendingPoolAddressesProviderInstance: LendingPoolAddressesProviderInstance;
+    let _lendingPoolInstance: LendingPool;
+    let _lendingPoolCoreInstance: LendingPoolCore;
+    let _priceOracleInstance: PriceOracle;
+    // let _mTokenInstances: ImTokenInstances;
+    // let _tokenInstances: ITokenInstances;
+    let _lendingPoolAddressesProviderInstance: LendingPoolAddressesProvider;
 
     let _daiAddress: string;
 
-    let _reservesParams: IReservesParams;
+    // let _reservesParams: IReservesParams;
 
-    let _depositorAddress: string;
-    let _borrowerAddress: string;
+    // let _depositorAddress: string;
+    // let _borrowerAddress: string;
 
-    let _web3: Web3;
+    // let _web3: Web3;
 
     let _initialDepositorETHBalance: string;
 
     const halfEther = (0.5 * Math.pow(10, 18)).toString();
 
     before("Initializing LendingPool test variables", async () => {
-      _testEnvProvider = await testEnvProvider(
-        artifacts,
-        [deployer, ...users],
-        ContractsInstancesOrigin.TruffleArtifacts
-      );
+      //_reservesParams = await getReservesParams();
+      _lendingPoolInstance = testEnv.pool;
+      _lendingPoolCoreInstance = testEnv.core;
+      _priceOracleInstance = testEnv.oracle;
+      //_mTokenInstances = mTokenInstances;
+      _lendingPoolAddressesProviderInstance = testEnv.addressesProvider;
+      // _tokenInstances = await getAllTokenInstances();
+      _daiAddress = testEnv.dai.address;
+      // _depositorAddress = await getFirstDepositorAddressOnTests();
+      // _borrowerAddress = await getFirstBorrowerAddressOnTests();
 
-      const {
-        deployedInstances: {
-          lendingPoolInstance,
-          lendingPoolCoreInstance,
-          mTokenInstances,
-          priceOracleInstance,
-          lendingPoolAddressesProviderInstance,
-        },
-        getTokenAddresses,
-        getWeb3,
-        getAllTokenInstances,
-        getFirstBorrowerAddressOnTests,
-        getFirstDepositorAddressOnTests,
-        getReservesParams,
-      } = _testEnvProvider;
-
-      _reservesParams = await getReservesParams();
-      _lendingPoolInstance = lendingPoolInstance;
-      _lendingPoolCoreInstance = lendingPoolCoreInstance;
-      _priceOracleInstance = priceOracleInstance;
-      _mTokenInstances = mTokenInstances;
-      _lendingPoolAddressesProviderInstance = lendingPoolAddressesProviderInstance;
-      _tokenInstances = await getAllTokenInstances();
-      _daiAddress = (await getTokenAddresses()).DAI;
-      _depositorAddress = await getFirstDepositorAddressOnTests();
-      _borrowerAddress = await getFirstBorrowerAddressOnTests();
-
-      _web3 = await getWeb3();
-      _initialDepositorETHBalance = await _web3.eth.getBalance(
-        _depositorAddress
+      // _web3 = await getWeb3();
+      _initialDepositorETHBalance = await web3.eth.getBalance(
+        testEnv.users[1].address
       );
     });
 
     it("LIQUIDATION - Deposits ETH, borrows DAI", async () => {
-      const { DAI: daiInstance } = _tokenInstances;
+      const { dai, users } = testEnv;
 
-      const aEthInstance: mTokenInstance = await getTruffleContractInstance(
-        artifacts,
-        ContractId.mToken,
-        await _lendingPoolCoreInstance.getReservemTokenAddress(ETHEREUM_ADDRESS)
-      );
+      const _depositorAddress = users[1];
+      const _borrowerAddress = users[2];
 
       //mints DAI to depositor
-      await daiInstance.mint(
-        await convertToCurrencyDecimals(daiInstance.address, "1000"),
-        {
-          from: _depositorAddress,
-        }
-      );
+      await dai
+        .connect(_depositorAddress.signer)
+        .mint(await convertToCurrencyDecimals(dai.address, "1000"), {
+          // from: _depositorAddress,
+        });
 
       //approve protocol to access depositor wallet
-      await daiInstance.approve(
-        _lendingPoolCoreInstance.address,
-        APPROVAL_AMOUNT_LENDING_POOL_CORE,
-        {
-          from: _depositorAddress,
-        }
-      );
+      await dai
+        .connect(_depositorAddress.signer)
+        .approve(
+          _lendingPoolCoreInstance.address,
+          APPROVAL_AMOUNT_LENDING_POOL_CORE,
+          {
+            //from: _depositorAddress,
+          }
+        );
 
       //user 1 deposits 1000 DAI
       const amountDAItoDeposit = await convertToCurrencyDecimals(
@@ -129,9 +121,11 @@ makeSuite(
         "1000"
       );
 
-      await _lendingPoolInstance.deposit(_daiAddress, amountDAItoDeposit, "0", {
-        from: _depositorAddress,
-      });
+      await _lendingPoolInstance
+        .connect(_depositorAddress.signer)
+        .deposit(_daiAddress, amountDAItoDeposit, "0", {
+          // from: _depositorAddress,
+        });
 
       //user 2 deposits 1 ETH
       const amountETHtoDeposit = await convertToCurrencyDecimals(
@@ -139,77 +133,76 @@ makeSuite(
         "1"
       );
 
-      await _lendingPoolInstance.deposit(
-        ETHEREUM_ADDRESS,
-        amountETHtoDeposit,
-        "0",
-        {
-          from: _borrowerAddress,
+      await _lendingPoolInstance
+        .connect(_borrowerAddress.signer)
+        .deposit(ETHEREUM_ADDRESS, amountETHtoDeposit, "0", {
+          // from: _borrowerAddress,
           value: amountETHtoDeposit,
-        }
-      );
+        });
 
       //user 2 borrows
 
       const userGlobalData: any = await _lendingPoolInstance.getUserAccountData(
-        _borrowerAddress
+        _borrowerAddress.address
       );
-      const daiPrice = await _priceOracleInstance.getAssetPrice(_daiAddress);
+      const daiPrice = new BigNumber(
+        (await _priceOracleInstance.getAssetPrice(_daiAddress)).toString()
+      );
 
       const amountDAIToBorrow = await convertToCurrencyDecimals(
         _daiAddress,
-        new BigNumber(userGlobalData.availableBorrowsBNB)
+        new BigNumber(userGlobalData.availableBorrowsBNB.toString())
           .div(daiPrice)
           .multipliedBy(0.95)
           .toFixed(0)
       );
 
-      await _lendingPoolInstance.borrow(
-        _daiAddress,
-        amountDAIToBorrow,
-        RATEMODE_STABLE,
-        "0",
-        {
-          from: _borrowerAddress,
-        }
-      );
+      await _lendingPoolInstance
+        .connect(_borrowerAddress.signer)
+        .borrow(_daiAddress, amountDAIToBorrow, RATEMODE_VARIABLE, "0", {
+          //from: _borrowerAddress,
+        });
 
       const userGlobalDataAfter: any = await _lendingPoolInstance.getUserAccountData(
-        _borrowerAddress
+        _borrowerAddress.address
       );
 
       expect(
-        userGlobalDataAfter.currentLiquidationThreshold
+        userGlobalDataAfter.currentLiquidationThreshold.toString()
       ).to.be.bignumber.equal("80", "Invalid liquidation threshold");
     });
 
     it("LIQUIDATION - Drop the health factor below 1", async () => {
+      const { users } = testEnv;
+      const _borrowerAddress = users[2];
+
       const daiPrice = await _priceOracleInstance.getAssetPrice(_daiAddress);
 
       //halving the price of ETH - means doubling the DAIETH exchange rate
 
       const userGlobalDataBefore: any = await _lendingPoolInstance.getUserAccountData(
-        _borrowerAddress
+        _borrowerAddress.address
       );
 
       await _priceOracleInstance.setAssetPrice(
         _daiAddress,
-        new BigNumber(daiPrice).multipliedBy(1.15).toFixed(0)
+        new BigNumber(daiPrice.toString()).multipliedBy(1.15).toFixed(0)
       );
 
       const userGlobalData: any = await _lendingPoolInstance.getUserAccountData(
-        _borrowerAddress
+        _borrowerAddress.address
       );
 
-      expect(userGlobalData.healthFactor).to.be.bignumber.lt(
+      expect(userGlobalData.healthFactor.toString()).to.be.bignumber.lt(
         oneEther.toFixed(0),
         "Invalid health factor"
       );
     });
 
     it("LIQUIDATION - Liquidates the borrow", async () => {
-      const { DAI: daiInstance } = _tokenInstances;
-
+      const { dai: daiInstance } = testEnv;
+      const { users, deployer } = testEnv;
+      const _borrowerAddress = users[2];
       //mints dai to the caller
 
       await daiInstance.mint(
@@ -226,7 +219,7 @@ makeSuite(
 
       const userReserveDataBefore: any = await _lendingPoolInstance.getUserReserveData(
         _daiAddress,
-        _borrowerAddress
+        _borrowerAddress.address
       );
 
       const daiReserveDataBefore = await _lendingPoolInstance.getReserveData(
@@ -234,7 +227,7 @@ makeSuite(
       );
 
       const amountToLiquidate = new BigNumber(
-        userReserveDataBefore.currentBorrowBalance
+        userReserveDataBefore.currentBorrowBalance.toString()
       )
         .div(2)
         .toFixed(0);
@@ -242,36 +235,36 @@ makeSuite(
       await _lendingPoolInstance.liquidationCall(
         ETHEREUM_ADDRESS,
         _daiAddress,
-        _borrowerAddress,
+        _borrowerAddress.address,
         amountToLiquidate,
         false
       );
 
       const userReserveDataAfter: any = await _lendingPoolInstance.getUserReserveData(
         _daiAddress,
-        _borrowerAddress
+        _borrowerAddress.address
       );
 
       const liquidatorReserveData: any = await _lendingPoolInstance.getUserReserveData(
         ETHEREUM_ADDRESS,
-        deployer
+        deployer.address
       );
 
-      const feeAddress = await _lendingPoolAddressesProviderInstance.getTokenDistributor();
+      // const feeAddress = await _lendingPoolAddressesProviderInstance.getTokenDistributor();
 
-      const feeAddressBalance = await web3.eth.getBalance(feeAddress);
+      // const feeAddressBalance = await web3.eth.getBalance(feeAddress);
 
-      expect(userReserveDataAfter.originationFee).to.be.bignumber.eq(
+      expect(userReserveDataAfter.originationFee.toString()).eq(
         "0",
         "Origination fee should be repaid"
       );
 
-      expect(feeAddressBalance).to.be.bignumber.gt("0");
+      //expect(feeAddressBalance.toString()).to.be.bignumber.gt("0");
 
       expect(
-        userReserveDataAfter.principalBorrowBalance
+        userReserveDataAfter.principalBorrowBalance.toString()
       ).to.be.bignumber.almostEqual(
-        new BigNumber(userReserveDataBefore.currentBorrowBalance)
+        new BigNumber(userReserveDataBefore.currentBorrowBalance.toString())
           .minus(amountToLiquidate)
           .toFixed(0),
         "Invalid user borrow balance after liquidation"
