@@ -14,6 +14,7 @@ import {
   getMockDAI,
   getMDAI,
   getLendingPoolProxy,
+  getMETH,
   //getLendingPoolAddressesProviderRegistry,
   //getWETHMocked,
   //getWETHGateway,
@@ -70,6 +71,7 @@ export interface TestEnv {
   liqManager: LendingPoolLiquidationManager;
   dataProvider: LendingPoolDataProvider;
   mDAI: MToken;
+  mETH: MToken;
 }
 
 let buidlerevmSnapshotId: string = "0x1";
@@ -95,6 +97,7 @@ const testEnv: TestEnv = {
   liqManager: {} as LendingPoolLiquidationManager,
   dataProvider: {} as LendingPoolDataProvider,
   mDAI: {} as MToken,
+  mETH: {} as MToken,
 } as TestEnv;
 
 export async function initializeMakeSuite() {
@@ -165,6 +168,7 @@ export async function initializeMakeSuite() {
   // testEnv.wethGateway = await getWETHGateway();
   testEnv.dai = await getMockDAI();
   testEnv.mDAI = await getMDAI();
+  testEnv.mETH = await getMETH();
 }
 
 export function makeSuite(name: string, tests: (testEnv: TestEnv) => void) {

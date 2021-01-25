@@ -76,6 +76,7 @@ export enum eContractid {
   RewardsManager = "RewardsManager",
   aDAI = "aDAI",
   MockDAI = "MockDAI",
+  mETH = "mETH",
   RewardVault1 = "RewardVault1",
   RewardVault2 = "RewardVault2",
   RewardVault3 = "RewardVault",

@@ -230,6 +230,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   );
 
   const lendingRateOracle = await deployLendingRateOracle();
+
   await waitForTx(
     await addressesProvider.setLendingRateOracle(lendingRateOracle.address)
   );
@@ -320,6 +321,13 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     daiReserve.bMXXTokenAddress
   );
 
+  const ethReserve = await dataProviderProxy.getReserveData(ETHEREUM_ADDRESS);
+
+  await insertContractAddressInDb(
+    eContractid.mETH,
+    ethReserve.bMXXTokenAddress
+  );
+
   //staking address
 
   await deployMintableErc20(["stkMXX", "stkMXX", "18"]);
@@ -352,10 +360,10 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   await waitForTx(
     await fallbackOracle.setAssetPrice(ETHEREUM_ADDRESS, "1000000000000000000") //1 BNB
   );
-  console.log(
-    "dai price:",
-    (await fallbackOracle.getAssetPrice(dai.address)).toString()
-  );
+  // console.log(
+  //   "dai price:",
+  //   (await fallbackOracle.getAssetPrice(dai.address)).toString()
+  // );
   //fallbackOracle.getAssetPrice()
 
   const mockFlashLoanReceiver = await deployMockFlashLoanReceiver(
@@ -364,6 +372,34 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   await insertContractAddressInDb(
     eContractid.MockFlashLoanReceiver,
     mockFlashLoanReceiver.address
+  );
+
+  await waitForTx(
+    await lendingRateOracle.setMarketBorrowRate(
+      ETHEREUM_ADDRESS,
+      "10000000000000000"
+    )
+  );
+
+  await waitForTx(
+    await lendingRateOracle.setMarketBorrowRate(
+      dai.address,
+      "10000000000000000"
+    )
+  );
+
+  await waitForTx(
+    await lendingRateOracle.setMarketLiquidityRate(
+      dai.address,
+      "10000000000000000"
+    )
+  );
+
+  await waitForTx(
+    await lendingRateOracle.setMarketLiquidityRate(
+      ETHEREUM_ADDRESS,
+      "10000000000000000"
+    )
   );
 
   console.timeEnd("setup");

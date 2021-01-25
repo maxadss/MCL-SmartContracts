@@ -377,6 +377,14 @@ export const getMockDAI = async (address?: tEthereumAddress) =>
     await getFirstSigner()
   );
 
+export const getMETH = async (address?: tEthereumAddress) =>
+  await MTokenFactory.connect(
+    address ||
+      (await getDb().get(`${eContractid.mETH}.${DRE.network.name}`).value())
+        .address,
+    await getFirstSigner()
+  );
+
 // export const getMockVariableDebtToken = async (address?: tEthereumAddress) =>
 //   await MockVariableDebtTokenFactory.connect(
 //     address ||
