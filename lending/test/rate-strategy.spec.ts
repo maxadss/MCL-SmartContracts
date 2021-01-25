@@ -60,7 +60,7 @@ makeSuite("Interest rate strategy", (testEnv: TestEnv) => {
       "Invalid liquidity rate"
     );
     expect(data.currentStableBorrowRate.toString()).to.be.equal(
-      new BigNumber(0).times(RAY).toFixed(0),
+      new BigNumber(0.01).times(RAY).toFixed(0),
       "Invalid stable rate"
     );
     expect(data.currentVariableBorrowRate.toString()).to.be.equal(

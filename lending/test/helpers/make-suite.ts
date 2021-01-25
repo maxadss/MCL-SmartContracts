@@ -15,6 +15,7 @@ import {
   getMDAI,
   getLendingPoolProxy,
   getMETH,
+  getRewardManager,
   //getLendingPoolAddressesProviderRegistry,
   //getWETHMocked,
   //getWETHGateway,
@@ -45,6 +46,7 @@ import {
   LendingRateOracle,
   MockDAI,
   MockDAIFactory,
+  RewardsManager,
 } from "../../types";
 
 chai.use(bignumberChai());
@@ -72,6 +74,7 @@ export interface TestEnv {
   dataProvider: LendingPoolDataProvider;
   mDAI: MToken;
   mETH: MToken;
+  rewardMgr: RewardsManager;
 }
 
 let buidlerevmSnapshotId: string = "0x1";
@@ -98,6 +101,7 @@ const testEnv: TestEnv = {
   dataProvider: {} as LendingPoolDataProvider,
   mDAI: {} as MToken,
   mETH: {} as MToken,
+  rewardMgr: {} as RewardsManager,
 } as TestEnv;
 
 export async function initializeMakeSuite() {
@@ -169,6 +173,7 @@ export async function initializeMakeSuite() {
   testEnv.dai = await getMockDAI();
   testEnv.mDAI = await getMDAI();
   testEnv.mETH = await getMETH();
+  testEnv.rewardMgr = await getRewardManager();
 }
 
 export function makeSuite(name: string, tests: (testEnv: TestEnv) => void) {
