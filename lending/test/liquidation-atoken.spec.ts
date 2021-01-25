@@ -248,45 +248,67 @@ makeSuite(
     //   );
     // });
 
-    it("LIQUIDATION - Liquidates the borrow", async () => {
+    it("LIQUIDATION1 - Liquidates the borrow", async () => {
       const { users, dai, deployer } = testEnv;
       const _borrowerAddress = users[2];
 
       //mints dai to the caller
 
-      await dai.mint(await convertToCurrencyDecimals(dai.address, "1000"));
+      await dai
+        .connect(deployer.signer)
+        .mint(await convertToCurrencyDecimals(dai.address, "1000"));
 
       //approve protocol to access depositor wallet
-      await dai.approve(
-        _lendingPoolCoreInstance.address,
-        APPROVAL_AMOUNT_LENDING_POOL_CORE
-      );
+      await dai
+        .connect(deployer.signer)
+        .approve(
+          _lendingPoolCoreInstance.address,
+          APPROVAL_AMOUNT_LENDING_POOL_CORE
+        );
 
       const daiPrice = await _priceOracleInstance.getAssetPrice(dai.address);
 
-      const userReserveDataBefore: any = await _lendingPoolInstance.getUserReserveData(
+      await _priceOracleInstance.setAssetPrice(
+        dai.address,
+        new BigNumber(daiPrice.toString()).multipliedBy(1.3).toFixed(0)
+      );
+
+      const userReserveDataBefore = await _lendingPoolInstance.getUserReserveData(
         dai.address,
         _borrowerAddress.address
       );
 
+      //console.log("currentMTokenBalance ", userReserveDataBeforeeth.currentMTokenBalance.toString());
       const daiReserveDataBefore = await _lendingPoolInstance.getReserveData(
         dai.address
       );
 
       const amountToLiquidate = new BigNumber(
-        userReserveDataBefore.currentBorrowBalance
+        userReserveDataBefore.currentBorrowBalance.toString()
       )
-        .div(2)
+        .div(3)
         .toFixed(0);
 
-      await _lendingPoolInstance.liquidationCall(
-        ETHEREUM_ADDRESS,
-        dai.address,
-        _borrowerAddress.address,
-        amountToLiquidate,
-        true
+      console.log("123456");
+      console.log(
+        "userReserveDataBefore.currentBorrowBalance ",
+        userReserveDataBefore.currentBorrowBalance.toString()
       );
+      console.log("amountToLiquidate ", amountToLiquidate.toString());
 
+      const r = await _lendingPoolInstance
+        .connect(deployer.signer)
+        .liquidationCall(
+          ETHEREUM_ADDRESS,
+          dai.address,
+          _borrowerAddress.address,
+          amountToLiquidate.toString(),
+          false
+        );
+
+      console.log(r);
+
+      console.log("1234568");
       const userReserveDataAfter: any = await _lendingPoolInstance.getUserReserveData(
         dai.address,
         _borrowerAddress.address
@@ -305,9 +327,9 @@ makeSuite(
         dai.address
       );
 
-      const feeAddress = await _lendingPoolAddressesProviderInstance.getTokenDistributor();
+      //const feeAddress = await _lendingPoolAddressesProviderInstance.getTokenDistributor();
 
-      const feeAddressBalance = await web3.eth.getBalance(feeAddress);
+      //const feeAddressBalance = await web3.eth.getBalance(feeAddress);
 
       expect(userGlobalDataAfter.healthFactor.toString()).to.be.bignumber.gt(
         oneEther.toFixed(0),
@@ -319,7 +341,7 @@ makeSuite(
         "Origination fee should be repaid"
       );
 
-      expect(feeAddressBalance.toString()).to.be.bignumber.gt("0");
+      //expect(feeAddressBalance.toString()).to.be.bignumber.gt("0");
 
       expect(
         userReserveDataAfter.principalBorrowBalance.toString()

@@ -186,7 +186,7 @@ makeSuite(
 
       await _priceOracleInstance.setAssetPrice(
         _daiAddress,
-        new BigNumber(daiPrice.toString()).multipliedBy(1.15).toFixed(0)
+        new BigNumber(daiPrice.toString()).multipliedBy(1.5).toFixed(0)
       );
 
       const userGlobalData: any = await _lendingPoolInstance.getUserAccountData(
@@ -199,31 +199,31 @@ makeSuite(
       );
     });
 
-    it("LIQUIDATION - Liquidates the borrow", async () => {
-      const { dai: daiInstance } = testEnv;
+    it("LIQUIDATION2 - Liquidates the borrow", async () => {
+      const { dai } = testEnv;
       const { users, deployer } = testEnv;
       const _borrowerAddress = users[2];
       //mints dai to the caller
 
-      await daiInstance.mint(
-        await convertToCurrencyDecimals(daiInstance.address, "1000")
-      );
+      await dai
+        .connect(deployer.signer)
+        .mint(await convertToCurrencyDecimals(dai.address, "1000"));
 
       //approve protocol to access depositor wallet
-      await daiInstance.approve(
+      await dai.approve(
         _lendingPoolCoreInstance.address,
         APPROVAL_AMOUNT_LENDING_POOL_CORE
       );
 
       const daiPrice = await _priceOracleInstance.getAssetPrice(_daiAddress);
 
-      const userReserveDataBefore: any = await _lendingPoolInstance.getUserReserveData(
-        _daiAddress,
+      const userReserveDataBefore = await _lendingPoolInstance.getUserReserveData(
+        dai.address,
         _borrowerAddress.address
       );
 
       const daiReserveDataBefore = await _lendingPoolInstance.getReserveData(
-        _daiAddress
+        dai.address
       );
 
       const amountToLiquidate = new BigNumber(
@@ -232,20 +232,25 @@ makeSuite(
         .div(2)
         .toFixed(0);
 
+      console.log("XYZ111");
+      console.log(
+        "userReserveDataBefore.currentBorrowBalance.toString() ",
+        userReserveDataBefore.currentBorrowBalance.toString()
+      );
       await _lendingPoolInstance.liquidationCall(
         ETHEREUM_ADDRESS,
-        _daiAddress,
+        dai.address,
         _borrowerAddress.address,
-        amountToLiquidate,
+        amountToLiquidate.toString(),
         false
       );
 
-      const userReserveDataAfter: any = await _lendingPoolInstance.getUserReserveData(
-        _daiAddress,
+      const userReserveDataAfter = await _lendingPoolInstance.getUserReserveData(
+        dai.address,
         _borrowerAddress.address
       );
 
-      const liquidatorReserveData: any = await _lendingPoolInstance.getUserReserveData(
+      const liquidatorReserveData = await _lendingPoolInstance.getUserReserveData(
         ETHEREUM_ADDRESS,
         deployer.address
       );

@@ -126,7 +126,7 @@ makeSuite("Interest rate strategy", (testEnv: TestEnv) => {
     );
 
     expect(data.currentStableBorrowRate.toString()).to.be.equal(
-      new BigNumber(0.039)
+      new BigNumber(0)
         .times(RAY)
         .plus(stableSlope1)
         .plus(stableSlope2)

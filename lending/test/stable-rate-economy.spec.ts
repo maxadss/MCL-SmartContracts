@@ -124,7 +124,7 @@ makeSuite("LendingPool - stable rate economy tests", (testEnv: TestEnv) => {
     //user 2 deposits 5 ETH tries to borrow. needs to be reverted as you can't borrow more than 25% of the available reserve (250 DAI)
     const amountETHToDeposit = await convertToCurrencyDecimals(
       ETHEREUM_ADDRESS,
-      "5"
+      "100"
     );
     await _lendingPoolInstance
       .connect(users[2].signer)
@@ -133,11 +133,12 @@ makeSuite("LendingPool - stable rate economy tests", (testEnv: TestEnv) => {
         value: amountETHToDeposit,
       });
 
-    const data: any = await _lendingPoolInstance.getReserveData(_daiAddress);
+    const data = await _lendingPoolInstance.getReserveData(_daiAddress);
+    console.log("data.availableLiquidity ", data.availableLiquidity.toString());
 
     const amountDAIToBorrow = await convertToCurrencyDecimals(
       _daiAddress,
-      "500"
+      "255"
     );
 
     //user 2 tries to borrow
@@ -203,12 +204,12 @@ makeSuite("LendingPool - stable rate economy tests", (testEnv: TestEnv) => {
     });
 
     //check the underlying balance is 0
-    const userData: any = await _lendingPoolInstance.getUserReserveData(
+    const userData = await _lendingPoolInstance.getUserReserveData(
       dai.address,
       user.address
     );
 
-    expect(userData.currentmTokenBalance.toString()).to.be.equal("0");
+    expect(userData.currentMTokenBalance.toString()).to.be.equal("0");
 
     //user tries to borrow the DAI at a stable rate using the ETH as collateral
     const amountDAIToBorrow = await convertToCurrencyDecimals(
