@@ -23,3 +23,5 @@ node_modules
 build
 .DS_Store
 artifacts
+cache/*
+deployed-contracts.json
