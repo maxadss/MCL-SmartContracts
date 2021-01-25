@@ -1,6 +1,7 @@
-import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/dist/src/signer-with-address";
 import { expect } from "chai";
-import { FormatTypes } from "ethers/lib/utils";
+import { LendingPoolAddressesProvider } from "./../types/LendingPoolAddressesProvider.d";
+import { getLendingPoolCoreImpl } from "./../helpers/contracts-getters";
+import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/dist/src/signer-with-address";
 import {
   APPROVAL_AMOUNT_LENDING_POOL_CORE,
   ETHEREUM_ADDRESS,
@@ -26,6 +27,7 @@ import {
   RewardsManager,
 } from "../types";
 import { makeSuite, TestEnv } from "./helpers/make-suite";
+import BigNumber from "bignumber.js";
 
 const expectRevert = require("@openzeppelin/test-helpers").expectRevert;
 
@@ -35,13 +37,15 @@ makeSuite("Reward - transfer", (testEnv: TestEnv) => {
   let _lendingPoolInstance: LendingPool;
   let _lendingPoolCoreInstance: LendingPoolCore;
   let _rewardManager: RewardsManager;
+  let _addressProvider: LendingPoolAddressesProvider;
 
   before("Initializing test variables", async () => {
-    const { mDAI, dai, pool, core, rewardMgr } = testEnv;
+    const { mDAI, dai, pool, core, rewardMgr, addressesProvider } = testEnv;
 
     _lendingPoolInstance = pool;
     _lendingPoolCoreInstance = core;
     _rewardManager = rewardMgr;
+    _addressProvider = addressesProvider;
 
     _aDAI = mDAI;
     _DAI = dai;
@@ -116,39 +120,114 @@ makeSuite("Reward - transfer", (testEnv: TestEnv) => {
     expect(user1Reward.toString()).to.be.equal("0", "Invalid reward");
   });
 
-  it("User 2 borrow and repay, user 1 earn reward", async () => {
-    const { users } = testEnv;
+  it("User 1 borrow and repay, both user 1 & user 2 can earn LP reward", async () => {
+    const { users, dai, mDAI } = testEnv;
 
     const user1 = users[2];
-    const user2 = users[3];
 
-    await _DAI
-      .connect(user1.signer)
-      .mint(await convertToCurrencyDecimals(_DAI.address, "1000"));
+    const amt = await convertToCurrencyDecimals(dai.address, "1000");
+    await dai.connect(user1.signer).mint(amt.toString());
 
-    await _DAI
+    await dai
       .connect(user1.signer)
       .approve(
         _lendingPoolCoreInstance.address,
         APPROVAL_AMOUNT_LENDING_POOL_CORE,
-        {
-          // from: users[0].address,
-        }
+        {}
       );
 
     //user 1 deposits 1000 DAI
     const amountDAItoDeposit = await convertToCurrencyDecimals(
-      _DAI.address,
+      dai.address,
       "1000"
     );
 
     await _lendingPoolInstance
       .connect(user1.signer)
-      .deposit(_DAI.address, amountDAItoDeposit, "0", {
+      .deposit(dai.address, amountDAItoDeposit, "0", {
         // from: users[0],
       });
 
+    const fromBalance = await mDAI.balanceOf(user1.address);
+
     //user 1 borrow 500 DAI
+    const amountDAIToBorrow = await convertToCurrencyDecimals(
+      _DAI.address,
+      "10"
+    );
+    // //user 1 repay 500 DAI
+
+    await _lendingPoolInstance
+      .connect(user1.signer)
+      .borrow(dai.address, amountDAIToBorrow, RATEMODE_VARIABLE, "0", {
+        // from: users[0],
+      });
+    // //user 1 repay 500 DAI
+    const amountDAIToRepay = await convertToCurrencyDecimals(dai.address, "5");
+
+    await _lendingPoolInstance
+      .connect(user1.signer)
+      .repay(dai.address, amountDAIToRepay.toString(), user1.address, {
+        // from: users[0],
+      });
+
+    const user0RewardAfter = await _rewardManager.readRewards(
+      _DAI.address,
+      user1.address,
+      "0",
+      fromBalance.toString()
+    );
+    const expected = new BigNumber(amountDAIToBorrow.toString())
+      .times(0.00001)
+      .times(0.7)
+      .div(2)
+      .toString();
+    expect(user0RewardAfter.toString()).to.be.equal(expected, "Invalid reward");
+  });
+
+  it("2 users deposit, user 1 borrow, then repay after user 1 withdraw, user 1 can earn LP reward", async () => {
+    const { users, dai, mDAI } = testEnv;
+
+    const user1 = users[2];
+    const user2 = users[3];
+    await dai
+      .connect(user1.signer)
+      .mint(await convertToCurrencyDecimals(dai.address, "1000"));
+    await dai
+      .connect(user2.signer)
+      .mint(await convertToCurrencyDecimals(dai.address, "1000"));
+
+    await dai
+      .connect(user1.signer)
+      .approve(
+        _lendingPoolCoreInstance.address,
+        APPROVAL_AMOUNT_LENDING_POOL_CORE,
+        {}
+      );
+    await dai
+      .connect(user2.signer)
+      .approve(
+        _lendingPoolCoreInstance.address,
+        APPROVAL_AMOUNT_LENDING_POOL_CORE,
+        {}
+      );
+
+    //user 1 deposits 1000 DAI
+    const amountDAItoDeposit = await convertToCurrencyDecimals(
+      dai.address,
+      "1000"
+    );
+
+    await _lendingPoolInstance
+      .connect(user1.signer)
+      .deposit(dai.address, amountDAItoDeposit, "0", {});
+
+    const fromBalance = await mDAI.balanceOf(user1.address);
+    //user 2 deposits 1000 DAI
+    await _lendingPoolInstance
+      .connect(user2.signer)
+      .deposit(dai.address, amountDAItoDeposit, "0", {});
+    //user 1 borrow 10 DAI
     const amountDAIToBorrow = await convertToCurrencyDecimals(
       _DAI.address,
       "10"
@@ -156,124 +235,39 @@ makeSuite("Reward - transfer", (testEnv: TestEnv) => {
 
     await _lendingPoolInstance
       .connect(user1.signer)
-      .borrow(_DAI.address, amountDAIToBorrow, RATEMODE_VARIABLE, "0", {
-        // from: users[0],
-      });
+      .borrow(dai.address, amountDAIToBorrow, RATEMODE_VARIABLE, "0", {});
 
-    const fromBalance = await _aDAI.balanceOf(user1.address);
+    //user 2 withdraw 100%
+    const fromBalanceUser2 = await mDAI.balanceOf(user2.address);
 
-    const user0Reward = await _rewardManager.readRewards(
-      _DAI.address,
-      user1.address,
-      "0",
-      fromBalance
-    );
-    expect(user0Reward.toString()).to.be.equal("0", "Invalid reward");
+    console.log("fromBalanceUser2 ", fromBalanceUser2.toString());
 
-    await _DAI
-      .connect(user1.signer)
-      .approve(
-        _lendingPoolCoreInstance.address,
-        APPROVAL_AMOUNT_LENDING_POOL_CORE,
-        {
-          // from: users[0].address,
-        }
-      );
+    await mDAI.connect(user2.signer).redeem(fromBalanceUser2.toString(), {});
 
-    //user 1 repay 500 DAI
+    // //user 1 repay 500 DAI
+    // const amountDAIToRepay = await convertToCurrencyDecimals(
+    //   dai.address,
+    //   "5"
+    // );
 
-    await _lendingPoolInstance
-      .connect(user1.signer)
-      .repay(_DAI.address, amountDAIToBorrow, user1.address, {
-        // from: users[0],
-      });
+    // // user 1 repay 5 DAI
+    // await _lendingPoolInstance
+    //   .connect(user1.signer)
+    //   .repay(dai.address, amountDAIToRepay.toString(), user1.address, {
+    //   });
 
-    const total = await _aDAI.totalSupply();
-    console.log("totalSupply ", total.toString());
+    // //user 1 earn 50% of LP reward
+    // const user0RewardAfter = await _rewardManager.readRewards(
+    //   _DAI.address,
+    //   user1.address,
+    //   "0",
+    //   fromBalance.toString()
+    // );
 
-    //const  reward =
-
-    const user0RewardAfter = await _rewardManager.readRewards(
-      _DAI.address,
-      user1.address,
-      "0",
-      fromBalance
-    );
-
-    console.log("user0RewardAfter ", user0RewardAfter.toString());
-    // expect(user0Reward.toString()).to.be.equal(
-    //     "0",
-    //     "Invalid reward"
-    //   );
+    // const expected = new BigNumber(amountDAIToBorrow.toString()).times(0.00001).times(0.7).toString();
+    // expect(user0RewardAfter.toString()).to.be.equal(
+    //   expected,
+    //   "Invalid reward"
+    // );
   });
-
-  // it("User 1 redirects interest to user 2, transfers 500 DAI back to user 0", async () => {
-  //   const { users } = testEnv;
-
-  //   await _aDAI
-  //     .connect(users[1].signer)
-  //     .redirectInterestStream(users[2].address, {
-  //       //  from: users[1]
-  //     });
-
-  //   const aDAIRedirected = await convertToCurrencyDecimals(
-  //     _DAI.address,
-  //     "1000"
-  //   );
-
-  //   const aDAItoTransfer = await convertToCurrencyDecimals(_DAI.address, "500");
-
-  //   const user2RedirectedBalanceBefore = await _aDAI.getRedirectedBalance(
-  //     users[2].address
-  //   );
-  //   expect(user2RedirectedBalanceBefore.toString()).to.be.equal(
-  //     aDAIRedirected,
-  //     "Invalid redirected balance for user 2 before transfer"
-  //   );
-
-  //   await _aDAI
-  //     .connect(users[1].signer)
-  //     .transfer(users[0].address, aDAItoTransfer, {
-  //       //from: users[1]
-  //     });
-
-  //   const user2RedirectedBalanceAfter = await _aDAI.getRedirectedBalance(
-  //     users[2].address
-  //   );
-  //   const user1RedirectionAddress = await _aDAI.getInterestRedirectionAddress(
-  //     users[1].address
-  //   );
-
-  //   expect(user2RedirectedBalanceAfter.toString()).to.be.equal(
-  //     aDAItoTransfer,
-  //     "Invalid redirected balance for user 2 after transfer"
-  //   );
-  //   expect(user1RedirectionAddress.toString()).to.be.equal(
-  //     users[2].address,
-  //     "Invalid redirection address for user 1"
-  //   );
-  // });
-
-  // it("User 0 transfers back to user 1", async () => {
-  //   const { users } = testEnv;
-
-  //   const aDAItoTransfer = await convertToCurrencyDecimals(_DAI.address, "500");
-
-  //   await _aDAI
-  //     .connect(users[0].signer)
-  //     .transfer(users[1].address, aDAItoTransfer, {
-  //       //  from: users[0].address
-  //     });
-
-  //   const user2RedirectedBalanceAfter = await _aDAI.getRedirectedBalance(
-  //     users[2].address
-  //   );
-
-  //   const user1BalanceAfter = await _aDAI.balanceOf(users[1].address);
-
-  //   expect(user2RedirectedBalanceAfter.toString()).to.be.equal(
-  //     user1BalanceAfter.toString(),
-  //     "Invalid redirected balance for user 2 after transfer"
-  //   );
-  // });
 });

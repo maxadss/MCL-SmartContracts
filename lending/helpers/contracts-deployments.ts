@@ -286,7 +286,7 @@ export const deployLendingPoolCore = async (
   );
   return withSaveAndVerify(
     collateralManagerImpl,
-    eContractid.LendingPoolCore,
+    eContractid.LendingPoolCoreImpl,
     [],
     verify
   );
