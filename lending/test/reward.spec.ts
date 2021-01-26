@@ -124,6 +124,7 @@ makeSuite("Reward - transfer", (testEnv: TestEnv) => {
     const { users, dai, mDAI } = testEnv;
 
     const user1 = users[2];
+    const user2 = users[3];
 
     const amt = await convertToCurrencyDecimals(dai.address, "1000");
     await dai.connect(user1.signer).mint(amt.toString());
@@ -149,6 +150,7 @@ makeSuite("Reward - transfer", (testEnv: TestEnv) => {
       });
 
     const fromBalance = await mDAI.balanceOf(user1.address);
+    const fromBalanceUser2 = await mDAI.balanceOf(user2.address);
 
     //user 1 borrow 500 DAI
     const amountDAIToBorrow = await convertToCurrencyDecimals(
@@ -183,6 +185,43 @@ makeSuite("Reward - transfer", (testEnv: TestEnv) => {
       .div(2)
       .toString();
     expect(user0RewardAfter.toString()).to.be.equal(expected, "Invalid reward");
+
+    const user1RewardAfter = await _rewardManager.readRewards(
+      _DAI.address,
+      user2.address,
+      "0",
+      fromBalance.toString()
+    );
+    expect(user1RewardAfter.toString()).to.be.equal(expected, "Invalid reward");
+  });
+
+  it("User can claim reward successfully", async () => {
+    const { users, dai, mDAI } = testEnv;
+
+    const user1 = users[2];
+    const user2 = users[3];
+
+    const fromBalance = await dai.balanceOf(user1.address);
+
+    const user0RewardAfter = await _rewardManager.readRewards(
+      _DAI.address,
+      user1.address,
+      "0",
+      (await mDAI.balanceOf(user1.address)).toString()
+    );
+
+    await _lendingPoolInstance.connect(user1.signer).claimAllReward("0");
+
+    const fromBalanceAfter = await dai.balanceOf(user1.address);
+
+    const expected = new BigNumber(fromBalance.toString()).plus(
+      user0RewardAfter.toString()
+    );
+
+    expect(fromBalanceAfter.toString()).to.be.equal(
+      expected.toString(),
+      "Invalid reward"
+    );
   });
 
   it("2 users deposit, user 1 borrow, then repay after user 1 withdraw, user 1 can earn LP reward", async () => {
@@ -223,6 +262,7 @@ makeSuite("Reward - transfer", (testEnv: TestEnv) => {
       .deposit(dai.address, amountDAItoDeposit, "0", {});
 
     const fromBalance = await mDAI.balanceOf(user1.address);
+
     //user 2 deposits 1000 DAI
     await _lendingPoolInstance
       .connect(user2.signer)
@@ -238,36 +278,30 @@ makeSuite("Reward - transfer", (testEnv: TestEnv) => {
       .borrow(dai.address, amountDAIToBorrow, RATEMODE_VARIABLE, "0", {});
 
     //user 2 withdraw 100%
-    const fromBalanceUser2 = await mDAI.balanceOf(user2.address);
-
-    console.log("fromBalanceUser2 ", fromBalanceUser2.toString());
-
-    await mDAI.connect(user2.signer).redeem(fromBalanceUser2.toString(), {});
+    await mDAI.connect(user2.signer).redeem(MAX_UINT_AMOUNT, {});
 
     // //user 1 repay 500 DAI
-    // const amountDAIToRepay = await convertToCurrencyDecimals(
-    //   dai.address,
-    //   "5"
-    // );
+    const amountDAIToRepay = await convertToCurrencyDecimals(dai.address, "5");
 
     // // user 1 repay 5 DAI
-    // await _lendingPoolInstance
-    //   .connect(user1.signer)
-    //   .repay(dai.address, amountDAIToRepay.toString(), user1.address, {
-    //   });
+    await _lendingPoolInstance
+      .connect(user1.signer)
+      .repay(dai.address, amountDAIToRepay.toString(), user1.address, {});
 
-    // //user 1 earn 50% of LP reward
-    // const user0RewardAfter = await _rewardManager.readRewards(
-    //   _DAI.address,
-    //   user1.address,
-    //   "0",
-    //   fromBalance.toString()
-    // );
+    //user 1 earn 50% of LP reward
+    const user0RewardAfter = await _rewardManager.readRewards(
+      _DAI.address,
+      user1.address,
+      "0",
+      fromBalance.toString()
+    );
 
-    // const expected = new BigNumber(amountDAIToBorrow.toString()).times(0.00001).times(0.7).toString();
-    // expect(user0RewardAfter.toString()).to.be.equal(
-    //   expected,
-    //   "Invalid reward"
-    // );
+    console.log("user0RewardAfter ", user0RewardAfter.toString());
+
+    const expected = new BigNumber(amountDAIToBorrow.toString())
+      .times(0.00001)
+      .times(0.7)
+      .toString();
+    expect(user0RewardAfter.toString()).to.be.equal(expected, "Invalid reward");
   });
 });
