@@ -320,10 +320,8 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
         onlyUnfreezedReserve(_reserve)
         onlyAmountGreaterThanZero(_amount)
     {
-        uint256 curBalance = core.getUserUnderlyingAssetBalance(
-            _reserve,
-            msg.sender
-        );
+        uint256 curBalance =
+            core.getUserUnderlyingAssetBalance(_reserve, msg.sender);
         bool isFirstDeposit = (curBalance == 0);
 
         core.updateStateOnDeposit(
@@ -370,9 +368,8 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
         onlyActiveReserve(_reserve)
         onlyAmountGreaterThanZero(_amount)
     {
-        uint256 currentAvailableLiquidity = core.getReserveAvailableLiquidity(
-            _reserve
-        );
+        uint256 currentAvailableLiquidity =
+            core.getReserveAvailableLiquidity(_reserve);
         require(
             currentAvailableLiquidity >= _amount,
             "There is not enough liquidity available to redeem"
@@ -531,12 +528,10 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
 
             //calculate the max available loan size in stable rate mode as a percentage of the
             //available liquidity
-            uint256 maxLoanPercent = parametersProvider
-                .getMaxStableRateBorrowSizePercent();
-            uint256 maxLoanSizeStable = vars
-                .availableLiquidity
-                .mul(maxLoanPercent)
-                .div(100);
+            uint256 maxLoanPercent =
+                parametersProvider.getMaxStableRateBorrowSizePercent();
+            uint256 maxLoanSizeStable =
+                vars.availableLiquidity.mul(maxLoanPercent).div(100);
 
             require(
                 _amount <= maxLoanSizeStable,
@@ -752,8 +747,8 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
             "User does not have a borrow in progress on this reserve"
         );
 
-        CoreLibrary.InterestRateMode currentRateMode = core
-            .getUserCurrentBorrowRateMode(_reserve, msg.sender);
+        CoreLibrary.InterestRateMode currentRateMode =
+            core.getUserCurrentBorrowRateMode(_reserve, msg.sender);
 
         if (currentRateMode == CoreLibrary.InterestRateMode.VARIABLE) {
             /**
@@ -774,15 +769,15 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
             );
         }
 
-        (CoreLibrary.InterestRateMode newRateMode, uint256 newBorrowRate) = core
-            .updateStateOnSwapRate(
-            _reserve,
-            msg.sender,
-            principalBorrowBalance,
-            compoundedBorrowBalance,
-            borrowBalanceIncrease,
-            currentRateMode
-        );
+        (CoreLibrary.InterestRateMode newRateMode, uint256 newBorrowRate) =
+            core.updateStateOnSwapRate(
+                _reserve,
+                msg.sender,
+                principalBorrowBalance,
+                compoundedBorrowBalance,
+                borrowBalanceIncrease,
+                currentRateMode
+            );
 
         emit Swap(
             _reserve,
@@ -809,8 +804,8 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
         nonReentrant
         onlyActiveReserve(_reserve)
     {
-        (, uint256 compoundedBalance, uint256 borrowBalanceIncrease) = core
-            .getUserBorrowBalances(_reserve, _user);
+        (, uint256 compoundedBalance, uint256 borrowBalanceIncrease) =
+            core.getUserBorrowBalances(_reserve, _user);
 
         //step 1: user must be borrowing on _reserve at a stable rate
         require(
@@ -824,16 +819,17 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
             "The user borrow is variable and cannot be rebalanced"
         );
 
-        uint256 userCurrentStableRate = core.getUserCurrentStableBorrowRate(
-            _reserve,
-            _user
-        );
+        uint256 userCurrentStableRate =
+            core.getUserCurrentStableBorrowRate(_reserve, _user);
         uint256 liquidityRate = core.getReserveCurrentLiquidityRate(_reserve);
-        uint256 reserveCurrentStableRate = core
-            .getReserveCurrentStableBorrowRate(_reserve);
-        uint256 rebalanceDownRateThreshold = reserveCurrentStableRate.rayMul(
-            WadRayMath.ray().add(parametersProvider.getRebalanceDownRateDelta())
-        );
+        uint256 reserveCurrentStableRate =
+            core.getReserveCurrentStableBorrowRate(_reserve);
+        uint256 rebalanceDownRateThreshold =
+            reserveCurrentStableRate.rayMul(
+                WadRayMath.ray().add(
+                    parametersProvider.getRebalanceDownRateDelta()
+                )
+            );
 
         // Step 2: we have two possible situations to rebalance:
 
@@ -849,11 +845,12 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
             userCurrentStableRate < liquidityRate ||
             userCurrentStableRate > rebalanceDownRateThreshold
         ) {
-            uint256 newStableRate = core.updateStateOnRebalance(
-                _reserve,
-                _user,
-                borrowBalanceIncrease
-            );
+            uint256 newStableRate =
+                core.updateStateOnRebalance(
+                    _reserve,
+                    _user,
+                    borrowBalanceIncrease
+                );
 
             emit RebalanceStableBorrowRate(
                 _reserve,
@@ -886,10 +883,8 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
         onlyActiveReserve(_reserve)
         onlyUnfreezedReserve(_reserve)
     {
-        uint256 underlyingBalance = core.getUserUnderlyingAssetBalance(
-            _reserve,
-            msg.sender
-        );
+        uint256 underlyingBalance =
+            core.getUserUnderlyingAssetBalance(_reserve, msg.sender);
 
         require(
             underlyingBalance > 0,
@@ -943,25 +938,24 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
         onlyActiveReserve(_reserve)
         onlyActiveReserve(_collateral)
     {
-        address liquidationManager = addressesProvider
-            .getLendingPoolLiquidationManager();
+        address liquidationManager =
+            addressesProvider.getLendingPoolLiquidationManager();
         //solium-disable-next-line
-        (bool success, bytes memory result) = liquidationManager.delegatecall(
-            abi.encodeWithSignature(
-                "liquidationCall(address,address,address,uint256,bool)",
-                _collateral,
-                _reserve,
-                _user,
-                _purchaseAmount,
-                _receiveMToken
-            )
-        );
+        (bool success, bytes memory result) =
+            liquidationManager.delegatecall(
+                abi.encodeWithSignature(
+                    "liquidationCall(address,address,address,uint256,bool)",
+                    _collateral,
+                    _reserve,
+                    _user,
+                    _purchaseAmount,
+                    _receiveMToken
+                )
+            );
         //require(success, "Liquidation call failed");
 
-        (uint256 returnCode, string memory returnMessage) = abi.decode(
-            result,
-            (uint256, string)
-        );
+        (uint256 returnCode, string memory returnMessage) =
+            abi.decode(result, (uint256, string));
 
         if (returnCode != 0) {
             require(
@@ -1000,10 +994,10 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
         onlyAmountGreaterThanZero(_amount)
     {
         //check that the reserve has enough available liquidity
-        uint256 availableLiquidityBefore = _reserve ==
-            BscAddressLib.bnbAddress()
-            ? address(core).balance
-            : IERC20(_reserve).balanceOf(address(core));
+        uint256 availableLiquidityBefore =
+            _reserve == BscAddressLib.bnbAddress()
+                ? address(core).balance
+                : IERC20(_reserve).balanceOf(address(core));
 
         require(
             availableLiquidityBefore >= _amount,
@@ -1030,9 +1024,10 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
         receiver.executeOperation(_reserve, _amount, amountFee, _params);
 
         //check that the actual balance of the core contract includes the returned amount
-        uint256 availableLiquidityAfter = _reserve == BscAddressLib.bnbAddress()
-            ? address(core).balance
-            : IERC20(_reserve).balanceOf(address(core));
+        uint256 availableLiquidityAfter =
+            _reserve == BscAddressLib.bnbAddress()
+                ? address(core).balance
+                : IERC20(_reserve).balanceOf(address(core));
 
         require(
             availableLiquidityAfter == availableLiquidityBefore.add(amountFee),
@@ -1185,9 +1180,10 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
         view
         returns (uint256)
     {
-        uint256 share = _type == RewardsManager.RewardTypes.Depositor
-            ? core.getUsermTokenBalance(_reserve, msg.sender)
-            : core.getUserStakedTokenBalance(msg.sender);
+        uint256 share =
+            _type == RewardsManager.RewardTypes.Depositor
+                ? core.getUsermTokenBalance(_reserve, msg.sender)
+                : core.getUserStakedTokenBalance(msg.sender);
 
         return rewardsMgr.readRewards(_reserve, msg.sender, _type, share);
     }
@@ -1282,16 +1278,13 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
         address _reserve,
         RewardsManager.RewardTypes _type
     ) private {
-        uint256 share = _type == RewardsManager.RewardTypes.Depositor
-            ? core.getUsermTokenBalance(_reserve, msg.sender)
-            : core.getUserStakedTokenBalance(msg.sender);
+        uint256 share =
+            _type == RewardsManager.RewardTypes.Depositor
+                ? core.getUsermTokenBalance(_reserve, msg.sender)
+                : core.getUserStakedTokenBalance(msg.sender);
 
-        uint256 amt = rewardsMgr.readRewards(
-            _reserve,
-            msg.sender,
-            _type,
-            share
-        );
+        uint256 amt =
+            rewardsMgr.readRewards(_reserve, msg.sender, _type, share);
 
         if (amt != 0) {
             rewardsMgr.resetReward(_reserve, msg.sender, _type);

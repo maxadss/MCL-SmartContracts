@@ -1,4 +1,4 @@
-import BigNumber from './test/StakedbMXX/node_modules/bignumber.js.js';
+import BigNumber from 'bignumber.js';
 import {WAD} from './helpers/constants';
 
 const toWad = (value: string) => new BigNumber(value).times(WAD).toFixed();

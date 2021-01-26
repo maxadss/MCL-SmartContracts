@@ -1,4 +1,4 @@
-import rawBRE from '@nomiclabs/buidler';
+import rawBRE from 'hardhat';
 import {Signer, ethers} from 'ethers';
 
 import {getEthersSigners, insertContractAddressInDb} from '../helpers/contracts-helpers';
@@ -11,10 +11,11 @@ import {
   deployInitializableAdminUpgradeabilityProxy,
   deployMockTransferHook,
   deployBTokenMock,
+  deployLendingPool,
 } from '../helpers/contracts-accessors';
 import {
   PSM_STAKER_PREMIUM,
-  COOLDOWN_DAYS,
+  COOLDOWN_SECONDS,
   UNSTAKE_WINDOW,
   MAX_UINT_AMOUNT,
   STAKED_BMXX_NAME,
@@ -73,20 +74,24 @@ const buildTestEnv = async (deployer: Signer, vaultOfRewards: Signer, restWallet
     (1000 * 60 * 60).toString(),
   ]);
 
+  const lp = await deployLendingPool();
+
   const stakedbMXXImpl = await deployStakedbMXX([
     stakedToken,
     rewardsToken,
-    COOLDOWN_DAYS,
+    COOLDOWN_SECONDS,
     UNSTAKE_WINDOW,
     vaultOfRewardsAddress,
     emissionManager,
     (1000 * 60 * 60).toString(),
+    lp.address,
   ]);
 
   const mockTransferHook = await deployMockTransferHook();
 
   const stakedbMXXEncodedInitialize = stakedbMXXImpl.interface.encodeFunctionData('initialize', [
     mockTransferHook.address,
+    lp.address,
     STAKED_BMXX_NAME,
     STAKED_BMXX_SYMBOL,
     STAKED_BMXX_DECIMALS,

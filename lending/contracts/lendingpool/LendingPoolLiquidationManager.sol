@@ -200,15 +200,13 @@ contract LendingPoolLiquidationManager is
             ? vars.maxPrincipalAmountToLiquidate
             : _purchaseAmount;
 
-        (
-            uint256 maxCollateralToLiquidate,
-            uint256 principalAmountNeeded
-        ) = calculateAvailableCollateralToLiquidate(
-            _collateral,
-            _reserve,
-            vars.actualAmountToLiquidate,
-            vars.userCollateralmTokenBalance
-        );
+        (uint256 maxCollateralToLiquidate, uint256 principalAmountNeeded) =
+            calculateAvailableCollateralToLiquidate(
+                _collateral,
+                _reserve,
+                vars.actualAmountToLiquidate,
+                vars.userCollateralmTokenBalance
+            );
 
         vars.originationFee = core.getUserOriginationFee(_reserve, _user);
 
@@ -238,8 +236,8 @@ contract LendingPoolLiquidationManager is
         // if liquidator reclaims the underlying asset, we make sure there is
         // enough available collateral in the reserve
         if (!_receiveMToken) {
-            uint256 currentAvailableCollateral = core
-                .getReserveAvailableLiquidity(_collateral);
+            uint256 currentAvailableCollateral =
+                core.getReserveAvailableLiquidity(_collateral);
             if (currentAvailableCollateral < maxCollateralToLiquidate) {
                 return (
                     uint256(LiquidationErrors.NOT_ENOUGH_LIQUIDITY),
@@ -260,9 +258,8 @@ contract LendingPoolLiquidationManager is
             _receiveMToken
         );
 
-        mToken collateralMToken = mToken(
-            core.getReservemTokenAddress(_collateral)
-        );
+        mToken collateralMToken =
+            mToken(core.getReservemTokenAddress(_collateral));
 
         // if liquidator reclaims the mToken, he receives the equivalent
         // mToken amount
@@ -362,9 +359,8 @@ contract LendingPoolLiquidationManager is
     {
         collateralAmount = 0;
         principalAmountNeeded = 0;
-        IPriceOracleGetter oracle = IPriceOracleGetter(
-            addressesProvider.getPriceOracle()
-        );
+        IPriceOracleGetter oracle =
+            IPriceOracleGetter(addressesProvider.getPriceOracle());
 
         // Usage of a memory struct of vars to avoid "Stack too deep" errors due to local variables
         AvailableCollateralToLiquidateLocalVars memory vars;

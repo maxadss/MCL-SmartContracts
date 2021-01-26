@@ -103,13 +103,14 @@ library CoreLibrary {
         view
         returns (uint256)
     {
-        uint256 cumulated = calculateLinearInterest(
-            _reserve
-                .currentLiquidityRate,
-            _reserve
-                .lastUpdateTimestamp
-        )
-            .rayMul(_reserve.lastLiquidityCumulativeIndex);
+        uint256 cumulated =
+            calculateLinearInterest(
+                _reserve
+                    .currentLiquidityRate,
+                _reserve
+                    .lastUpdateTimestamp
+            )
+                .rayMul(_reserve.lastLiquidityCumulativeIndex);
 
         return cumulated;
     }
@@ -125,20 +126,20 @@ library CoreLibrary {
 
         if (totalBorrows > 0) {
             //only cumulating if there is any income being produced
-            uint256 cumulatedLiquidityInterest = calculateLinearInterest(
-                _self.currentLiquidityRate,
-                _self.lastUpdateTimestamp
-            );
+            uint256 cumulatedLiquidityInterest =
+                calculateLinearInterest(
+                    _self.currentLiquidityRate,
+                    _self.lastUpdateTimestamp
+                );
 
             _self.lastLiquidityCumulativeIndex = cumulatedLiquidityInterest
                 .rayMul(_self.lastLiquidityCumulativeIndex);
 
-
-                uint256 cumulatedVariableBorrowInterest
-             = calculateCompoundedInterest(
-                _self.currentVariableBorrowRate,
-                _self.lastUpdateTimestamp
-            );
+            uint256 cumulatedVariableBorrowInterest =
+                calculateCompoundedInterest(
+                    _self.currentVariableBorrowRate,
+                    _self.lastUpdateTimestamp
+                );
             _self
                 .lastVariableBorrowCumulativeIndex = cumulatedVariableBorrowInterest
                 .rayMul(_self.lastVariableBorrowCumulativeIndex);
@@ -158,13 +159,11 @@ library CoreLibrary {
         uint256 _totalLiquidity,
         uint256 _amount
     ) internal {
-        uint256 amountToLiquidityRatio = _amount.wadToRay().rayDiv(
-            _totalLiquidity.wadToRay()
-        );
+        uint256 amountToLiquidityRatio =
+            _amount.wadToRay().rayDiv(_totalLiquidity.wadToRay());
 
-        uint256 cumulatedLiquidity = amountToLiquidityRatio.add(
-            WadRayMath.ray()
-        );
+        uint256 cumulatedLiquidity =
+            amountToLiquidityRatio.add(WadRayMath.ray());
 
         _self.lastLiquidityCumulativeIndex = cumulatedLiquidity.rayMul(
             _self.lastLiquidityCumulativeIndex
@@ -281,9 +280,8 @@ library CoreLibrary {
     ) internal view returns (uint256) {
         if (_self.principalBorrowBalance == 0) return 0;
 
-        uint256 principalBorrowBalanceRay = _self
-            .principalBorrowBalance
-            .wadToRay();
+        uint256 principalBorrowBalanceRay =
+            _self.principalBorrowBalance.wadToRay();
         uint256 compoundedBalance = 0;
         uint256 cumulatedInterest = 0;
 
@@ -341,9 +339,10 @@ library CoreLibrary {
         //update the average stable rate
         //weighted average of all the borrows
         uint256 weightedLastBorrow = _amount.wadToRay().rayMul(_rate);
-        uint256 weightedPreviousTotalBorrows = previousTotalBorrowStable
-            .wadToRay()
-            .rayMul(_reserve.currentAverageStableBorrowRate);
+        uint256 weightedPreviousTotalBorrows =
+            previousTotalBorrowStable.wadToRay().rayMul(
+                _reserve.currentAverageStableBorrowRate
+            );
 
         _reserve.currentAverageStableBorrowRate = weightedLastBorrow
             .add(weightedPreviousTotalBorrows)
@@ -380,9 +379,10 @@ library CoreLibrary {
         //update the average stable rate
         //weighted average of all the borrows
         uint256 weightedLastBorrow = _amount.wadToRay().rayMul(_rate);
-        uint256 weightedPreviousTotalBorrows = previousTotalBorrowStable
-            .wadToRay()
-            .rayMul(_reserve.currentAverageStableBorrowRate);
+        uint256 weightedPreviousTotalBorrows =
+            previousTotalBorrowStable.wadToRay().rayMul(
+                _reserve.currentAverageStableBorrowRate
+            );
 
         require(
             weightedPreviousTotalBorrows >= weightedLastBorrow,
@@ -442,13 +442,11 @@ library CoreLibrary {
         returns (uint256)
     {
         //solium-disable-next-line
-        uint256 timeDifference = block.timestamp.sub(
-            uint256(_lastUpdateTimestamp)
-        );
+        uint256 timeDifference =
+            block.timestamp.sub(uint256(_lastUpdateTimestamp));
 
-        uint256 timeDelta = timeDifference.wadToRay().rayDiv(
-            SECONDS_PER_YEAR.wadToRay()
-        );
+        uint256 timeDelta =
+            timeDifference.wadToRay().rayDiv(SECONDS_PER_YEAR.wadToRay());
 
         return _rate.rayMul(timeDelta).add(WadRayMath.ray());
     }
@@ -466,9 +464,8 @@ library CoreLibrary {
         uint40 _lastUpdateTimestamp
     ) internal view returns (uint256) {
         //solium-disable-next-line
-        uint256 timeDifference = block.timestamp.sub(
-            uint256(_lastUpdateTimestamp)
-        );
+        uint256 timeDifference =
+            block.timestamp.sub(uint256(_lastUpdateTimestamp));
 
         uint256 ratePerSecond = _rate.div(SECONDS_PER_YEAR);
 

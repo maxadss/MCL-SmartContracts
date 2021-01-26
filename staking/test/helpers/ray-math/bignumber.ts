@@ -1,4 +1,4 @@
-import BigNumber from '../../StakedbMXX/node_modules/bignumber.js.js';
+import BigNumber from 'bignumber.js';
 import {BigNumber as BigNumberEthers, BigNumberish} from 'ethers';
 
 export type BigNumberValue = string | number | BigNumber | BigNumberEthers | BigNumberish;

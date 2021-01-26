@@ -1,5 +1,5 @@
 import {makeSuite, TestEnv} from '../helpers/make-suite';
-import {COOLDOWN_DAYS, UNSTAKE_WINDOW} from '../../helpers/constants';
+import {COOLDOWN_SECONDS, UNSTAKE_WINDOW} from '../../helpers/constants';
 import {
   waitForTx,
   advanceBlock,
@@ -43,7 +43,7 @@ makeSuite('StakedbMXX. Redeem', (testEnv: TestEnv) => {
     ).to.be.revertedWith('UNSTAKE_WINDOW_FINISHED');
   });
 
-  it('User 1 activates the cooldown, but is not able to redeem before the COOLDOWN_DAYS passed', async () => {
+  it('User 1 activates the cooldown, but is not able to redeem before the COOLDOWN_SECONDS passed', async () => {
     const {stakedbMXX, users} = testEnv;
     const amount = ethers.utils.parseEther('50');
     const staker = users[1];
@@ -55,13 +55,13 @@ makeSuite('StakedbMXX. Redeem', (testEnv: TestEnv) => {
     );
     const currentTime = await timeLatest();
 
-    const remainingCooldown = startedCooldownAt.plus(COOLDOWN_DAYS).minus(currentTime);
+    const remainingCooldown = startedCooldownAt.plus(COOLDOWN_SECONDS).minus(currentTime);
     await increaseTimeAndMine(Number(remainingCooldown.dividedBy('2').toString()));
     await expect(
       stakedbMXX.connect(staker.signer).redeem(staker.address, amount)
     ).to.be.revertedWith('INSUFFICIENT_COOLDOWN');
 
-    await advanceBlock(startedCooldownAt.plus(new BigNumber(COOLDOWN_DAYS).minus(1)).toNumber()); // We fast-forward time to just before COOLDOWN_DAYS
+    await advanceBlock(startedCooldownAt.plus(new BigNumber(COOLDOWN_SECONDS).minus(1)).toNumber()); // We fast-forward time to just before COOLDOWN_SECONDS
 
     await expect(
       stakedbMXX.connect(staker.signer).redeem(staker.address, amount)
@@ -69,7 +69,7 @@ makeSuite('StakedbMXX. Redeem', (testEnv: TestEnv) => {
 
     await advanceBlock(
       startedCooldownAt
-        .plus(new BigNumber(COOLDOWN_DAYS).plus(UNSTAKE_WINDOW).plus(1))
+        .plus(new BigNumber(COOLDOWN_SECONDS).plus(UNSTAKE_WINDOW).plus(1))
         .toNumber()
     ); // We fast-forward time to just after the unstake window
 
@@ -89,7 +89,7 @@ makeSuite('StakedbMXX. Redeem', (testEnv: TestEnv) => {
     );
     const currentTime = await timeLatest();
 
-    const remainingCooldown = startedCooldownAt.plus(COOLDOWN_DAYS).minus(currentTime);
+    const remainingCooldown = startedCooldownAt.plus(COOLDOWN_SECONDS).minus(currentTime);
 
     await increaseTimeAndMine(remainingCooldown.plus(1).toNumber());
     const bMXXBalanceBefore = new BigNumber((await mToken.balanceOf(staker.address)).toString());
@@ -117,7 +117,7 @@ makeSuite('StakedbMXX. Redeem', (testEnv: TestEnv) => {
     );
     const currentTime = await timeLatest();
 
-    const remainingCooldown = startedCooldownAt.plus(COOLDOWN_DAYS).minus(currentTime);
+    const remainingCooldown = startedCooldownAt.plus(COOLDOWN_SECONDS).minus(currentTime);
 
     await increaseTimeAndMine(remainingCooldown.plus(1).toNumber());
     const bMXXBalanceBefore = new BigNumber((await mToken.balanceOf(staker.address)).toString());
@@ -141,7 +141,7 @@ makeSuite('StakedbMXX. Redeem', (testEnv: TestEnv) => {
     const cooldownActivationTimestamp = await timeLatest();
 
     await advanceBlock(
-      cooldownActivationTimestamp.plus(new BigNumber(COOLDOWN_DAYS).plus(1)).toNumber()
+      cooldownActivationTimestamp.plus(new BigNumber(COOLDOWN_SECONDS).plus(1)).toNumber()
     );
 
     const bMXXBalanceBefore = new BigNumber((await mToken.balanceOf(staker.address)).toString());
@@ -167,7 +167,7 @@ makeSuite('StakedbMXX. Redeem', (testEnv: TestEnv) => {
     const cooldownActivationTimestamp = await timeLatest();
 
     await advanceBlock(
-      cooldownActivationTimestamp.plus(new BigNumber(COOLDOWN_DAYS).plus(1)).toNumber()
+      cooldownActivationTimestamp.plus(new BigNumber(COOLDOWN_SECONDS).plus(1)).toNumber()
     );
 
     const bMXXBalanceBefore = new BigNumber((await mToken.balanceOf(staker.address)).toString());

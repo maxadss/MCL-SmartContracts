@@ -1,10 +1,10 @@
-import {task} from '@nomiclabs/buidler/config';
+import {task} from 'hardhat/config';
 import {eContractid} from '../../helpers/types';
-import {BuidlerRuntimeEnvironment} from '@nomiclabs/buidler/types';
-import {StakedbMXX} from '../../types/StakedbMXX';
+import {HardhatRuntimeEnvironment} from 'hardhat/types';
+import {StakedbMXX} from '../../types/StakedbMxx';
 
-task('dev-deployment', 'Deployment in buidlerevm').setAction(async (_, localBRE) => {
-  const BRE: BuidlerRuntimeEnvironment = await localBRE.run('set-bre');
+task('dev-deployment', 'Deployment in hardhat').setAction(async (_, localBRE) => {
+  const BRE: HardhatRuntimeEnvironment = await localBRE.run('set-bre');
 
   const bMXXStake = (await BRE.run(`deploy-${eContractid.StakedbMXX}`)) as StakedbMXX;
 });

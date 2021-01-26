@@ -17,7 +17,7 @@ pragma solidity ^0.5.0;
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/ownership/Ownable.sol";
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/utils/ReentrancyGuard.sol";
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/math/SafeMath.sol";
-import "./bMXX.sol";
+import "./bMxx.sol";
 
 /**
  * @title Mxx Converter Redemption Contract

@@ -1,10 +1,11 @@
-import BigNumber from '../test/StakedbMXX/node_modules/bignumber.js.js';
+import BigNumber from 'bignumber.js';
 import low from 'lowdb';
 import FileSync from 'lowdb/adapters/FileSync';
 import {WAD} from './constants';
 import {Wallet, ContractTransaction} from 'ethers';
-import {BuidlerRuntimeEnvironment} from '@nomiclabs/buidler/types';
+import {HardhatRuntimeEnvironment} from 'hardhat/types';
 import {iParamsPerNetwork, eEthereumNetwork} from './types';
+
 
 export const toWad = (value: string | number) => new BigNumber(value).times(WAD).toFixed();
 
@@ -12,18 +13,18 @@ export const stringToBigNumber = (amount: string): BigNumber => new BigNumber(am
 
 export const getDb = () => low(new FileSync('./deployed-contracts.json'));
 
-export let BRE: BuidlerRuntimeEnvironment = {} as BuidlerRuntimeEnvironment;
-export const setBRE = (_BRE: BuidlerRuntimeEnvironment) => {
+export let BRE: HardhatRuntimeEnvironment = {} as HardhatRuntimeEnvironment;
+export const setBRE = (_BRE: HardhatRuntimeEnvironment) => {
   BRE = _BRE;
 };
 
 export const getParamPerNetwork = <T>(
-  {kovan, ropsten, main, buidlerevm}: iParamsPerNetwork<T>,
+  {kovan, ropsten, main, hardhat}: iParamsPerNetwork<T>,
   network: eEthereumNetwork
 ) => {
   switch (network) {
-    case eEthereumNetwork.buidlerevm:
-      return buidlerevm;
+    case eEthereumNetwork.hardhat:
+      return hardhat;
     case eEthereumNetwork.kovan:
       return kovan;
     case eEthereumNetwork.ropsten:
@@ -43,9 +44,9 @@ export const createRandomAddress = () => Wallet.createRandom().address;
 
 export const waitForTx = async (tx: ContractTransaction) => await tx.wait();
 
-export const evmSnapshot = async () => await BRE.ethereum.send('evm_snapshot', []);
+export const evmSnapshot = async () => await BRE.ethers.provider.send('evm_snapshot', []);
 
-export const evmRevert = async (id: string) => BRE.ethereum.send('evm_revert', [id]);
+export const evmRevert = async (id: string) => BRE.ethers.provider.send('evm_revert', [id]);
 
 export const timeLatest = async () => {
   const block = await BRE.ethers.provider.getBlock('latest');

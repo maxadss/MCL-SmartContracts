@@ -191,12 +191,12 @@ contract LendingPoolConfigurator is VersionedInitializable {
     ) external onlyLendingPoolManager {
         ERC20Detailed asset = ERC20Detailed(_reserve);
 
-        string memory bMXXTokenName = string(
-            abi.encodePacked("Multiplier Interest bearing ", asset.name())
-        );
-        string memory mTokenSymbol = string(
-            abi.encodePacked("mx", asset.symbol())
-        );
+        string memory bMXXTokenName =
+            string(
+                abi.encodePacked("Multiplier Interest bearing ", asset.name())
+            );
+        string memory mTokenSymbol =
+            string(abi.encodePacked("mx", asset.symbol()));
 
         initReserveWithData(
             _reserve,
@@ -225,17 +225,17 @@ contract LendingPoolConfigurator is VersionedInitializable {
         uint8 _underlyingAssetDecimals,
         address _interestRateStrategyAddress
     ) public onlyLendingPoolManager {
-        LendingPoolCore core = LendingPoolCore(
-            poolAddressesProvider.getLendingPoolCore()
-        );
+        LendingPoolCore core =
+            LendingPoolCore(poolAddressesProvider.getLendingPoolCore());
 
-        mToken bMXXTokenInstance = new mToken(
-            poolAddressesProvider,
-            _reserve,
-            _underlyingAssetDecimals,
-            _mTokenName,
-            _mTokenSymbol
-        );
+        mToken bMXXTokenInstance =
+            new mToken(
+                poolAddressesProvider,
+                _reserve,
+                _underlyingAssetDecimals,
+                _mTokenName,
+                _mTokenSymbol
+            );
         core.initReserve(
             _reserve,
             address(bMXXTokenInstance),
@@ -258,9 +258,8 @@ contract LendingPoolConfigurator is VersionedInitializable {
         external
         onlyLendingPoolManager
     {
-        LendingPoolCore core = LendingPoolCore(
-            poolAddressesProvider.getLendingPoolCore()
-        );
+        LendingPoolCore core =
+            LendingPoolCore(poolAddressesProvider.getLendingPoolCore());
         core.removeLastAddedReserve(_reserveToRemove);
         emit ReserveRemoved(_reserveToRemove);
     }
@@ -275,9 +274,8 @@ contract LendingPoolConfigurator is VersionedInitializable {
         address _reserve,
         bool _stableBorrowRateEnabled
     ) external onlyLendingPoolManager {
-        LendingPoolCore core = LendingPoolCore(
-            poolAddressesProvider.getLendingPoolCore()
-        );
+        LendingPoolCore core =
+            LendingPoolCore(poolAddressesProvider.getLendingPoolCore());
         core.enableBorrowingOnReserve(_reserve, _stableBorrowRateEnabled);
         emit BorrowingEnabledOnReserve(_reserve, _stableBorrowRateEnabled);
     }
@@ -290,9 +288,8 @@ contract LendingPoolConfigurator is VersionedInitializable {
         external
         onlyLendingPoolManager
     {
-        LendingPoolCore core = LendingPoolCore(
-            poolAddressesProvider.getLendingPoolCore()
-        );
+        LendingPoolCore core =
+            LendingPoolCore(poolAddressesProvider.getLendingPoolCore());
         core.disableBorrowingOnReserve(_reserve);
 
         emit BorrowingDisabledOnReserve(_reserve);
@@ -314,9 +311,8 @@ contract LendingPoolConfigurator is VersionedInitializable {
         uint256 _liquidationThreshold,
         uint256 _liquidationBonus
     ) external onlyLendingPoolManager {
-        LendingPoolCore core = LendingPoolCore(
-            poolAddressesProvider.getLendingPoolCore()
-        );
+        LendingPoolCore core =
+            LendingPoolCore(poolAddressesProvider.getLendingPoolCore());
         core.enableReserveAsCollateral(
             _reserve,
             _baseLTVasCollateral,
@@ -339,9 +335,8 @@ contract LendingPoolConfigurator is VersionedInitializable {
         external
         onlyLendingPoolManager
     {
-        LendingPoolCore core = LendingPoolCore(
-            poolAddressesProvider.getLendingPoolCore()
-        );
+        LendingPoolCore core =
+            LendingPoolCore(poolAddressesProvider.getLendingPoolCore());
         core.disableReserveAsCollateral(_reserve);
 
         emit ReserveDisabledAsCollateral(_reserve);
@@ -355,9 +350,8 @@ contract LendingPoolConfigurator is VersionedInitializable {
         external
         onlyLendingPoolManager
     {
-        LendingPoolCore core = LendingPoolCore(
-            poolAddressesProvider.getLendingPoolCore()
-        );
+        LendingPoolCore core =
+            LendingPoolCore(poolAddressesProvider.getLendingPoolCore());
         core.enableReserveStableBorrowRate(_reserve);
 
         emit StableRateEnabledOnReserve(_reserve);
@@ -371,9 +365,8 @@ contract LendingPoolConfigurator is VersionedInitializable {
         external
         onlyLendingPoolManager
     {
-        LendingPoolCore core = LendingPoolCore(
-            poolAddressesProvider.getLendingPoolCore()
-        );
+        LendingPoolCore core =
+            LendingPoolCore(poolAddressesProvider.getLendingPoolCore());
         core.disableReserveStableBorrowRate(_reserve);
 
         emit StableRateDisabledOnReserve(_reserve);
@@ -384,9 +377,8 @@ contract LendingPoolConfigurator is VersionedInitializable {
      * @param _reserve the address of the reserve
      **/
     function activateReserve(address _reserve) external onlyLendingPoolManager {
-        LendingPoolCore core = LendingPoolCore(
-            poolAddressesProvider.getLendingPoolCore()
-        );
+        LendingPoolCore core =
+            LendingPoolCore(poolAddressesProvider.getLendingPoolCore());
         core.activateReserve(_reserve);
 
         emit ReserveActivated(_reserve);
@@ -400,9 +392,8 @@ contract LendingPoolConfigurator is VersionedInitializable {
         external
         onlyLendingPoolManager
     {
-        LendingPoolCore core = LendingPoolCore(
-            poolAddressesProvider.getLendingPoolCore()
-        );
+        LendingPoolCore core =
+            LendingPoolCore(poolAddressesProvider.getLendingPoolCore());
         require(
             core.getReserveTotalLiquidity(_reserve) == 0,
             "The liquidity of the reserve needs to be 0"
@@ -419,9 +410,8 @@ contract LendingPoolConfigurator is VersionedInitializable {
      * @param _reserve the address of the reserve
      **/
     function freezeReserve(address _reserve) external onlyLendingPoolManager {
-        LendingPoolCore core = LendingPoolCore(
-            poolAddressesProvider.getLendingPoolCore()
-        );
+        LendingPoolCore core =
+            LendingPoolCore(poolAddressesProvider.getLendingPoolCore());
         core.freezeReserve(_reserve);
 
         emit ReserveFreezed(_reserve);
@@ -432,9 +422,8 @@ contract LendingPoolConfigurator is VersionedInitializable {
      * @param _reserve the address of the reserve
      **/
     function unfreezeReserve(address _reserve) external onlyLendingPoolManager {
-        LendingPoolCore core = LendingPoolCore(
-            poolAddressesProvider.getLendingPoolCore()
-        );
+        LendingPoolCore core =
+            LendingPoolCore(poolAddressesProvider.getLendingPoolCore());
         core.unfreezeReserve(_reserve);
 
         emit ReserveUnfreezed(_reserve);
@@ -449,9 +438,8 @@ contract LendingPoolConfigurator is VersionedInitializable {
         external
         onlyLendingPoolManager
     {
-        LendingPoolCore core = LendingPoolCore(
-            poolAddressesProvider.getLendingPoolCore()
-        );
+        LendingPoolCore core =
+            LendingPoolCore(poolAddressesProvider.getLendingPoolCore());
         core.setReserveBaseLTVasCollateral(_reserve, _ltv);
         emit ReserveBaseLtvChanged(_reserve, _ltv);
     }
@@ -465,9 +453,8 @@ contract LendingPoolConfigurator is VersionedInitializable {
         address _reserve,
         uint256 _threshold
     ) external onlyLendingPoolManager {
-        LendingPoolCore core = LendingPoolCore(
-            poolAddressesProvider.getLendingPoolCore()
-        );
+        LendingPoolCore core =
+            LendingPoolCore(poolAddressesProvider.getLendingPoolCore());
         core.setReserveLiquidationThreshold(_reserve, _threshold);
         emit ReserveLiquidationThresholdChanged(_reserve, _threshold);
     }
@@ -481,9 +468,8 @@ contract LendingPoolConfigurator is VersionedInitializable {
         external
         onlyLendingPoolManager
     {
-        LendingPoolCore core = LendingPoolCore(
-            poolAddressesProvider.getLendingPoolCore()
-        );
+        LendingPoolCore core =
+            LendingPoolCore(poolAddressesProvider.getLendingPoolCore());
         core.setReserveLiquidationBonus(_reserve, _bonus);
         emit ReserveLiquidationBonusChanged(_reserve, _bonus);
     }
@@ -497,9 +483,8 @@ contract LendingPoolConfigurator is VersionedInitializable {
         external
         onlyLendingPoolManager
     {
-        LendingPoolCore core = LendingPoolCore(
-            poolAddressesProvider.getLendingPoolCore()
-        );
+        LendingPoolCore core =
+            LendingPoolCore(poolAddressesProvider.getLendingPoolCore());
         core.setReserveDecimals(_reserve, _decimals);
         emit ReserveDecimalsChanged(_reserve, _decimals);
     }
@@ -514,9 +499,8 @@ contract LendingPoolConfigurator is VersionedInitializable {
         address _reserve,
         address _rateStrategyAddress
     ) external onlyLendingPoolManager {
-        LendingPoolCore core = LendingPoolCore(
-            poolAddressesProvider.getLendingPoolCore()
-        );
+        LendingPoolCore core =
+            LendingPoolCore(poolAddressesProvider.getLendingPoolCore());
         core.setReserveInterestRateStrategyAddress(
             _reserve,
             _rateStrategyAddress
@@ -532,9 +516,8 @@ contract LendingPoolConfigurator is VersionedInitializable {
         external
         onlyLendingPoolManager
     {
-        LendingPoolCore core = LendingPoolCore(
-            poolAddressesProvider.getLendingPoolCore()
-        );
+        LendingPoolCore core =
+            LendingPoolCore(poolAddressesProvider.getLendingPoolCore());
         core.refreshConfiguration();
     }
 }

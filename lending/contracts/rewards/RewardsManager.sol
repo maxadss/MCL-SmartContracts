@@ -216,13 +216,17 @@ contract RewardsManager is Ownable, ReentrancyGuard {
             return;
         }
 
-        (uint256 start, uint256 end, bool hasNewReward) = getValidRange(
+        (uint256 start, uint256 end, bool hasNewReward) =
+            getValidRange(pool, _user, uint256(_type), _num);
+        updateRange(
             pool,
             _user,
             uint256(_type),
-            _num
+            start,
+            end,
+            _shares,
+            hasNewReward
         );
-        updateRange( pool, _user, uint256(_type), start, end, _shares, hasNewReward);
     }
 
     /**
@@ -246,18 +250,14 @@ contract RewardsManager is Ownable, ReentrancyGuard {
             return 0;
         }
 
-        uint256 rewardAmt = pool.claims[_user].items[uint256(_type)]
-            .accumReward;
+        uint256 rewardAmt =
+            pool.claims[_user].items[uint256(_type)].accumReward;
         if (_share == 0) {
             return rewardAmt;
         }
 
-        (uint256 start, uint256 end, bool hasNewReward) = getValidRange(
-            pool,
-            _user,
-            uint256(_type),
-            0
-        );
+        (uint256 start, uint256 end, bool hasNewReward) =
+            getValidRange(pool, _user, uint256(_type), 0);
         if (hasNewReward) {
             uint256 accum = readRange(pool, uint256(_type), start, end, _share);
             rewardAmt = rewardAmt.add(accum);
@@ -335,9 +335,8 @@ contract RewardsManager is Ownable, ReentrancyGuard {
                 continue;
             }
 
-            uint256 rewardAmt = _share.wadMul(r.amount).wadDiv(
-                r.totalSharingBase
-            );
+            uint256 rewardAmt =
+                _share.wadMul(r.amount).wadDiv(r.totalSharingBase);
 
             // Enough in RewardItem to pay ?
             if (r.amount.sub(r.paidSoFar) < rewardAmt) {
@@ -379,9 +378,8 @@ contract RewardsManager is Ownable, ReentrancyGuard {
                 continue;
             }
 
-            uint256 rewardAmt = _share.wadMul(r.amount).wadDiv(
-                r.totalSharingBase
-            );
+            uint256 rewardAmt =
+                _share.wadMul(r.amount).wadDiv(r.totalSharingBase);
 
             // Enough in RewardItem to pay ?
             if (r.amount.sub(r.paidSoFar) < rewardAmt) {

@@ -1,5 +1,5 @@
-import {task} from '@nomiclabs/buidler/config';
-import {BuidlerRuntimeEnvironment} from '@nomiclabs/buidler/types';
+import {task} from 'hardhat/config';
+import {HardhatRuntimeEnvironment} from 'hardhat/types';
 
 import {eContractid, eEthereumNetwork} from '../../helpers/types';
 import {checkVerification} from '../../helpers/etherscan-verification';
@@ -13,7 +13,7 @@ task('common-deployment', 'Deployment in for Main, Kovan and Ropsten networks')
   )
   .addOptionalParam('bMXXAddress', 'Use mToken address by param instead of configuration.')
   .setAction(async ({verify, vaultAddress, bMXXAddress}, localBRE) => {
-    const BRE: BuidlerRuntimeEnvironment = await localBRE.run('set-bre');
+    const BRE: HardhatRuntimeEnvironment = await localBRE.run('set-bre');
     const network = BRE.network.name as eEthereumNetwork;
     const bMXXAdmin = getbMXXAdminPerNetwork(network);
 

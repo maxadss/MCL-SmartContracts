@@ -1,4 +1,4 @@
-import {task} from '@nomiclabs/buidler/config';
+import {task} from 'hardhat/config';
 import {eContractid} from '../../helpers/types';
 import {waitForTx} from '../../helpers/misc-utils';
 import {
@@ -8,10 +8,12 @@ import {
   STAKED_BMXX_DECIMALS,
 } from '../../helpers/constants';
 import {
-  getStakedbMXX,
   getStakedbMXXImpl,
   getStakedbMXXProxy,
+  getLendingPoolMock,
 } from '../../helpers/contracts-accessors';
+
+
 
 const {StakedbMXX} = eContractid;
 
@@ -37,8 +39,11 @@ task(`initialize-${StakedbMXX}`, `Initialize the ${StakedbMXX} proxy contract`)
 
     console.log('\tInitializing StakedbMXX');
 
+    const lendingPoolMock =  await getLendingPoolMock();
+
     const encodedInitializeStakedbMXX = stakedbMXXImpl.interface.encodeFunctionData('initialize', [
       ZERO_ADDRESS,
+      lendingPoolMock.address,
       STAKED_BMXX_NAME,
       STAKED_BMXX_SYMBOL,
       STAKED_BMXX_DECIMALS,

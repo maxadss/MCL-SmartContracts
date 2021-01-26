@@ -13,9 +13,9 @@ import {
   getMintableErc20,
   getStakedbMXX,
 } from '../../helpers/contracts-accessors';
-import {bMXXIncentivesController} from '../../types/bMXXIncentivesController';
 import {MintableErc20} from '../../types/MintableErc20';
 import {BTokenMock} from '../../types/BTokenMock';
+import { BMXXIncentivesController } from '../../types/BMxxIncentivesController';
 
 chai.use(bignumberChai());
 
@@ -33,7 +33,7 @@ export interface TestEnv {
   deployer: SignerWithAddress;
   users: SignerWithAddress[];
   mToken: MintableErc20;
-  bMXXIncentivesController: bMXXIncentivesController;
+  bMXXIncentivesController: BMXXIncentivesController;
   stakedbMXX: StakedbMXX;
   aDaiMock: BTokenMock;
   aWethMock: BTokenMock;
@@ -51,7 +51,7 @@ const testEnv: TestEnv = {
   users: [] as SignerWithAddress[],
   mToken: {} as MintableErc20,
   stakedbMXX: {} as StakedbMXX,
-  bMXXIncentivesController: {} as bMXXIncentivesController,
+  bMXXIncentivesController: {} as BMXXIncentivesController,
   aDaiMock: {} as BTokenMock,
   aWethMock: {} as BTokenMock,
 } as TestEnv;

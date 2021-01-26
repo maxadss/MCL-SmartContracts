@@ -93,9 +93,8 @@ contract LendingPoolDataProvider is VersionedInitializable {
             bool healthFactorBelowThreshold
         )
     {
-        IPriceOracleGetter oracle = IPriceOracleGetter(
-            addressesProvider.getPriceOracle()
-        );
+        IPriceOracleGetter oracle =
+            IPriceOracleGetter(addressesProvider.getPriceOracle());
 
         // Usage of a memory struct of vars to avoid "Stack too deep" errors due to local variables
         UserGlobalDataLocalVars memory vars;
@@ -132,10 +131,11 @@ contract LendingPoolDataProvider is VersionedInitializable {
 
             //liquidity and collateral balance
             if (vars.compoundedLiquidityBalance > 0) {
-                uint256 liquidityBalanceBNB = vars
-                    .reserveUnitPrice
-                    .mul(vars.compoundedLiquidityBalance)
-                    .div(vars.tokenUnit);
+                uint256 liquidityBalanceBNB =
+                    vars
+                        .reserveUnitPrice
+                        .mul(vars.compoundedLiquidityBalance)
+                        .div(vars.tokenUnit);
                 totalLiquidityBalanceBNB = totalLiquidityBalanceBNB.add(
                     liquidityBalanceBNB
                 );
@@ -247,9 +247,8 @@ contract LendingPoolDataProvider is VersionedInitializable {
             return true; //no borrows - no reasons to block the transfer
         }
 
-        IPriceOracleGetter oracle = IPriceOracleGetter(
-            addressesProvider.getPriceOracle()
-        );
+        IPriceOracleGetter oracle =
+            IPriceOracleGetter(addressesProvider.getPriceOracle());
 
         vars.amountToDecreaseBNB = oracle
             .getAssetPrice(_reserve)
@@ -271,14 +270,13 @@ contract LendingPoolDataProvider is VersionedInitializable {
             .sub(vars.amountToDecreaseBNB.mul(vars.reserveLiquidationThreshold))
             .div(vars.collateralBalancefterDecrease);
 
-
-            uint256 healthFactorAfterDecrease
-         = calculateHealthFactorFromBalancesInternal(
-            vars.collateralBalancefterDecrease,
-            vars.borrowBalanceBNB,
-            vars.totalFeesBNB,
-            vars.liquidationThresholdAfterDecrease
-        );
+        uint256 healthFactorAfterDecrease =
+            calculateHealthFactorFromBalancesInternal(
+                vars.collateralBalancefterDecrease,
+                vars.borrowBalanceBNB,
+                vars.totalFeesBNB,
+                vars.liquidationThresholdAfterDecrease
+            );
 
         return healthFactorAfterDecrease > HEALTH_FACTOR_LIQUIDATION_THRESHOLD;
     }
@@ -306,21 +304,21 @@ contract LendingPoolDataProvider is VersionedInitializable {
     ) external view returns (uint256) {
         uint256 reserveDecimals = core.getReserveDecimals(_reserve);
 
-        IPriceOracleGetter oracle = IPriceOracleGetter(
-            addressesProvider.getPriceOracle()
-        );
+        IPriceOracleGetter oracle =
+            IPriceOracleGetter(addressesProvider.getPriceOracle());
 
-        uint256 requestedBorrowAmountBNB = oracle
-            .getAssetPrice(_reserve)
-            .mul(_amount.add(_fee))
-            .div(10**reserveDecimals); //price is in bnb
+        uint256 requestedBorrowAmountBNB =
+            oracle.getAssetPrice(_reserve).mul(_amount.add(_fee)).div(
+                10**reserveDecimals
+            ); //price is in bnb
 
         //add the current already borrowed amount to the amount requested to calculate the total collateral needed.
-        uint256 collateralNeededInBNB = _userCurrentBorrowBalanceTH
-            .add(_userCurrentFeesBNB)
-            .add(requestedBorrowAmountBNB)
-            .mul(100)
-            .div(_userCurrentLtv); //LTV is calculated in percentage
+        uint256 collateralNeededInBNB =
+            _userCurrentBorrowBalanceTH
+                .add(_userCurrentFeesBNB)
+                .add(requestedBorrowAmountBNB)
+                .mul(100)
+                .div(_userCurrentLtv); //LTV is calculated in percentage
 
         return collateralNeededInBNB;
     }
@@ -352,8 +350,9 @@ contract LendingPoolDataProvider is VersionedInitializable {
             borrowBalanceBNB.add(totalFeesBNB)
         );
         //calculate fee
-        uint256 borrowFee = IFeeProvider(addressesProvider.getFeeProvider())
-            .calculateLoanOriginationFee(availableBorrowsBNB);
+        uint256 borrowFee =
+            IFeeProvider(addressesProvider.getFeeProvider())
+                .calculateLoanOriginationFee(availableBorrowsBNB);
         return availableBorrowsBNB.sub(borrowFee);
     }
 
@@ -509,10 +508,8 @@ contract LendingPoolDataProvider is VersionedInitializable {
     {
         currentmTokenBalance = mToken(core.getReservemTokenAddress(_reserve))
             .balanceOf(_user);
-        CoreLibrary.InterestRateMode mode = core.getUserCurrentBorrowRateMode(
-            _reserve,
-            _user
-        );
+        CoreLibrary.InterestRateMode mode =
+            core.getUserCurrentBorrowRateMode(_reserve, _user);
         (principalBorrowBalance, currentBorrowBalance, ) = core
             .getUserBorrowBalances(_reserve, _user);
 

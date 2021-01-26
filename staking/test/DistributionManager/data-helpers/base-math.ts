@@ -1,4 +1,4 @@
-import BigNumber from '../../StakedbMXX/node_modules/bignumber.js.js';
+import BigNumber from 'bignumber.js';
 
 import {BigNumberValue, valueToZDBigNumber} from '../../helpers/ray-math/bignumber';
 

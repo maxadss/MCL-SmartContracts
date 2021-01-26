@@ -231,12 +231,8 @@ contract mToken is ERC20, ERC20Detailed {
         require(_amount > 0, "Amount to redeem needs to be > 0");
 
         //cumulates the balance of the user
-        (
-            ,
-            uint256 currentBalance,
-            uint256 balanceIncrease,
-            uint256 index
-        ) = cumulateBalanceInternal(msg.sender);
+        (, uint256 currentBalance, uint256 balanceIncrease, uint256 index) =
+            cumulateBalanceInternal(msg.sender);
 
         uint256 amountToRedeem = _amount;
 
@@ -306,9 +302,8 @@ contract mToken is ERC20, ERC20Detailed {
         onlyLendingPool
     {
         //cumulates the balance of the user
-        (, , uint256 balanceIncrease, uint256 index) = cumulateBalanceInternal(
-            _account
-        );
+        (, , uint256 balanceIncrease, uint256 index) =
+            cumulateBalanceInternal(_account);
 
         // if the user is redirecting his interest towards someone else,
         // we update the redirected balance of the redirection address by
@@ -342,12 +337,8 @@ contract mToken is ERC20, ERC20Detailed {
         onlyLendingPool
     {
         // cumulates the balance of the user being liquidated
-        (
-            ,
-            uint256 accountBalance,
-            uint256 balanceIncrease,
-            uint256 index
-        ) = cumulateBalanceInternal(_account);
+        (, uint256 accountBalance, uint256 balanceIncrease, uint256 index) =
+            cumulateBalanceInternal(_account);
 
         // adds the accrued interest and substracts the burned amount to
         // the redirected balance
@@ -549,18 +540,18 @@ contract mToken is ERC20, ERC20Detailed {
         uint256 previousPrincipalBalance = super.balanceOf(_user);
 
         // calculate the accrued interest since the last accumulation
-        uint256 balanceIncrease = balanceOf(_user).sub(
-            previousPrincipalBalance
-        );
+        uint256 balanceIncrease =
+            balanceOf(_user).sub(previousPrincipalBalance);
         // mints an amount of tokens equivalent to the amount accumulated
         if (balanceIncrease != 0) {
             _mint(_user, balanceIncrease);
         }
 
         // updates the user index
-        uint256 index = userIndexes[_user] = core.getReserveNormalizedIncome(
-            underlyingAssetAddress
-        );
+        uint256 index =
+            userIndexes[_user] = core.getReserveNormalizedIncome(
+                underlyingAssetAddress
+            );
         return (
             previousPrincipalBalance,
             previousPrincipalBalance.add(balanceIncrease),
@@ -590,12 +581,13 @@ contract mToken is ERC20, ERC20Detailed {
         }
 
         // compound balances of the redirected address
-        (, , uint256 balanceIncrease, uint256 index) = cumulateBalanceInternal(
-            redirectionAddress
-        );
+        (, , uint256 balanceIncrease, uint256 index) =
+            cumulateBalanceInternal(redirectionAddress);
 
         // updating the redirected balance
-        redirectedBalances[redirectionAddress] = redirectedBalances[redirectionAddress]
+        redirectedBalances[redirectionAddress] = redirectedBalances[
+            redirectionAddress
+        ]
             .add(_balanceToAdd)
             .sub(_balanceToRemove);
 
@@ -604,12 +596,13 @@ contract mToken is ERC20, ERC20Detailed {
         // the redirected balance of the redirection target by adding the
         // balance increase
 
-
-            address targetOfRedirectionAddress
-         = interestRedirectionAddresses[redirectionAddress];
+        address targetOfRedirectionAddress =
+            interestRedirectionAddresses[redirectionAddress];
 
         if (targetOfRedirectionAddress != address(0)) {
-            redirectedBalances[targetOfRedirectionAddress] = redirectedBalances[targetOfRedirectionAddress]
+            redirectedBalances[targetOfRedirectionAddress] = redirectedBalances[
+                targetOfRedirectionAddress
+            ]
                 .add(balanceIncrease);
         }
 
@@ -665,12 +658,8 @@ contract mToken is ERC20, ERC20Detailed {
         ) = cumulateBalanceInternal(_from);
 
         // cumulate the balance of the receiver
-        (
-            ,
-            ,
-            uint256 toBalanceIncrease,
-            uint256 toIndex
-        ) = cumulateBalanceInternal(_to);
+        (, , uint256 toBalanceIncrease, uint256 toIndex) =
+            cumulateBalanceInternal(_to);
 
         // if the sender is redirecting his interest towards someone else,
         // adds to the redirected balance the accrued interest and removes the

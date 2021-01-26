@@ -1,0 +1,11 @@
+{
+  "name": "bmxx",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "bignumber.js": "^9.0.1",
+    "openzeppelin-solidity": "2.4.0",
+    "truffle-assertions": "^0.9.2"
+  }
+}

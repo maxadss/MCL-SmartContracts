@@ -1,56 +1,35 @@
+import { ETHEREUM_ADDRESS, RATEMODE_VARIABLE } from "../helpers/constants";
 import {
-  ITestEnv,
-  ContractsInstancesOrigin,
-  ImTokenInstances,
-  ITokenInstances,
-} from "../utils/types";
-import {
-  LendingPoolConfiguratorInstance,
-  LendingPoolInstance,
-  mTokenInstance,
-  LendingPoolCoreInstance,
-} from "../utils/typechain-types/truffle-contracts";
-import { testEnvProvider } from "../utils/truffle/dlp-tests-env";
-import {
-  oneEther,
-  RATEMODE_STABLE,
-  ETHEREUM_ADDRESS,
-} from "../utils/constants";
-import { convertToCurrencyDecimals } from "../utils/misc-utils";
-import BigNumber from "bignumber.js";
+  LendingPool,
+  LendingPoolConfigurator,
+  LendingPoolCore,
+  MToken,
+} from "../types";
+import { makeSuite, TestEnv } from "./helpers/make-suite";
 
 const expectRevert = require("@openzeppelin/test-helpers").expectRevert;
 
-contract("LendingPoolCore: Modifiers", async ([deployer, ...users]) => {
-  let _testEnvProvider: ITestEnv;
-  let _lendingPoolConfiguratorInstance: LendingPoolConfiguratorInstance;
-  let _lendingPoolInstance: LendingPoolInstance;
-  let _lendingPoolCoreInstance: LendingPoolCoreInstance;
-  let _mTokenInstances: ImTokenInstances;
-  let _tokenInstances: ITokenInstances;
+makeSuite("LendingPoolCore: Modifiers", (testEnv: TestEnv) => {
+  let _lendingPoolConfiguratorInstance: LendingPoolConfigurator;
+  let _lendingPoolInstance: LendingPool;
+  let _lendingPoolCoreInstance: LendingPoolCore;
+  //let _mTokenInstances: MToken;
+  // let _tokenInstances: ITokenInstances;
 
   before("Initializing tests", async () => {
-    _testEnvProvider = await testEnvProvider(
-      artifacts,
-      [deployer, ...users],
-      ContractsInstancesOrigin.TruffleArtifacts
-    );
-
-    const {
-      deployedInstances: { lendingPoolCoreInstance },
-      getAllTokenInstances,
-    } = _testEnvProvider;
-    _lendingPoolCoreInstance = lendingPoolCoreInstance;
-    _tokenInstances = await getAllTokenInstances();
+    _lendingPoolCoreInstance = testEnv.core;
+    _lendingPoolInstance = testEnv.pool;
+    _lendingPoolConfiguratorInstance = testEnv.configurator;
+    //_tokenInstances = await getAllTokenInstances();
   });
 
   it("Tries invoke updateStateOnDeposit ", async () => {
-    const { DAI: daiInstance } = _tokenInstances;
+    const { dai, deployer } = testEnv;
 
     await expectRevert(
       _lendingPoolCoreInstance.updateStateOnDeposit(
-        daiInstance.address,
-        deployer,
+        dai.address,
+        deployer.address,
         "0",
         false
       ),
@@ -59,12 +38,12 @@ contract("LendingPoolCore: Modifiers", async ([deployer, ...users]) => {
   });
 
   it("Tries invoke updateStateOnRedeem", async () => {
-    const { DAI: daiInstance } = _tokenInstances;
+    const { dai, deployer } = testEnv;
 
     await expectRevert(
       _lendingPoolCoreInstance.updateStateOnRedeem(
-        daiInstance.address,
-        deployer,
+        dai.address,
+        deployer.address,
         "0",
         false
       ),
@@ -73,27 +52,27 @@ contract("LendingPoolCore: Modifiers", async ([deployer, ...users]) => {
   });
 
   it("Tries invoke updateStateOnBorrow", async () => {
-    const { DAI: daiInstance } = _tokenInstances;
+    const { dai, deployer } = testEnv;
 
     await expectRevert(
       _lendingPoolCoreInstance.updateStateOnBorrow(
-        daiInstance.address,
-        deployer,
+        dai.address,
+        deployer.address,
         "0",
         "0",
-        RATEMODE_STABLE
+        RATEMODE_VARIABLE
       ),
       "The caller must be a lending pool contract"
     );
   });
 
   it("Tries invoke updateStateOnRepay", async () => {
-    const { DAI: daiInstance } = _tokenInstances;
+    const { dai, deployer } = testEnv;
 
     await expectRevert(
       _lendingPoolCoreInstance.updateStateOnRepay(
-        daiInstance.address,
-        deployer,
+        dai.address,
+        deployer.address,
         "0",
         "0",
         "0",
@@ -104,28 +83,28 @@ contract("LendingPoolCore: Modifiers", async ([deployer, ...users]) => {
   });
 
   it("Tries invoke updateStateOnSwapRate", async () => {
-    const { DAI: daiInstance } = _tokenInstances;
+    const { dai, deployer } = testEnv;
 
     await expectRevert(
       _lendingPoolCoreInstance.updateStateOnSwapRate(
-        daiInstance.address,
-        deployer,
+        dai.address,
+        deployer.address,
         "0",
         "0",
         "0",
-        RATEMODE_STABLE
+        RATEMODE_VARIABLE
       ),
       "The caller must be a lending pool contract"
     );
   });
 
   it("Tries invoke updateStateOnRebalance", async () => {
-    const { DAI: daiInstance } = _tokenInstances;
+    const { dai, deployer } = testEnv;
 
     await expectRevert(
       _lendingPoolCoreInstance.updateStateOnRebalance(
-        daiInstance.address,
-        deployer,
+        dai.address,
+        deployer.address,
         "0"
       ),
       "The caller must be a lending pool contract"
@@ -133,13 +112,13 @@ contract("LendingPoolCore: Modifiers", async ([deployer, ...users]) => {
   });
 
   it("Tries invoke updateStateOnLiquidation", async () => {
-    const { DAI: daiInstance } = _tokenInstances;
+    const { dai, deployer } = testEnv;
 
     await expectRevert(
       _lendingPoolCoreInstance.updateStateOnLiquidation(
         ETHEREUM_ADDRESS,
-        daiInstance.address,
-        deployer,
+        dai.address,
+        deployer.address,
         "0",
         "0",
         "0",
@@ -152,10 +131,12 @@ contract("LendingPoolCore: Modifiers", async ([deployer, ...users]) => {
   });
 
   it("Tries invoke setUserUseReserveAsCollateral", async () => {
+    const { deployer } = testEnv;
+
     await expectRevert(
       _lendingPoolCoreInstance.setUserUseReserveAsCollateral(
         ETHEREUM_ADDRESS,
-        deployer,
+        deployer.address,
         false
       ),
       "The caller must be a lending pool contract"
@@ -163,17 +144,25 @@ contract("LendingPoolCore: Modifiers", async ([deployer, ...users]) => {
   });
 
   it("Tries invoke transferToUser", async () => {
+    const { dai, deployer } = testEnv;
+
     await expectRevert(
-      _lendingPoolCoreInstance.transferToUser(ETHEREUM_ADDRESS, deployer, "0"),
+      _lendingPoolCoreInstance.transferToUser(
+        ETHEREUM_ADDRESS,
+        deployer.address,
+        "0"
+      ),
       "The caller must be a lending pool contract"
     );
   });
 
   it("Tries invoke transferToReserve", async () => {
+    const { dai, deployer } = testEnv;
+
     await expectRevert(
       _lendingPoolCoreInstance.transferToReserve(
         ETHEREUM_ADDRESS,
-        deployer,
+        deployer.address,
         "0"
       ),
       "The caller must be a lending pool contract"
@@ -181,33 +170,37 @@ contract("LendingPoolCore: Modifiers", async ([deployer, ...users]) => {
   });
 
   it("Tries invoke transferToFeeCollectionAddress", async () => {
+    const { dai, deployer } = testEnv;
+
     await expectRevert(
       _lendingPoolCoreInstance.transferToFeeCollectionAddress(
         ETHEREUM_ADDRESS,
-        deployer,
+        deployer.address,
         "0",
-        deployer
+        true
       ),
       "The caller must be a lending pool contract"
     );
   });
 
   it("Tries invoke liquidateFee", async () => {
+    const { dai, deployer } = testEnv;
+
     await expectRevert(
-      _lendingPoolCoreInstance.liquidateFee(ETHEREUM_ADDRESS, "0", deployer),
+      _lendingPoolCoreInstance.liquidateFee(ETHEREUM_ADDRESS, "0"),
       "The caller must be a lending pool contract"
     );
   });
 
   it("Tries invoke initReserve", async () => {
-    const { DAI: daiInstance } = _tokenInstances;
+    const { dai, deployer } = testEnv;
 
     await expectRevert(
       _lendingPoolCoreInstance.initReserve(
-        daiInstance.address,
-        daiInstance.address,
+        dai.address,
+        dai.address,
         "18",
-        deployer
+        deployer.address
       ),
       "The caller must be a lending pool configurator contract"
     );
@@ -221,13 +214,10 @@ contract("LendingPoolCore: Modifiers", async ([deployer, ...users]) => {
   });
 
   it("Tries invoke enableBorrowingOnReserve, disableBorrowingOnReserve", async () => {
-    const { DAI: daiInstance } = _tokenInstances;
+    const { dai } = testEnv;
 
     await expectRevert(
-      _lendingPoolCoreInstance.enableBorrowingOnReserve(
-        daiInstance.address,
-        false
-      ),
+      _lendingPoolCoreInstance.enableBorrowingOnReserve(dai.address, false),
       "The caller must be a lending pool configurator contract"
     );
     await expectRevert(
@@ -237,114 +227,96 @@ contract("LendingPoolCore: Modifiers", async ([deployer, ...users]) => {
   });
 
   it("Tries invoke freezeReserve, unfreezeReserve", async () => {
-    const { DAI: daiInstance } = _tokenInstances;
+    const { dai } = testEnv;
 
     await expectRevert(
-      _lendingPoolCoreInstance.freezeReserve(daiInstance.address),
+      _lendingPoolCoreInstance.freezeReserve(dai.address),
       "The caller must be a lending pool configurator contract"
     );
     await expectRevert(
-      _lendingPoolCoreInstance.unfreezeReserve(daiInstance.address),
+      _lendingPoolCoreInstance.unfreezeReserve(dai.address),
       "The caller must be a lending pool configurator contract"
     );
   });
 
   it("Tries invoke enableReserveAsCollateral, disableReserveAsCollateral", async () => {
-    const { DAI: daiInstance } = _tokenInstances;
+    const { dai } = testEnv;
 
     await expectRevert(
-      _lendingPoolCoreInstance.enableReserveAsCollateral(
-        daiInstance.address,
-        0,
-        0,
-        0
-      ),
+      _lendingPoolCoreInstance.enableReserveAsCollateral(dai.address, 0, 0, 0),
       "The caller must be a lending pool configurator contract"
     );
     await expectRevert(
-      _lendingPoolCoreInstance.disableReserveAsCollateral(daiInstance.address),
+      _lendingPoolCoreInstance.disableReserveAsCollateral(dai.address),
       "The caller must be a lending pool configurator contract"
     );
   });
 
   it("Tries invoke enableReserveStableBorrowRate, disableReserveStableBorrowRate", async () => {
-    const { DAI: daiInstance } = _tokenInstances;
+    const { dai } = testEnv;
 
     await expectRevert(
-      _lendingPoolCoreInstance.enableReserveStableBorrowRate(
-        daiInstance.address
-      ),
+      _lendingPoolCoreInstance.enableReserveStableBorrowRate(dai.address),
       "The caller must be a lending pool configurator contract"
     );
     await expectRevert(
-      _lendingPoolCoreInstance.disableReserveStableBorrowRate(
-        daiInstance.address
-      ),
+      _lendingPoolCoreInstance.disableReserveStableBorrowRate(dai.address),
       "The caller must be a lending pool configurator contract"
     );
   });
 
   it("Tries invoke setReserveDecimals", async () => {
-    const { DAI: daiInstance } = _tokenInstances;
+    const { dai } = testEnv;
 
     await expectRevert(
-      _lendingPoolCoreInstance.setReserveDecimals(daiInstance.address, "0"),
+      _lendingPoolCoreInstance.setReserveDecimals(dai.address, "0"),
       "The caller must be a lending pool configurator contract"
     );
   });
 
   it("Tries invoke removeLastAddedReserve", async () => {
-    const { DAI: daiInstance } = _tokenInstances;
+    const { dai } = testEnv;
 
     await expectRevert(
-      _lendingPoolCoreInstance.removeLastAddedReserve(daiInstance.address),
+      _lendingPoolCoreInstance.removeLastAddedReserve(dai.address),
       "The caller must be a lending pool configurator contract"
     );
   });
 
   it("Tries invoke setReserveBaseLTVasCollateral", async () => {
-    const { DAI: daiInstance } = _tokenInstances;
+    const { dai } = testEnv;
 
     await expectRevert(
-      _lendingPoolCoreInstance.setReserveBaseLTVasCollateral(
-        daiInstance.address,
-        "0"
-      ),
+      _lendingPoolCoreInstance.setReserveBaseLTVasCollateral(dai.address, "0"),
       "The caller must be a lending pool configurator contract"
     );
   });
 
   it("Tries invoke setReserveLiquidationBonus", async () => {
-    const { DAI: daiInstance } = _tokenInstances;
+    const { dai } = testEnv;
 
     await expectRevert(
-      _lendingPoolCoreInstance.setReserveLiquidationBonus(
-        daiInstance.address,
-        "0"
-      ),
+      _lendingPoolCoreInstance.setReserveLiquidationBonus(dai.address, "0"),
       "The caller must be a lending pool configurator contract"
     );
   });
 
   it("Tries invoke setReserveLiquidationThreshold", async () => {
-    const { DAI: daiInstance } = _tokenInstances;
+    const { dai } = testEnv;
 
     await expectRevert(
-      _lendingPoolCoreInstance.setReserveLiquidationThreshold(
-        daiInstance.address,
-        "0"
-      ),
+      _lendingPoolCoreInstance.setReserveLiquidationThreshold(dai.address, "0"),
       "The caller must be a lending pool configurator contract"
     );
   });
 
   it("Tries invoke setReserveInterestRateStrategyAddress", async () => {
-    const { DAI: daiInstance } = _tokenInstances;
+    const { dai, deployer } = testEnv;
 
     await expectRevert(
       _lendingPoolCoreInstance.setReserveInterestRateStrategyAddress(
-        daiInstance.address,
-        deployer
+        dai.address,
+        deployer.address
       ),
       "The caller must be a lending pool configurator contract"
     );

@@ -1,8 +1,8 @@
-import BigNumber from '../test/StakedbMXX/node_modules/bignumber.js.js';
+import BigNumber from 'bignumber.js';
 
 export enum eEthereumNetwork {
   coverage = 'coverage',
-  buidlerevm = 'buidlerevm',
+  hardhat = 'hardhat',
   kovan = 'kovan',
   ropsten = 'ropsten',
   main = 'main',
@@ -31,7 +31,7 @@ export type tBigNumberTokenSmallUnits = BigNumber;
 
 export interface iParamsPerNetwork<T> {
   [eEthereumNetwork.coverage]: T;
-  [eEthereumNetwork.buidlerevm]: T;
+  [eEthereumNetwork.hardhat]: T;
   [eEthereumNetwork.kovan]: T;
   [eEthereumNetwork.ropsten]: T;
   [eEthereumNetwork.main]: T;
