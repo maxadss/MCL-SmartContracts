@@ -65,6 +65,7 @@ import {
   getMintableErc20,
   getLendingPoolProxy,
   getLendingPoolCoreProxy,
+  getVault,
 } from "../helpers/contracts-getters";
 //import { WETH9Mocked } from '../types/WETH9Mocked';
 
@@ -349,6 +350,21 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   await deployRewardVault(rewardsManager.address, eContractid.RewardVault2);
   await deployRewardVault(rewardsManager.address, eContractid.RewardVault3);
 
+  await waitForTx(
+    await addressesProvider.setLpRewardVault(
+      (await getVault(eContractid.RewardVault1)).address
+    )
+  );
+  await waitForTx(
+    await addressesProvider.setGovRewardVault(
+      (await getVault(eContractid.RewardVault2)).address
+    )
+  );
+  await waitForTx(
+    await addressesProvider.setSafetyRewardVault(
+      (await getVault(eContractid.RewardVault3)).address
+    )
+  );
   //register reward
   await waitForTx(await lendingPoolProxy.registerAllPoolsForReward());
 

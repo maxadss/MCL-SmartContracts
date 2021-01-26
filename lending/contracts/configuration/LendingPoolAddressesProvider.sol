@@ -1,6 +1,6 @@
 pragma solidity ^0.5.0;
 
-import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/ownership/Ownable.sol";
 import "../libraries/openzeppelin-upgradeability/InitializableAdminUpgradeabilityProxy.sol";
 import "./AddressStorage.sol";
 import "../interfaces/ILendingPoolAddressesProvider.sol";
@@ -38,13 +38,13 @@ contract LendingPoolAddressesProvider is
 
     bytes32 private constant LENDING_POOL = "LENDING_POOL";
     bytes32 private constant LENDING_POOL_CORE = "LENDING_POOL_CORE";
-    bytes32
-        private constant LENDING_POOL_CONFIGURATOR = "LENDING_POOL_CONFIGURATOR";
-    bytes32
-        private constant LENDING_POOL_PARAMETERS_PROVIDER = "PARAMETERS_PROVIDER";
+    bytes32 private constant LENDING_POOL_CONFIGURATOR =
+        "LENDING_POOL_CONFIGURATOR";
+    bytes32 private constant LENDING_POOL_PARAMETERS_PROVIDER =
+        "PARAMETERS_PROVIDER";
     bytes32 private constant LENDING_POOL_MANAGER = "LENDING_POOL_MANAGER";
-    bytes32
-        private constant LENDING_POOL_LIQUIDATION_MANAGER = "LIQUIDATION_MANAGER";
+    bytes32 private constant LENDING_POOL_LIQUIDATION_MANAGER =
+        "LIQUIDATION_MANAGER";
     bytes32 private constant DATA_PROVIDER = "DATA_PROVIDER";
     bytes32 private constant PRICE_ORACLE = "PRICE_ORACLE";
     bytes32 private constant LENDING_RATE_ORACLE = "LENDING_RATE_ORACLE";
@@ -281,13 +281,10 @@ contract LendingPoolAddressesProvider is
     function updateImplInternal(bytes32 _id, address _newAddress) internal {
         address payable proxyAddress = address(uint160(getAddress(_id)));
 
-
-            InitializableAdminUpgradeabilityProxy proxy
-         = InitializableAdminUpgradeabilityProxy(proxyAddress);
-        bytes memory params = abi.encodeWithSignature(
-            "initialize(address)",
-            address(this)
-        );
+        InitializableAdminUpgradeabilityProxy proxy =
+            InitializableAdminUpgradeabilityProxy(proxyAddress);
+        bytes memory params =
+            abi.encodeWithSignature("initialize(address)", address(this));
 
         if (proxyAddress == address(0)) {
             proxy = new InitializableAdminUpgradeabilityProxy();

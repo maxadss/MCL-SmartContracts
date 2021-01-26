@@ -171,9 +171,6 @@ makeSuite(
         _borrowerAddress.address
       );
 
-      console.log("userGlobalDataAfter");
-      console.log(userGlobalDataAfter);
-
       expect(
         userGlobalDataAfter.currentLiquidationThreshold.toString()
       ).to.be.bignumber.equal("80", "Invalid liquidation threshold");
