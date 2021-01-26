@@ -14,11 +14,11 @@
 pragma solidity ^0.5.0;
 
 // Importing libraries
-import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
-import "openzeppelin-solidity/contracts/utils/ReentrancyGuard.sol";
-import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
-import "openzeppelin-solidity/contracts/token/ERC20/SafeERC20.sol";
-import "openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/ownership/Ownable.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/utils/ReentrancyGuard.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/token/ERC20/ERC20.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/token/ERC20/SafeERC20.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/math/SafeMath.sol";
 
 /**
  * @title Mxx Converter Contract
@@ -72,14 +72,12 @@ contract MxxConverter is Ownable, ReentrancyGuard {
     /**
      * @dev - Variable to store Official MXX ERC20 token address
      */
-    address
-        public  MXX_ADDRESS = 0x8F1E37Afacdc033dC2c0BF2BD116eaa558eFCdE8;
+    address public MXX_ADDRESS = 0x8F1E37Afacdc033dC2c0BF2BD116eaa558eFCdE8;
 
     /**
      * @dev - Address to store the Official MXX Burn Address
      */
-    address
-        public  BURN_ADDRESS = 0x1f31541E77cAC6BFAE2FBdA66a2085e6C137871e;
+    address public BURN_ADDRESS = 0x1f31541E77cAC6BFAE2FBdA66a2085e6C137871e;
 
     /**
      * @dev - The grand total number of Mxx that can be converted to BSC.

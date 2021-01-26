@@ -1,6 +1,6 @@
 pragma solidity ^0.5.0;
 
-import "openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/math/SafeMath.sol";
 
 import "../interfaces/IReserveInterestRateStrategy.sol";
 import "../libraries/WadRayMath.sol";
@@ -132,10 +132,10 @@ contract DefaultReserveInterestRateStrategy is IReserveInterestRateStrategy {
     {
         uint256 totalBorrows = _totalBorrowsStable.add(_totalBorrowsVariable);
 
-        uint256 utilizationRate = (totalBorrows == 0 &&
-            _availableLiquidity == 0)
-            ? 0
-            : totalBorrows.rayDiv(_availableLiquidity.add(totalBorrows));
+        uint256 utilizationRate =
+            (totalBorrows == 0 && _availableLiquidity == 0)
+                ? 0
+                : totalBorrows.rayDiv(_availableLiquidity.add(totalBorrows));
 
         currentStableBorrowRate = ILendingRateOracle(
             addressesProvider.getLendingRateOracle()
@@ -143,9 +143,10 @@ contract DefaultReserveInterestRateStrategy is IReserveInterestRateStrategy {
             .getMarketBorrowRate(_reserve);
 
         if (utilizationRate > OPTIMAL_UTILIZATION_RATE) {
-            uint256 excessUtilizationRateRatio = utilizationRate
-                .sub(OPTIMAL_UTILIZATION_RATE)
-                .rayDiv(EXCESS_UTILIZATION_RATE);
+            uint256 excessUtilizationRateRatio =
+                utilizationRate.sub(OPTIMAL_UTILIZATION_RATE).rayDiv(
+                    EXCESS_UTILIZATION_RATE
+                );
 
             currentStableBorrowRate = currentStableBorrowRate
                 .add(stableRateSlope1)
@@ -197,17 +198,18 @@ contract DefaultReserveInterestRateStrategy is IReserveInterestRateStrategy {
 
         if (totalBorrows == 0) return 0;
 
-        uint256 weightedVariableRate = _totalBorrowsVariable.wadToRay().rayMul(
-            _currentVariableBorrowRate
-        );
+        uint256 weightedVariableRate =
+            _totalBorrowsVariable.wadToRay().rayMul(_currentVariableBorrowRate);
 
-        uint256 weightedStableRate = _totalBorrowsStable.wadToRay().rayMul(
-            _currentAverageStableBorrowRate
-        );
+        uint256 weightedStableRate =
+            _totalBorrowsStable.wadToRay().rayMul(
+                _currentAverageStableBorrowRate
+            );
 
-        uint256 overallBorrowRate = weightedVariableRate
-            .add(weightedStableRate)
-            .rayDiv(totalBorrows.wadToRay());
+        uint256 overallBorrowRate =
+            weightedVariableRate.add(weightedStableRate).rayDiv(
+                totalBorrows.wadToRay()
+            );
 
         return overallBorrowRate;
     }

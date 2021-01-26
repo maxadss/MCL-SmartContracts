@@ -232,11 +232,6 @@ makeSuite(
         .div(2)
         .toFixed(0);
 
-      console.log("XYZ111");
-      console.log(
-        "userReserveDataBefore.currentBorrowBalance.toString() ",
-        userReserveDataBefore.currentBorrowBalance.toString()
-      );
       await _lendingPoolInstance.liquidationCall(
         ETHEREUM_ADDRESS,
         dai.address,
