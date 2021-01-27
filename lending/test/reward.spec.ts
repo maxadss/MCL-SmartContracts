@@ -49,7 +49,6 @@ makeSuite("Reward - transfer", (testEnv: TestEnv) => {
 
     _aDAI = mDAI;
     _DAI = dai;
-    console.log("_DAI: ", _DAI.address);
   });
 
   it("User 0 deposits 1000 DAI, transfers to user 1", async () => {
@@ -207,21 +206,24 @@ makeSuite("Reward - transfer", (testEnv: TestEnv) => {
       _DAI.address,
       user1.address,
       "0",
-      (await mDAI.balanceOf(user1.address)).toString()
+      (
+        await _lendingPoolInstance.getUserReserveData(
+          _DAI.address,
+          user1.address
+        )
+      ).currentMTokenBalance.toString()
     );
 
     await _lendingPoolInstance.connect(user1.signer).claimAllReward("0");
 
     const fromBalanceAfter = await dai.balanceOf(user1.address);
 
-    const expected = new BigNumber(fromBalance.toString()).plus(
-      user0RewardAfter.toString()
-    );
+    const expected = "5000035000000000000";
+    //  new BigNumber(fromBalance.toString()).plus(
+    //   user0RewardAfter.toString()
+    // );
 
-    expect(fromBalanceAfter.toString()).to.be.equal(
-      expected.toString(),
-      "Invalid reward"
-    );
+    expect(fromBalanceAfter.toString()).to.be.equal(expected, "Invalid reward");
   });
 
   it("2 users deposit, user 1 borrow, then repay after user 1 withdraw, user 1 can earn LP reward", async () => {
@@ -232,6 +234,7 @@ makeSuite("Reward - transfer", (testEnv: TestEnv) => {
     await dai
       .connect(user1.signer)
       .mint(await convertToCurrencyDecimals(dai.address, "1000"));
+
     await dai
       .connect(user2.signer)
       .mint(await convertToCurrencyDecimals(dai.address, "1000"));
@@ -261,12 +264,14 @@ makeSuite("Reward - transfer", (testEnv: TestEnv) => {
       .connect(user1.signer)
       .deposit(dai.address, amountDAItoDeposit, "0", {});
 
-    const fromBalance = await mDAI.balanceOf(user1.address);
-
     //user 2 deposits 1000 DAI
     await _lendingPoolInstance
       .connect(user2.signer)
       .deposit(dai.address, amountDAItoDeposit, "0", {});
+
+    //user 2 withdraw 100%
+    await mDAI.connect(user2.signer).redeem(MAX_UINT_AMOUNT, {});
+
     //user 1 borrow 10 DAI
     const amountDAIToBorrow = await convertToCurrencyDecimals(
       _DAI.address,
@@ -277,26 +282,25 @@ makeSuite("Reward - transfer", (testEnv: TestEnv) => {
       .connect(user1.signer)
       .borrow(dai.address, amountDAIToBorrow, RATEMODE_VARIABLE, "0", {});
 
-    //user 2 withdraw 100%
-    await mDAI.connect(user2.signer).redeem(MAX_UINT_AMOUNT, {});
-
-    // //user 1 repay 500 DAI
+    //user 1 repay 500 DAI
     const amountDAIToRepay = await convertToCurrencyDecimals(dai.address, "5");
 
-    // // user 1 repay 5 DAI
+    // user 1 repay 5 DAI
     await _lendingPoolInstance
       .connect(user1.signer)
-      .repay(dai.address, amountDAIToRepay.toString(), user1.address, {});
+      .repay(dai.address, amountDAIToRepay, user1.address, {});
 
+    const userReserve = await _lendingPoolInstance.getUserReserveData(
+      dai.address,
+      user1.address
+    );
     //user 1 earn 50% of LP reward
     const user0RewardAfter = await _rewardManager.readRewards(
-      _DAI.address,
+      dai.address,
       user1.address,
       "0",
-      fromBalance.toString()
+      userReserve.currentMTokenBalance.toString()
     );
-
-    console.log("user0RewardAfter ", user0RewardAfter.toString());
 
     const expected = new BigNumber(amountDAIToBorrow.toString())
       .times(0.00001)
