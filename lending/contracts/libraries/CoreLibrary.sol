@@ -65,7 +65,7 @@ library CoreLibrary {
         //the decimals of the reserve asset
         uint256 decimals;
         /**
-         * @dev address of the bMXXToken representing the asset
+         * @dev address of the MToken representing the asset
          **/
         address mTokenAddress;
         /**
