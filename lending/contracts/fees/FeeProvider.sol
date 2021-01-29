@@ -14,13 +14,13 @@ contract FeeProvider is IFeeProvider, VersionedInitializable {
     using WadRayMath for uint256;
 
     // percentage of the fee to be calculated on the loan amount
-    uint256 private originationFeeRate;
-    uint256 private flashloanFeeRate;
+    uint256 private constant originationFeeRate = 0.00001 * 1e18; // 100% = 1e18;
+    uint256 private constant flashloanFeeRate = 0.0006 * 1e18;
     
     // 70/20/10% reward rates //
-    uint256 private supplierRewardRate;
-    uint256 private governanceRewardRate;
-    // uint256 private safetyModuleRewardRate; // Thr remaining of 1 - supplierRewardRate - governanceRewardRate
+    uint256 private constant supplierRewardRate = 0.7 * 1e18;
+    uint256 private constant governanceRewardRate = 0.2 * 1e18;
+    // uint256 private safetyModuleRewardRate; // The remaining of 1 - supplierRewardRate - governanceRewardRate
     
 
     uint256 public constant FEE_PROVIDER_REVISION = 0x1;
@@ -35,11 +35,6 @@ contract FeeProvider is IFeeProvider, VersionedInitializable {
      * @param _addressesProvider the address of the LendingPoolAddressesProvider
      */
     function initialize(address _addressesProvider) public initializer {
-        /// @notice origination fee is set as default as 10 basis points of the loan amount (0.001%)
-        originationFeeRate = 0.00001 * 1e18; // 100% = 1e18
-        flashloanFeeRate = 0.0006 * 1e18;
-        supplierRewardRate = 0.7 * 1e18;
-        governanceRewardRate = 0.2 * 1e18;
     }
 
     /**
@@ -66,7 +61,7 @@ contract FeeProvider is IFeeProvider, VersionedInitializable {
         uint256 supplierReward = _originationFee.wadMul(supplierRewardRate);
         uint256 govtReward = _originationFee.wadMul(governanceRewardRate);
         
-        return (supplierReward, govtReward, _originationFee.sub(supplierReward).sub(govtReward));
+        return (supplierReward, govtReward, _originationFee - supplierReward - govtReward);
         
     }
   
@@ -79,8 +74,7 @@ contract FeeProvider is IFeeProvider, VersionedInitializable {
     }
     
     function getRewardRates() external view returns (uint256, uint256, uint256) {
-        uint256 safetyModuleRate = 1e18;
-        safetyModuleRate = safetyModuleRate.sub(supplierRewardRate).sub(governanceRewardRate);
+        uint256 safetyModuleRate = 1e18 - supplierRewardRate - governanceRewardRate;
         return (supplierRewardRate, governanceRewardRate, safetyModuleRate);
     }
     
