@@ -533,42 +533,27 @@ contract LendingPoolCore is VersionedInitializable {
                 "User is sending bnb along with the ERC20 transfer. Check the value attribute of the transaction"
             );
 
-            if (reward.supplier != 0) {
-                if (_transferFromCore) {
-                    ERC20(_token).safeTransfer(toLpVault, reward.supplier);
-                } else {
-                    ERC20(_token).safeTransferFrom(
-                        _user,
-                        toLpVault,
-                        reward.supplier
-                    );
-                }
-            }
+            ERC20 token = ERC20(_token);
 
-            if (reward.governance != 0) {
-                if (_transferFromCore) {
-                    ERC20(_token).safeTransfer(toGovtVault, reward.governance);
-                } else {
-                    ERC20(_token).safeTransferFrom(
-                        _user,
-                        toGovtVault,
-                        reward.governance
-                    );
+            if (_transferFromCore) {
+                if (reward.supplier != 0) {
+                    token.safeTransfer(toLpVault, reward.supplier);
                 }
-            }
-
-            if (reward.safetyModule != 0) {
-                if (_transferFromCore) {
-                    ERC20(_token).safeTransfer(
-                        toSafetyVault,
-                        reward.safetyModule
-                    );
-                } else {
-                    ERC20(_token).safeTransferFrom(
-                        _user,
-                        toSafetyVault,
-                        reward.safetyModule
-                    );
+                if (reward.governance != 0) {
+                    token.safeTransfer(toGovtVault, reward.governance);
+                }
+                if (reward.safetyModule != 0) {
+                    token.safeTransfer(toSafetyVault,reward.safetyModule);
+                }
+            } else {
+                if (reward.supplier != 0) {
+                    token.safeTransferFrom(_user, toLpVault, reward.supplier);
+                }
+                if (reward.governance != 0) {
+                    token.safeTransferFrom(_user, toGovtVault, reward.governance);
+                }
+                if (reward.safetyModule != 0) {
+                    token.safeTransferFrom(_user, toSafetyVault, reward.safetyModule);
                 }
             }
         } else {
