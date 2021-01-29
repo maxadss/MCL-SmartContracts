@@ -5,11 +5,9 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contr
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/token/ERC20/ERC20.sol";
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/token/ERC20/SafeERC20.sol";
 import "../configuration/LendingPoolAddressesProvider.sol";
-import "../libraries/WadRayMath.sol";
 import "../interfaces/IRewardVault.sol";
 
 contract RewardsManager is Ownable, ReentrancyGuard {
-    using WadRayMath for uint256;
     using SafeMath for uint256;
     using SafeERC20 for ERC20;
 
@@ -130,19 +128,19 @@ contract RewardsManager is Ownable, ReentrancyGuard {
     /**
      * @dev This function will add a new reward item.
      * @param _reserve - The reserve of the lending pool.
-     * @param _sharesLp - The mxToken amount of the depositor.
-     * @param _sharingLpBase - The total amount of the mxToken supply.
-     * @param _shareGov - The stBMxx amount of the governance staker.
+     * @param _lpRewardAmt - The amount of reward for depositors.
+     * @param lpBase - The total amount of the mxToken supplied.
+     * @param govRewardAmt - The amount of reward for the governance stakers.
      * Access Control: Only Lending Pools or Core
      */
     function addRewardItem(
         address _reserve,
-        uint256 _sharesLp,
-        uint256 _sharingLpBase,
-        uint256 _shareGov
+        uint256 _lpRewardAmt,
+        uint256 lpBase,
+        uint256 govRewardAmt
     ) public onlyLendingPoolOrCore nonReentrant {
         // Check for ny zero inputs//
-        if (_sharesLp == 0 || _shareGov == 0 || _sharingLpBase == 0) {
+        if (_lpRewardAmt == 0 || govRewardAmt == 0 || lpBase == 0) {
             return;
         }
 
@@ -150,15 +148,15 @@ contract RewardsManager is Ownable, ReentrancyGuard {
         require(pool.valid, "Unknown reserve pool in Reward Manager");
 
         pool.rewards[pool.nextRewardPtr].items[0] = RewardItem(
-            _sharesLp,
+            _lpRewardAmt,
             0,
-            _sharingLpBase
+            lpBase
         );
 
         uint256 stakedTokenSupply = IERC20(stakingToken).totalSupply();
         if (stakedTokenSupply != 0) {
             pool.rewards[pool.nextRewardPtr].items[1] = RewardItem(
-                _shareGov,
+                govRewardAmt,
                 0,
                 stakedTokenSupply
             );
@@ -335,8 +333,7 @@ contract RewardsManager is Ownable, ReentrancyGuard {
                 continue;
             }
 
-            uint256 rewardAmt =
-                _share.wadMul(r.amount).wadDiv(r.totalSharingBase);
+            uint256 rewardAmt = _share.mul(r.amount).div(r.totalSharingBase);
 
             // Enough in RewardItem to pay ?
             if (r.amount.sub(r.paidSoFar) < rewardAmt) {
@@ -378,8 +375,7 @@ contract RewardsManager is Ownable, ReentrancyGuard {
                 continue;
             }
 
-            uint256 rewardAmt =
-                _share.wadMul(r.amount).wadDiv(r.totalSharingBase);
+            uint256 rewardAmt = _share.mul(r.amount).div(r.totalSharingBase);
 
             // Enough in RewardItem to pay ?
             if (r.amount.sub(r.paidSoFar) < rewardAmt) {
