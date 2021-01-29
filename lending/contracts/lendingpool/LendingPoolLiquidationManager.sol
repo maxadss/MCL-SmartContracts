@@ -28,11 +28,11 @@ contract LendingPoolLiquidationManager is
     using Address for address;
 
     LendingPoolAddressesProvider public addressesProvider;
-    LendingPoolCore core;
-    LendingPoolDataProvider dataProvider;
-    LendingPoolParametersProvider parametersProvider;
+    LendingPoolCore public core;
+    LendingPoolDataProvider public dataProvider;
+    LendingPoolParametersProvider public parametersProvider;
 
-    uint256 constant LIQUIDATION_CLOSE_FACTOR_PERCENT = 50;
+    uint256 private constant LIQUIDATION_CLOSE_FACTOR_PERCENT = 50;
 
     /**
      * @dev emitted when a borrow fee is liquidated
