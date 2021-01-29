@@ -35,7 +35,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
     LendingPoolCore public core;
     LendingPoolDataProvider public dataProvider;
     LendingPoolParametersProvider public parametersProvider;
-    IFeeProvider feeProvider;
+    IFeeProvider public feeProvider;
     RewardsManager public rewardsMgr;
 
     /**
@@ -401,7 +401,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
         uint256 amountOfCollateralNeededBNB;
         uint256 userCollateralBalanceBNB;
         uint256 userBorrowBalanceBNB;
-        uint256 usertotalFeesBNB;
+        uint256 userTotalFeesBNB;
         uint256 borrowBalanceIncrease;
         uint256 currentReserveStableRate;
         uint256 availableLiquidity;
@@ -466,7 +466,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
             ,
             vars.userCollateralBalanceBNB,
             vars.userBorrowBalanceBNB,
-            vars.usertotalFeesBNB,
+            vars.userTotalFeesBNB,
             vars.currentLtv,
             vars.currentLiquidationThreshold,
             ,
@@ -494,7 +494,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
             _amount,
             vars.borrowFee,
             vars.userBorrowBalanceBNB,
-            vars.usertotalFeesBNB,
+            vars.userTotalFeesBNB,
             vars.currentLtv
         );
 
@@ -565,7 +565,8 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
             block.timestamp
         );
     }
-
+    
+    
     /**
      * @notice repays a borrow on the specific reserve, for the specified amount
      * (or for the whole amount, if uint256(-1) is specified).
@@ -582,7 +583,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
         uint256 principalBorrowBalance;
         uint256 compoundedBorrowBalance;
         uint256 borrowBalanceIncrease;
-        bool isBnb;
+        bool    isBnb;
         uint256 paybackAmount;
         uint256 paybackAmountMinusFees;
         uint256 currentStableRate;
@@ -593,7 +594,6 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
     struct RewardLocalVars {
         uint256 suppliers;
         uint256 governace;
-        uint256 safety;
     }
 
     function repay(
@@ -652,7 +652,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
         }
 
         // Update and accumulate reward for this address.
-        this.updateRewards(_reserve, _onBehalfOf);
+        updateRewards(_reserve, _onBehalfOf);
         // RewardManager: Add new reward item. //
         addRewardItem(_reserve, feeReward);
 
@@ -952,21 +952,15 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
                     _receiveMToken
                 )
             );
-        //require(success, "Liquidation call failed");
+            
+        require(success, "Liquidation call failed");
 
-        (uint256 returnCode, string memory returnMessage) =
-            abi.decode(result, (uint256, string));
+        (uint256 returnCode, string memory returnMessage) = abi.decode(result, (uint256, string));
 
-        if (returnCode != 0) {
-            require(
-                success,
-                string(abi.encodePacked("Liquidation failed: ", returnMessage))
-            );
-
+        
+         if (returnCode != 0) {
             //error found
-            //revert(
-            //    string(abi.encodePacked("Liquidation failed: ", returnMessage))
-            //);
+            revert(string(abi.encodePacked("Liquidation failed: ", returnMessage)));
         }
     }
 
@@ -1087,7 +1081,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
             uint256 utilizationRate,
             uint256 liquidityIndex,
             uint256 variableBorrowIndex,
-            address bMXXTokenAddress,
+            address mTokenAddress,
             uint40 lastUpdateTimestamp
         )
     {
@@ -1187,8 +1181,8 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
 
         return rewardsMgr.readRewards(_reserve, msg.sender, _type, share);
     }
-
-    function updateRewards(address _reserve, address _user) external {
+    
+    function updateRewards(address _reserve, address _user) public {
         uint256 mTokenBalance = core.getUsermTokenBalance(_reserve, _user);
         uint256 stakedBalance = core.getUserStakedTokenBalance(_user);
 
@@ -1229,17 +1223,28 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
     }
 
     // In case a user has not claim for a very long time (exceed eVM max read/write), we can update it by batches //
-    function updatePartialLpReward(
+    function updatePartialReward(
         address _reserve,
         address _user,
+        RewardsManager.RewardTypes _type,
         uint256 num
     ) external {
-        uint256 mTokenBalance = core.getUsermTokenBalance(_reserve, _user);
+        
+        // Allow batch update only for Depositor and Governance rewards //
+        if (_type == RewardsManager.RewardTypes.Safety) {
+            return;
+        }
+
+        uint256 balance = 
+            _type == RewardsManager.RewardTypes.Depositor 
+            ? core.getUsermTokenBalance(_reserve, _user) 
+            : core.getUserStakedTokenBalance(_user);
+                
         rewardsMgr.updateReward(
             _reserve,
             _user,
-            RewardsManager.RewardTypes.Depositor,
-            mTokenBalance,
+            _type,
+            balance,
             num
         );
     }
@@ -1277,7 +1282,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
     function claimRewardInternal(
         address _reserve,
         RewardsManager.RewardTypes _type
-    ) private {
+    ) internal {
         uint256 share =
             _type == RewardsManager.RewardTypes.Depositor
                 ? core.getUsermTokenBalance(_reserve, msg.sender)

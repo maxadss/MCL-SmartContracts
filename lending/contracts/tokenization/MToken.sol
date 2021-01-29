@@ -680,7 +680,6 @@ contract mToken is ERC20, ERC20Detailed {
             0
         );
 
-        // zyn: This part need extensive testing //
         // RewardManager: Update the reward for these 2 users before transfering //
         updateLpReward(_from);
         updateLpReward(_to);

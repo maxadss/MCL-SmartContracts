@@ -434,7 +434,7 @@ contract LendingPoolDataProvider is VersionedInitializable {
             uint256 utilizationRate,
             uint256 liquidityIndex,
             uint256 variableBorrowIndex,
-            address bMXXTokenAddress,
+            address mTokenAddress,
             uint40 lastUpdateTimestamp
         )
     {
@@ -453,7 +453,7 @@ contract LendingPoolDataProvider is VersionedInitializable {
         variableBorrowIndex = core.getReserveVariableBorrowsCumulativeIndex(
             _reserve
         );
-        bMXXTokenAddress = core.getReservemTokenAddress(_reserve);
+        mTokenAddress = core.getReservemTokenAddress(_reserve);
         lastUpdateTimestamp = core.getReserveLastUpdate(_reserve);
     }
 
