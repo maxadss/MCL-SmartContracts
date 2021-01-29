@@ -10,7 +10,7 @@ import "../interfaces/IRewardVault.sol";
 
 contract RewardVault is IRewardVault, Ownable, ReentrancyGuard {
     using SafeERC20 for ERC20;
-    bool paused;
+    bool public paused;
     address public rewardManager;
 
     constructor(address _rewardManager) public {
