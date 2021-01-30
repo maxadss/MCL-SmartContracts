@@ -17,8 +17,11 @@ contract RewardVault is IRewardVault, Ownable, ReentrancyGuard {
         rewardManager = _rewardManager;
     }
 
-    /// @notice In order to receive ETH transfers
-    function() external payable {}
+    /// @notice In order to receive BNB transfers
+    function() external payable {
+        // Ensure the sender is a contract
+        require(msg.sender != tx.origin, "Reject accidental BNB transfer from EOA");
+    }
 
     /**
      * @dev only Reward Manager can use functions affected by this modifier
