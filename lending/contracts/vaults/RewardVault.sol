@@ -5,6 +5,7 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contr
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/token/ERC20/ERC20.sol";
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/token/ERC20/SafeERC20.sol";
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/math/SafeMath.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/utils/Address.sol";
 import "../libraries/BscAddressLib.sol";
 import "../interfaces/IRewardVault.sol";
 
@@ -43,15 +44,15 @@ contract RewardVault is IRewardVault, Ownable, ReentrancyGuard {
         address _destination,
         uint256 _timestamp
     );
-
+/*
     constructor(address _rewardManager) public {
         rewardManager = _rewardManager;
     }
-
+*/
     /// @notice In order to receive BNB transfers
     function() external payable {
         // Ensure the sender is a contract
-        require(msg.sender != tx.origin, "Reject accidental BNB transfer from EOA");
+        require(Address.isContract(msg.sender), "Reject accidental BNB transfer from EOA");
     }
 
     /**
