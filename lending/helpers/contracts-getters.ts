@@ -8,7 +8,7 @@ import {
   InitializableAdminUpgradeabilityProxyFactory,
   LendingPoolAddressesProviderFactory,
   //LendingPoolAddressesProviderRegistryFactory,
-  //LendingPoolCollateralManagerFactory,
+  //LendingPoolLiquidationManagerFactory,
   LendingPoolConfiguratorFactory,
   LendingPoolFactory,
   LendingRateOracleFactory,
@@ -450,7 +450,7 @@ export const getLendingPoolConfiguratorImpl = async (
     await getFirstSigner()
   );
 
-export const getLendingPoolCollateralManagerImpl = async (
+export const getLendingPoolLiquidationManagerImpl = async (
   address?: tEthereumAddress
 ) =>
   await LendingPoolLiquidationManagerFactory.connect(
@@ -458,7 +458,7 @@ export const getLendingPoolCollateralManagerImpl = async (
       (
         await getDb()
           .get(
-            `${eContractid.LendingPoolCollateralManagerImpl}.${DRE.network.name}`
+            `${eContractid.LendingPoolLiquidationManagerImpl}.${DRE.network.name}`
           )
           .value()
       ).address,
@@ -476,7 +476,7 @@ export const getWalletProvider = async (address?: tEthereumAddress) =>
     await getFirstSigner()
   );
 
-export const getLendingPoolCollateralManager = async (
+export const getLendingPoolLiquidationManager = async (
   address?: tEthereumAddress
 ) =>
   await LendingPoolLiquidationManagerFactory.connect(
@@ -484,7 +484,7 @@ export const getLendingPoolCollateralManager = async (
       (
         await getDb()
           .get(
-            `${eContractid.LendingPoolCollateralManager}.${DRE.network.name}`
+            `${eContractid.LendingPoolLiquidationManager}.${DRE.network.name}`
           )
           .value()
       ).address,
@@ -527,6 +527,18 @@ export const getRewardManager = async (address?: tEthereumAddress) =>
 
 export const getVault = async (id: string, address?: tEthereumAddress) =>
   await RewardVaultFactory.connect(
+    address || (await getDb().get(`${id}.${DRE.network.name}`).value()).address,
+    await getFirstSigner()
+  );
+
+export const getErc20 = async (id: string, address?: tEthereumAddress) =>
+  await MintableERC20Factory.connect(
+    address || (await getDb().get(`${id}.${DRE.network.name}`).value()).address,
+    await getFirstSigner()
+  );
+
+export const getMERC20 = async (id: string, address?: tEthereumAddress) =>
+  await MTokenFactory.connect(
     address || (await getDb().get(`${id}.${DRE.network.name}`).value()).address,
     await getFirstSigner()
   );
