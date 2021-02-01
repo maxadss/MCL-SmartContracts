@@ -499,12 +499,7 @@ contract LendingPoolCore is VersionedInitializable {
 
         // Create a Reward Item and send fees to vault //
         uint256 liquidity = getReserveAvailableLiquidity(_token);
-        rewardManager.addRewardItem(
-            _token,
-            supplierAmt,
-            liquidity,
-            govtAmt
-        );
+        rewardManager.addRewardItem(_token, supplierAmt, liquidity, govtAmt);
 
         distributeFeestoVaults(_token, address(this), _amount, true);
     }
@@ -543,17 +538,25 @@ contract LendingPoolCore is VersionedInitializable {
                     token.safeTransfer(toGovtVault, reward.governance);
                 }
                 if (reward.safetyModule != 0) {
-                    token.safeTransfer(toSafetyVault,reward.safetyModule);
+                    token.safeTransfer(toSafetyVault, reward.safetyModule);
                 }
             } else {
                 if (reward.supplier != 0) {
                     token.safeTransferFrom(_user, toLpVault, reward.supplier);
                 }
                 if (reward.governance != 0) {
-                    token.safeTransferFrom(_user, toGovtVault, reward.governance);
+                    token.safeTransferFrom(
+                        _user,
+                        toGovtVault,
+                        reward.governance
+                    );
                 }
                 if (reward.safetyModule != 0) {
-                    token.safeTransferFrom(_user, toSafetyVault, reward.safetyModule);
+                    token.safeTransferFrom(
+                        _user,
+                        toSafetyVault,
+                        reward.safetyModule
+                    );
                 }
             }
         } else {
@@ -688,7 +691,7 @@ contract LendingPoolCore is VersionedInitializable {
 
     /**
      * @dev gets the underlying asset balance of a user based on the
-     * corresponding bMXXToken balance.
+     * corresponding mToken balance.
      * @param _reserve the reserve address
      * @param _user the user address
      * @return the underlying deposit balance of the user
@@ -1328,7 +1331,7 @@ contract LendingPoolCore is VersionedInitializable {
     /**
      * @dev initializes a reserve
      * @param _reserve the address of the reserve
-     * @param _mTokenAddress the address of the overlying bMXXToken contract
+     * @param _mTokenAddress the address of the overlying mToken contract
      * @param _decimals the decimals of the reserve currency
      * @param _interestRateStrategyAddress the address of the interest rate
      * strategy contract

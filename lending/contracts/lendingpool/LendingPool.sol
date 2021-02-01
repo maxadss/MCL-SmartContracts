@@ -350,7 +350,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
 
     /**
      * @dev Redeems the underlying amount of assets requested by _user.
-     * This function is executed by the overlying bMXXToken contract in response
+     * This function is executed by the overlying mToken contract in response
      * to a redeem action.
      * @param _reserve the address of the reserve
      * @param _user the address of the user performing the action
@@ -565,8 +565,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
             block.timestamp
         );
     }
-    
-    
+
     /**
      * @notice repays a borrow on the specific reserve, for the specified amount
      * (or for the whole amount, if uint256(-1) is specified).
@@ -583,7 +582,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
         uint256 principalBorrowBalance;
         uint256 compoundedBorrowBalance;
         uint256 borrowBalanceIncrease;
-        bool    isBnb;
+        bool isBnb;
         uint256 paybackAmount;
         uint256 paybackAmountMinusFees;
         uint256 currentStableRate;
@@ -952,15 +951,17 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
                     _receiveMToken
                 )
             );
-            
+
         require(success, "Liquidation call failed");
 
-        (uint256 returnCode, string memory returnMessage) = abi.decode(result, (uint256, string));
+        (uint256 returnCode, string memory returnMessage) =
+            abi.decode(result, (uint256, string));
 
-        
-         if (returnCode != 0) {
+        if (returnCode != 0) {
             //error found
-            revert(string(abi.encodePacked("Liquidation failed: ", returnMessage)));
+            revert(
+                string(abi.encodePacked("Liquidation failed: ", returnMessage))
+            );
         }
     }
 
@@ -1181,7 +1182,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
 
         return rewardsMgr.readRewards(_reserve, msg.sender, _type, share);
     }
-    
+
     function updateRewards(address _reserve, address _user) public {
         uint256 mTokenBalance = core.getUsermTokenBalance(_reserve, _user);
         uint256 stakedBalance = core.getUserStakedTokenBalance(_user);
@@ -1229,24 +1230,17 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
         RewardsManager.RewardTypes _type,
         uint256 num
     ) external {
-        
         // Allow batch update only for Depositor and Governance rewards //
         if (_type == RewardsManager.RewardTypes.Safety) {
             return;
         }
 
-        uint256 balance = 
-            _type == RewardsManager.RewardTypes.Depositor 
-            ? core.getUsermTokenBalance(_reserve, _user) 
-            : core.getUserStakedTokenBalance(_user);
-                
-        rewardsMgr.updateReward(
-            _reserve,
-            _user,
-            _type,
-            balance,
-            num
-        );
+        uint256 balance =
+            _type == RewardsManager.RewardTypes.Depositor
+                ? core.getUsermTokenBalance(_reserve, _user)
+                : core.getUserStakedTokenBalance(_user);
+
+        rewardsMgr.updateReward(_reserve, _user, _type, balance, num);
     }
 
     function addRewardItem(address _reserve, uint256 _amount) private {

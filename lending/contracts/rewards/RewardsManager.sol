@@ -115,7 +115,7 @@ contract RewardsManager is Ownable, ReentrancyGuard {
      * @dev This function will add a new reward item.
      * @param _reserve - The reserve of the lending pool.
      * @param _lpRewardAmt - The amount of reward for depositors.
-     * @param lpBase - The total amount of the mxToken supplied.
+     * @param lpBase - The total amount of the mToken supplied.
      * @param govRewardAmt - The amount of reward for the governance stakers.
      * Access Control: Only Lending Pools or Core
      */
@@ -133,19 +133,15 @@ contract RewardsManager is Ownable, ReentrancyGuard {
         RewardPool storage pool = rewardPools[_reserve];
         require(pool.valid, "Unknown reserve pool in Reward Manager");
 
-        pool.rewards[pool.nextRewardPtr][uint256(RewardTypes.Depositor)] = RewardItem(
-            _lpRewardAmt,
-            0,
-            lpBase
-        );
+        pool.rewards[pool.nextRewardPtr][
+            uint256(RewardTypes.Depositor)
+        ] = RewardItem(_lpRewardAmt, 0, lpBase);
 
         uint256 stakedTokenSupply = IERC20(stakingToken).totalSupply();
         if (stakedTokenSupply != 0) {
-            pool.rewards[pool.nextRewardPtr][uint256(RewardTypes.Governance)] = RewardItem(
-                govRewardAmt,
-                0,
-                stakedTokenSupply
-            );
+            pool.rewards[pool.nextRewardPtr][
+                uint256(RewardTypes.Governance)
+            ] = RewardItem(govRewardAmt, 0, stakedTokenSupply);
         }
         pool.nextRewardPtr = pool.nextRewardPtr.add(1);
     }
@@ -154,8 +150,8 @@ contract RewardsManager is Ownable, ReentrancyGuard {
      * @dev This function will update both the Depositor and Governance reward of the user.
      * @param _reserve - The reserve of the lending pool.
      * @param _user - The user's address.
-     * @param _sharesLp - The amount of the mxToken the user has.
-     * @param _sharesGov - The amount of stBMxx token the user has.
+     * @param _sharesLp - The amount of the mToken the user has.
+     * @param _sharesGov - The amount of stBMXX token the user has.
      * @param _num - The number of reward items to update. Input 0 to update all available reward items.
      * Access Control: Only Lending Pools
      */
@@ -218,7 +214,7 @@ contract RewardsManager is Ownable, ReentrancyGuard {
      * @param _reserve - The reserve of the lending pool.
      * @param _user - The user's address.
      * @param _type - The type of reward.
-     * @param _share - The amount of mxToken or stBMxx token, depending on the _type specified.
+     * @param _share - The amount of mToken or stBMXX token, depending on the _type specified.
      */
     function readRewards(
         address _reserve,
@@ -234,8 +230,7 @@ contract RewardsManager is Ownable, ReentrancyGuard {
             return 0;
         }
 
-        uint256 rewardAmt =
-            pool.claims[_user][uint256(_type)].accumReward;
+        uint256 rewardAmt = pool.claims[_user][uint256(_type)].accumReward;
         if (_share == 0) {
             return rewardAmt;
         }
@@ -293,7 +288,7 @@ contract RewardsManager is Ownable, ReentrancyGuard {
      * @param _type - The type of reward.
      * @param _start - The start of the range.
      * @param _end - The end of the range.
-     * @param _share - The amount of mxToken or stBMxx token, depending on the _type specified.
+     * @param _share - The amount of mToken or stBMXX token, depending on the _type specified.
      * @param _hasNewReward - Specify whether a new reward is available.
      */
     function updateRange(
@@ -350,7 +345,7 @@ contract RewardsManager is Ownable, ReentrancyGuard {
      * @param _type - The type of reward.
      * @param _start - The start of the range.
      * @param _end - The end of the range.
-     * @param _share - The amount of mxToken or stBMxx token, depending on the _type specified.
+     * @param _share - The amount of mToken or stBMXX token, depending on the _type specified.
      */
     function readRange(
         RewardPool storage _pool,
