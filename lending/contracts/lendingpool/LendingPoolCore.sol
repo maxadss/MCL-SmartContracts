@@ -498,11 +498,11 @@ contract LendingPoolCore is VersionedInitializable {
             feeProvider.calculateRewards(_amount);
 
         // Create a Reward Item and send fees to vault //
-        uint256 totalLiquidity = getReserveTotalLiquidity(_token);
+        uint256 liquidity = getReserveAvailableLiquidity(_token);
         rewardManager.addRewardItem(
             _token,
             supplierAmt,
-            totalLiquidity,
+            liquidity,
             govtAmt
         );
 

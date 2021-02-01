@@ -1255,11 +1255,11 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
             _amount
         );
 
-        uint256 totalLiq = core.getReserveTotalLiquidity(_reserve);
+        uint256 liquidity = core.getReserveAvailableLiquidity(_reserve);
         rewardsMgr.addRewardItem(
             _reserve,
             reward.suppliers,
-            totalLiq,
+            liquidity,
             reward.governace
         );
     }
