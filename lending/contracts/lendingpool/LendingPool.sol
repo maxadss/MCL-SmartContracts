@@ -210,6 +210,33 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
     );
 
     /**
+     * @dev emitted when a borrower is liquidated
+     * @param _collateral the address of the collateral being liquidated
+     * @param _reserve the address of the reserve
+     * @param _user the address of the user being liquidated
+     * @param _purchaseAmount the total amount liquidated
+     * @param _liquidatedCollateralAmount the amount of collateral being
+     * liquidated
+     * @param _accruedBorrowInterest the amount of interest accrued by the
+     * borrower since the last action
+     * @param _liquidator the address of the liquidator
+     * @param _receiveMToken true if the liquidator wants to receive
+     * mTokens, false otherwise
+     * @param _timestamp the timestamp of the action
+     **/
+    event LiquidationCall(
+        address indexed _collateral,
+        address indexed _reserve,
+        address indexed _user,
+        uint256 _purchaseAmount,
+        uint256 _liquidatedCollateralAmount,
+        uint256 _accruedBorrowInterest,
+        address _liquidator,
+        bool _receiveMToken,
+        uint256 _timestamp
+    );
+
+    /**
      * @dev emitted when user claim reward.
      * @param _reserve the address of the reserve
      * @param _user the address of the user for which the reward was claimed to
