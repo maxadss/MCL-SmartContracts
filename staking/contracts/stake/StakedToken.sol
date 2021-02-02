@@ -46,15 +46,17 @@ contract StakedToken is
     event Staked(
         address indexed from,
         address indexed onBehalfOf,
-        uint256 amount
+        uint256 amount,
+        uint256 timestamp
     );
-    event Redeem(address indexed from, address indexed to, uint256 amount);
+    event Redeem(address indexed from, address indexed to, uint256 amount, uint256 timestamp);
 
     event RewardsAccrued(address user, uint256 amount);
     event RewardsClaimed(
         address indexed from,
         address indexed to,
-        uint256 amount
+        uint256 amount,
+        uint256 timestamp
     );
 
     event Cooldown(address indexed user);
@@ -136,7 +138,7 @@ contract StakedToken is
             amount
         );
 
-        emit Staked(msg.sender, onBehalfOf, amount);
+        emit Staked(msg.sender, onBehalfOf, amount, block.timestamp);
     }
 
     /**
@@ -178,7 +180,7 @@ contract StakedToken is
 
         IERC20(STAKED_TOKEN).safeTransfer(to, amountToRedeem);
 
-        emit Redeem(msg.sender, to, amountToRedeem);
+        emit Redeem(msg.sender, to, amountToRedeem, block.timestamp);
     }
 
     /**
@@ -215,7 +217,7 @@ contract StakedToken is
 
         REWARD_TOKEN.safeTransferFrom(REWARDS_VAULT, to, amountToClaim);
 
-        emit RewardsClaimed(msg.sender, to, amountToClaim);
+        emit RewardsClaimed(msg.sender, to, amountToClaim, block.timestamp);
     }
 
     /**
