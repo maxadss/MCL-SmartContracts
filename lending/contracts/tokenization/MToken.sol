@@ -441,6 +441,14 @@ contract mToken is ERC20, ERC20Detailed {
     }
 
     /**
+        @dev return total principal supply of mToken
+        @return the current principal total supply
+    */
+    function principalTotalSupply() external view returns (uint256) {
+        return super.totalSupply();
+    }
+
+    /**
      * @dev calculates the total supply of the specific mToken
      * since the balance of every single user increases over time, the total
      * supply

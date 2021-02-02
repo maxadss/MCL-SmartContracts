@@ -1276,7 +1276,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
             _amount
         );
 
-        uint256 liquidity = core.getReserveAvailableLiquidity(_reserve);
+        uint256 liquidity = core.getTotalmTokenSupply(_reserve);
         rewardsMgr.addRewardItem(
             _reserve,
             reward.suppliers,

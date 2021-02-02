@@ -498,7 +498,7 @@ contract LendingPoolCore is VersionedInitializable {
             feeProvider.calculateRewards(_amount);
 
         // Create a Reward Item and send fees to vault //
-        uint256 liquidity = getReserveAvailableLiquidity(_token);
+        uint256 liquidity = getTotalmTokenSupply(_token);
         rewardManager.addRewardItem(_token, supplierAmt, liquidity, govtAmt);
 
         distributeFeestoVaults(_token, address(this), _amount, true);
@@ -1282,6 +1282,15 @@ contract LendingPoolCore is VersionedInitializable {
         uint256 compoundedBalance =
             CoreLibrary.getCompoundedBorrowBalance(user, reserves[_reserve]);
         return (principal, compoundedBalance, compoundedBalance.sub(principal));
+    }
+
+    function getTotalmTokenSupply(address _reserve)
+        public
+        view
+        returns (uint256)
+    {
+        mToken mToken = mToken(reserves[_reserve].mTokenAddress);
+        return mToken.principalTotalSupply();
     }
 
     /**
