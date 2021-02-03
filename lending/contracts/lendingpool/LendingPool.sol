@@ -1,9 +1,9 @@
 pragma solidity ^0.5.0;
 
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/math/SafeMath.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/utils/ReentrancyGuard.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/utils/Address.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/token/ERC20/IERC20.sol";
+import "openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "openzeppelin-solidity/contracts/utils/ReentrancyGuard.sol";
+import "openzeppelin-solidity/contracts/utils/Address.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/IERC20.sol";
 import "../libraries/openzeppelin-upgradeability/VersionedInitializable.sol";
 
 import "../configuration/LendingPoolAddressesProvider.sol";
@@ -35,7 +35,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
     LendingPoolCore public core;
     LendingPoolDataProvider public dataProvider;
     LendingPoolParametersProvider public parametersProvider;
-    IFeeProvider feeProvider;
+    IFeeProvider public feeProvider;
     RewardsManager public rewardsMgr;
 
     /**
@@ -210,6 +210,33 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
     );
 
     /**
+     * @dev emitted when a borrower is liquidated
+     * @param _collateral the address of the collateral being liquidated
+     * @param _reserve the address of the reserve
+     * @param _user the address of the user being liquidated
+     * @param _purchaseAmount the total amount liquidated
+     * @param _liquidatedCollateralAmount the amount of collateral being
+     * liquidated
+     * @param _accruedBorrowInterest the amount of interest accrued by the
+     * borrower since the last action
+     * @param _liquidator the address of the liquidator
+     * @param _receiveMToken true if the liquidator wants to receive
+     * mTokens, false otherwise
+     * @param _timestamp the timestamp of the action
+     **/
+    event LiquidationCall(
+        address indexed _collateral,
+        address indexed _reserve,
+        address indexed _user,
+        uint256 _purchaseAmount,
+        uint256 _liquidatedCollateralAmount,
+        uint256 _accruedBorrowInterest,
+        address _liquidator,
+        bool _receiveMToken,
+        uint256 _timestamp
+    );
+
+    /**
      * @dev emitted when user claim reward.
      * @param _reserve the address of the reserve
      * @param _user the address of the user for which the reward was claimed to
@@ -350,7 +377,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
 
     /**
      * @dev Redeems the underlying amount of assets requested by _user.
-     * This function is executed by the overlying bMXXToken contract in response
+     * This function is executed by the overlying mToken contract in response
      * to a redeem action.
      * @param _reserve the address of the reserve
      * @param _user the address of the user performing the action
@@ -401,7 +428,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
         uint256 amountOfCollateralNeededBNB;
         uint256 userCollateralBalanceBNB;
         uint256 userBorrowBalanceBNB;
-        uint256 usertotalFeesBNB;
+        uint256 userTotalFeesBNB;
         uint256 borrowBalanceIncrease;
         uint256 currentReserveStableRate;
         uint256 availableLiquidity;
@@ -466,7 +493,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
             ,
             vars.userCollateralBalanceBNB,
             vars.userBorrowBalanceBNB,
-            vars.usertotalFeesBNB,
+            vars.userTotalFeesBNB,
             vars.currentLtv,
             vars.currentLiquidationThreshold,
             ,
@@ -494,7 +521,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
             _amount,
             vars.borrowFee,
             vars.userBorrowBalanceBNB,
-            vars.usertotalFeesBNB,
+            vars.userTotalFeesBNB,
             vars.currentLtv
         );
 
@@ -593,7 +620,6 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
     struct RewardLocalVars {
         uint256 suppliers;
         uint256 governace;
-        uint256 safety;
     }
 
     function repay(
@@ -652,7 +678,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
         }
 
         // Update and accumulate reward for this address.
-        this.updateRewards(_reserve, _onBehalfOf);
+        updateRewards(_reserve, _onBehalfOf);
         // RewardManager: Add new reward item. //
         addRewardItem(_reserve, feeReward);
 
@@ -952,21 +978,17 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
                     _receiveMToken
                 )
             );
-        //require(success, "Liquidation call failed");
+
+        require(success, "Liquidation call failed");
 
         (uint256 returnCode, string memory returnMessage) =
             abi.decode(result, (uint256, string));
 
         if (returnCode != 0) {
-            require(
-                success,
+            //error found
+            revert(
                 string(abi.encodePacked("Liquidation failed: ", returnMessage))
             );
-
-            //error found
-            //revert(
-            //    string(abi.encodePacked("Liquidation failed: ", returnMessage))
-            //);
         }
     }
 
@@ -1087,7 +1109,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
             uint256 utilizationRate,
             uint256 liquidityIndex,
             uint256 variableBorrowIndex,
-            address bMXXTokenAddress,
+            address mTokenAddress,
             uint40 lastUpdateTimestamp
         )
     {
@@ -1188,7 +1210,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
         return rewardsMgr.readRewards(_reserve, msg.sender, _type, share);
     }
 
-    function updateRewards(address _reserve, address _user) external {
+    function updateRewards(address _reserve, address _user) public {
         uint256 mTokenBalance = core.getUsermTokenBalance(_reserve, _user);
         uint256 stakedBalance = core.getUserStakedTokenBalance(_user);
 
@@ -1229,19 +1251,23 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
     }
 
     // In case a user has not claim for a very long time (exceed eVM max read/write), we can update it by batches //
-    function updatePartialLpReward(
+    function updatePartialReward(
         address _reserve,
         address _user,
+        RewardsManager.RewardTypes _type,
         uint256 num
     ) external {
-        uint256 mTokenBalance = core.getUsermTokenBalance(_reserve, _user);
-        rewardsMgr.updateReward(
-            _reserve,
-            _user,
-            RewardsManager.RewardTypes.Depositor,
-            mTokenBalance,
-            num
-        );
+        // Allow batch update only for Depositor and Governance rewards //
+        if (_type == RewardsManager.RewardTypes.Safety) {
+            return;
+        }
+
+        uint256 balance =
+            _type == RewardsManager.RewardTypes.Depositor
+                ? core.getUsermTokenBalance(_reserve, _user)
+                : core.getUserStakedTokenBalance(_user);
+
+        rewardsMgr.updateReward(_reserve, _user, _type, balance, num);
     }
 
     function addRewardItem(address _reserve, uint256 _amount) private {
@@ -1250,11 +1276,11 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
             _amount
         );
 
-        uint256 totalLiq = core.getReserveTotalLiquidity(_reserve);
+        uint256 liquidity = core.getTotalmTokenSupply(_reserve);
         rewardsMgr.addRewardItem(
             _reserve,
             reward.suppliers,
-            totalLiq,
+            liquidity,
             reward.governace
         );
     }
@@ -1277,7 +1303,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
     function claimRewardInternal(
         address _reserve,
         RewardsManager.RewardTypes _type
-    ) private {
+    ) internal {
         uint256 share =
             _type == RewardsManager.RewardTypes.Depositor
                 ? core.getUsermTokenBalance(_reserve, msg.sender)

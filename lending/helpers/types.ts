@@ -44,7 +44,7 @@ export enum eContractid {
   LendingRateOracle = "LendingRateOracle",
   AaveOracle = "AaveOracle",
   DefaultReserveInterestRateStrategy = "DefaultReserveInterestRateStrategy",
-  LendingPoolCollateralManager = "LendingPoolCollateralManager",
+  LendingPoolLiquidationManager = "LendingPoolLiquidationManager",
   InitializableAdminUpgradeabilityProxy = "InitializableAdminUpgradeabilityProxy",
   MockFlashLoanReceiver = "MockFlashLoanReceiver",
   WalletBalanceProvider = "WalletBalanceProvider",
@@ -68,18 +68,21 @@ export enum eContractid {
   SelfdestructTransferMock = "SelfdestructTransferMock",
   LendingPoolImpl = "LendingPoolImpl",
   LendingPoolConfiguratorImpl = "LendingPoolConfiguratorImpl",
-  LendingPoolCollateralManagerImpl = "LendingPoolCollateralManagerImpl",
+  LendingPoolLiquidationManagerImpl = "LendingPoolLiquidationManagerImpl",
   LendingPoolCoreImpl = "LendingPoolCoreImpl",
   LendingPoolParameterImpl = "LendingPoolParameterImpl",
   FeeProviderImpl = "FeeProviderImpl",
   CoreLibrary = "CoreLibrary",
   RewardsManager = "RewardsManager",
   aDAI = "aDAI",
+  aUSDC = "aUSDC",
+  MockUSDC = "MockUSDC",
   MockDAI = "MockDAI",
   mETH = "mETH",
   RewardVault1 = "RewardVault1",
   RewardVault2 = "RewardVault2",
   RewardVault3 = "RewardVault",
+  stkMXX = "stkMXX",
 }
 
 /*
@@ -91,7 +94,7 @@ export enum eContractid {
  *  - LPAPR = LendingPoolAddressesProviderRegistry
  *  - LPC = LendingPoolConfiguration
  *  - RL = ReserveLogic
- *  - LPCM = LendingPoolCollateralManager
+ *  - LPCM = LendingPoolLiquidationManager
  *  - P = Pausable
  */
 export enum ProtocolErrors {

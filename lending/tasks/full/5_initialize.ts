@@ -1,7 +1,7 @@
 import { task } from "hardhat/config";
 import { getParamPerNetwork } from "../../helpers/contracts-helpers";
 import {
-  deployLendingPoolCollateralManager,
+  deployLendingPoolLiquidationManager,
   deployWalletBalancerProvider,
   deployLengindPoolDataProvider,
   // deployWETHGateway,
@@ -65,11 +65,11 @@ task("full:initialize-lending-pool", "Initialize lending pool configuration.")
       );
       //await configureReservesByHelper(ReservesConfig, reserveAssets, testHelpers, admin);
 
-      const collateralManager = await deployLendingPoolCollateralManager(
+      const collateralManager = await deployLendingPoolLiquidationManager(
         verify
       );
       await waitForTx(
-        await addressesProvider.setLendingPoolCollateralManager(
+        await addressesProvider.setLendingPoolLiquidationManager(
           collateralManager.address
         )
       );

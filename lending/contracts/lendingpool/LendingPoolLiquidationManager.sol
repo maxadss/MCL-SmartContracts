@@ -1,8 +1,8 @@
 pragma solidity ^0.5.0;
 
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/math/SafeMath.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/utils/ReentrancyGuard.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/utils/Address.sol";
+import "openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "openzeppelin-solidity/contracts/utils/ReentrancyGuard.sol";
+import "openzeppelin-solidity/contracts/utils/Address.sol";
 import "../libraries/openzeppelin-upgradeability/VersionedInitializable.sol";
 
 import "../configuration/LendingPoolAddressesProvider.sol";
@@ -28,11 +28,11 @@ contract LendingPoolLiquidationManager is
     using Address for address;
 
     LendingPoolAddressesProvider public addressesProvider;
-    LendingPoolCore core;
-    LendingPoolDataProvider dataProvider;
-    LendingPoolParametersProvider parametersProvider;
+    LendingPoolCore public core;
+    LendingPoolDataProvider public dataProvider;
+    LendingPoolParametersProvider public parametersProvider;
 
-    uint256 constant LIQUIDATION_CLOSE_FACTOR_PERCENT = 50;
+    uint256 private constant LIQUIDATION_CLOSE_FACTOR_PERCENT = 50;
 
     /**
      * @dev emitted when a borrow fee is liquidated

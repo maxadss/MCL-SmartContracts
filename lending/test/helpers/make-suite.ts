@@ -1,11 +1,10 @@
+import { eContractid } from "./../../helpers/types";
+import { getErc20, getMERC20 } from "./../../helpers/contracts-getters";
 import { evmRevert, evmSnapshot, DRE } from "../../helpers/misc-utils";
 import { Signer } from "ethers";
 import {
-  getLendingPool,
   getLendingPoolAddressesProvider,
   getAaveProtocolDataProvider,
-  getAToken,
-  getMintableErc20,
   getLendingPoolConfiguratorProxy,
   getPriceOracle,
   getLendingPoolCoreProxy,
@@ -81,6 +80,7 @@ export interface TestEnv {
   dataProvider: LendingPoolDataProvider;
   mDAI: MToken;
   mETH: MToken;
+  mUSDC: MToken;
   rewardMgr: RewardsManager;
   getReservesParams: () => { [symbol: string]: IReserveParams };
 }
@@ -109,6 +109,7 @@ const testEnv: TestEnv = {
   dataProvider: {} as LendingPoolDataProvider,
   mDAI: {} as MToken,
   mETH: {} as MToken,
+  mUSDC: {} as MToken,
   rewardMgr: {} as RewardsManager,
   getReservesParams: () => ({} as { [symbol: string]: IReserveParams }),
 } as TestEnv;
@@ -182,6 +183,8 @@ export async function initializeMakeSuite() {
   testEnv.dai = await getMockDAI();
   testEnv.mDAI = await getMDAI();
   testEnv.mETH = await getMETH();
+  testEnv.usdc = await getErc20(eContractid.MockUSDC);
+  testEnv.mUSDC = await getMERC20(eContractid.aUSDC);
   testEnv.rewardMgr = await getRewardManager();
   testEnv.getReservesParams = () => AaveConfig.ReservesConfig;
 }

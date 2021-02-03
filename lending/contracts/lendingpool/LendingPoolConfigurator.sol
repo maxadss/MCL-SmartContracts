@@ -1,7 +1,7 @@
 pragma solidity ^0.5.0;
 
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/math/SafeMath.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/token/ERC20/ERC20Detailed.sol";
+import "openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/ERC20Detailed.sol";
 import "../libraries/openzeppelin-upgradeability/VersionedInitializable.sol";
 import "../configuration/LendingPoolAddressesProvider.sol";
 import "./LendingPoolCore.sol";
@@ -21,7 +21,7 @@ contract LendingPoolConfigurator is VersionedInitializable {
     /**
      * @dev emitted when a reserve is initialized.
      * @param _reserve the address of the reserve
-     * @param _mToken the address of the overlying bMXXToken contract
+     * @param _mToken the address of the overlying mToken contract
      * @param _interestRateStrategyAddress the address of the interest rate
      * strategy for the reserve
      **/
@@ -191,7 +191,7 @@ contract LendingPoolConfigurator is VersionedInitializable {
     ) external onlyLendingPoolManager {
         ERC20Detailed asset = ERC20Detailed(_reserve);
 
-        string memory bMXXTokenName =
+        string memory mTokenName =
             string(
                 abi.encodePacked("Multiplier Interest bearing ", asset.name())
             );
@@ -200,7 +200,7 @@ contract LendingPoolConfigurator is VersionedInitializable {
 
         initReserveWithData(
             _reserve,
-            bMXXTokenName,
+            mTokenName,
             mTokenSymbol,
             _underlyingAssetDecimals,
             _interestRateStrategyAddress
@@ -208,11 +208,11 @@ contract LendingPoolConfigurator is VersionedInitializable {
     }
 
     /**
-     * @dev initializes a reserve using bMXXTokenData provided externally
+     * @dev initializes a reserve using mTokenData provided externally
      * (useful if the underlying ERC20 contract doesn't expose name or decimals)
      * @param _reserve the address of the reserve to be initialized
-     * @param _mTokenName the name of the bMXXToken contract
-     * @param _mTokenSymbol the symbol of the bMXXToken contract
+     * @param _mTokenName the name of the mToken contract
+     * @param _mTokenSymbol the symbol of the mToken contract
      * @param _underlyingAssetDecimals the decimals of the reserve underlying
      * asset
      * @param _interestRateStrategyAddress the address of the interest rate
@@ -228,7 +228,7 @@ contract LendingPoolConfigurator is VersionedInitializable {
         LendingPoolCore core =
             LendingPoolCore(poolAddressesProvider.getLendingPoolCore());
 
-        mToken bMXXTokenInstance =
+        mToken mTokenInstance =
             new mToken(
                 poolAddressesProvider,
                 _reserve,
@@ -238,14 +238,14 @@ contract LendingPoolConfigurator is VersionedInitializable {
             );
         core.initReserve(
             _reserve,
-            address(bMXXTokenInstance),
+            address(mTokenInstance),
             _underlyingAssetDecimals,
             _interestRateStrategyAddress
         );
 
         emit ReserveInitialized(
             _reserve,
-            address(bMXXTokenInstance),
+            address(mTokenInstance),
             _interestRateStrategyAddress
         );
     }

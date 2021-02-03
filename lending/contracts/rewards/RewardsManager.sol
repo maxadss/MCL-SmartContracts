@@ -1,15 +1,13 @@
 pragma solidity ^0.5.0;
 
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/ownership/Ownable.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/utils/ReentrancyGuard.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/token/ERC20/ERC20.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/token/ERC20/SafeERC20.sol";
+import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
+import "openzeppelin-solidity/contracts/utils/ReentrancyGuard.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/SafeERC20.sol";
 import "../configuration/LendingPoolAddressesProvider.sol";
-import "../libraries/WadRayMath.sol";
 import "../interfaces/IRewardVault.sol";
 
 contract RewardsManager is Ownable, ReentrancyGuard {
-    using WadRayMath for uint256;
     using SafeMath for uint256;
     using SafeERC20 for ERC20;
 
@@ -32,13 +30,6 @@ contract RewardsManager is Ownable, ReentrancyGuard {
     }
 
     /**
-     * @dev - A struct to store the UserClaim[2]. 0: Depositor reward , 1: Governance reward
-     */
-    struct UserClaims {
-        UserClaim[2] items;
-    }
-
-    /**
      * @dev - A struct to store the RewardItem.
      * @notice amount - The amount of reward.
      * @notice paidSoFar - The amount that a user has accumulated or claimed from this reward item.
@@ -51,13 +42,6 @@ contract RewardsManager is Ownable, ReentrancyGuard {
     }
 
     /**
-     * @dev - A struct to store the RewardItem[2]. 0: Depositor reward , 1: Governance reward
-     */
-    struct RewardItems {
-        RewardItem[2] items;
-    }
-
-    /**
      * @dev - A struct to store the individual RewardPools.
      * @notice claims - A mapping of user address to UserClaims.
      * @notice rewards - A mapping of RewardItems, retrieved by index. The index starts from 0.
@@ -65,8 +49,8 @@ contract RewardsManager is Ownable, ReentrancyGuard {
      * @notice valid - Determines whether a pool is valid or not.
      */
     struct RewardPool {
-        mapping(address => UserClaims) claims;
-        mapping(uint256 => RewardItems) rewards;
+        mapping(address => UserClaim[2]) claims;
+        mapping(uint256 => RewardItem[2]) rewards;
         uint256 nextRewardPtr;
         bool valid;
     }
@@ -130,38 +114,34 @@ contract RewardsManager is Ownable, ReentrancyGuard {
     /**
      * @dev This function will add a new reward item.
      * @param _reserve - The reserve of the lending pool.
-     * @param _sharesLp - The mxToken amount of the depositor.
-     * @param _sharingLpBase - The total amount of the mxToken supply.
-     * @param _shareGov - The stBMxx amount of the governance staker.
+     * @param _lpRewardAmt - The amount of reward for depositors.
+     * @param lpBase - The total amount of the mToken supplied.
+     * @param govRewardAmt - The amount of reward for the governance stakers.
      * Access Control: Only Lending Pools or Core
      */
     function addRewardItem(
         address _reserve,
-        uint256 _sharesLp,
-        uint256 _sharingLpBase,
-        uint256 _shareGov
+        uint256 _lpRewardAmt,
+        uint256 lpBase,
+        uint256 govRewardAmt
     ) public onlyLendingPoolOrCore nonReentrant {
-        // Check for ny zero inputs//
-        if (_sharesLp == 0 || _shareGov == 0 || _sharingLpBase == 0) {
+        // Check for any zero inputs//
+        if (_lpRewardAmt == 0 || govRewardAmt == 0 || lpBase == 0) {
             return;
         }
 
         RewardPool storage pool = rewardPools[_reserve];
         require(pool.valid, "Unknown reserve pool in Reward Manager");
 
-        pool.rewards[pool.nextRewardPtr].items[0] = RewardItem(
-            _sharesLp,
-            0,
-            _sharingLpBase
-        );
+        pool.rewards[pool.nextRewardPtr][
+            uint256(RewardTypes.Depositor)
+        ] = RewardItem(_lpRewardAmt, 0, lpBase);
 
         uint256 stakedTokenSupply = IERC20(stakingToken).totalSupply();
         if (stakedTokenSupply != 0) {
-            pool.rewards[pool.nextRewardPtr].items[1] = RewardItem(
-                _shareGov,
-                0,
-                stakedTokenSupply
-            );
+            pool.rewards[pool.nextRewardPtr][
+                uint256(RewardTypes.Governance)
+            ] = RewardItem(govRewardAmt, 0, stakedTokenSupply);
         }
         pool.nextRewardPtr = pool.nextRewardPtr.add(1);
     }
@@ -170,8 +150,8 @@ contract RewardsManager is Ownable, ReentrancyGuard {
      * @dev This function will update both the Depositor and Governance reward of the user.
      * @param _reserve - The reserve of the lending pool.
      * @param _user - The user's address.
-     * @param _sharesLp - The amount of the mxToken the user has.
-     * @param _sharesGov - The amount of stBMxx token the user has.
+     * @param _sharesLp - The amount of the mToken the user has.
+     * @param _sharesGov - The amount of stBMXX token the user has.
      * @param _num - The number of reward items to update. Input 0 to update all available reward items.
      * Access Control: Only Lending Pools
      */
@@ -234,7 +214,7 @@ contract RewardsManager is Ownable, ReentrancyGuard {
      * @param _reserve - The reserve of the lending pool.
      * @param _user - The user's address.
      * @param _type - The type of reward.
-     * @param _share - The amount of mxToken or stBMxx token, depending on the _type specified.
+     * @param _share - The amount of mToken or stBMXX token, depending on the _type specified.
      */
     function readRewards(
         address _reserve,
@@ -250,8 +230,7 @@ contract RewardsManager is Ownable, ReentrancyGuard {
             return 0;
         }
 
-        uint256 rewardAmt =
-            pool.claims[_user].items[uint256(_type)].accumReward;
+        uint256 rewardAmt = pool.claims[_user][uint256(_type)].accumReward;
         if (_share == 0) {
             return rewardAmt;
         }
@@ -286,7 +265,7 @@ contract RewardsManager is Ownable, ReentrancyGuard {
             bool
         )
     {
-        UserClaim memory claim = _pool.claims[_user].items[_type];
+        UserClaim memory claim = _pool.claims[_user][_type];
         if (claim.nextClaimablePtr >= _pool.nextRewardPtr) {
             return (0, 0, false);
         }
@@ -309,7 +288,7 @@ contract RewardsManager is Ownable, ReentrancyGuard {
      * @param _type - The type of reward.
      * @param _start - The start of the range.
      * @param _end - The end of the range.
-     * @param _share - The amount of mxToken or stBMxx token, depending on the _type specified.
+     * @param _share - The amount of mToken or stBMXX token, depending on the _type specified.
      * @param _hasNewReward - Specify whether a new reward is available.
      */
     function updateRange(
@@ -323,35 +302,39 @@ contract RewardsManager is Ownable, ReentrancyGuard {
     ) private {
         // If there is no new claim, just point the nextClaimPtr to the latest
         if (!_hasNewReward) {
-            UserClaim storage claim = _pool.claims[_user].items[_type];
+            UserClaim storage claim = _pool.claims[_user][_type];
             claim.nextClaimablePtr = _pool.nextRewardPtr;
             return;
         }
 
         uint256 accum;
         for (uint256 n = _start; n <= _end; n++) {
-            RewardItem memory r = _pool.rewards[n].items[_type];
+            RewardItem memory r = _pool.rewards[n][_type];
             if (r.amount == 0) {
                 continue;
             }
 
-            uint256 rewardAmt =
-                _share.wadMul(r.amount).wadDiv(r.totalSharingBase);
-
             // Enough in RewardItem to pay ?
-            if (r.amount.sub(r.paidSoFar) < rewardAmt) {
+            uint256 amountAvailable = r.amount.sub(r.paidSoFar);
+            if (amountAvailable == 0) {
                 continue;
+            }
+
+            uint256 rewardAmt = _share.mul(r.amount).div(r.totalSharingBase);
+
+            if (amountAvailable < rewardAmt) {
+                rewardAmt = amountAvailable;
             }
 
             accum = accum.add(rewardAmt);
 
             // Update
             r.paidSoFar = r.paidSoFar.add(rewardAmt);
-            _pool.rewards[n].items[_type] = r;
+            _pool.rewards[n][_type] = r;
         }
 
         // Update
-        UserClaim storage claim = _pool.claims[_user].items[_type];
+        UserClaim storage claim = _pool.claims[_user][_type];
         claim.nextClaimablePtr = _end.add(1); // set pointer to next reward in future //
         claim.accumReward = claim.accumReward.add(accum);
     }
@@ -362,7 +345,7 @@ contract RewardsManager is Ownable, ReentrancyGuard {
      * @param _type - The type of reward.
      * @param _start - The start of the range.
      * @param _end - The end of the range.
-     * @param _share - The amount of mxToken or stBMxx token, depending on the _type specified.
+     * @param _share - The amount of mToken or stBMXX token, depending on the _type specified.
      */
     function readRange(
         RewardPool storage _pool,
@@ -373,18 +356,23 @@ contract RewardsManager is Ownable, ReentrancyGuard {
     ) private view returns (uint256) {
         uint256 accum;
         for (uint256 n = _start; n <= _end; n++) {
-            RewardItem memory r = _pool.rewards[n].items[_type];
+            RewardItem memory r = _pool.rewards[n][_type];
             if (r.amount == 0) {
                 continue;
             }
 
-            uint256 rewardAmt =
-                _share.wadMul(r.amount).wadDiv(r.totalSharingBase);
-
             // Enough in RewardItem to pay ?
-            if (r.amount.sub(r.paidSoFar) < rewardAmt) {
+            uint256 amountAvailable = r.amount.sub(r.paidSoFar);
+            if (amountAvailable == 0) {
                 continue;
             }
+
+            uint256 rewardAmt = _share.mul(r.amount).div(r.totalSharingBase);
+
+            if (amountAvailable < rewardAmt) {
+                rewardAmt = amountAvailable;
+            }
+
             accum = accum.add(rewardAmt);
         }
         return accum;
@@ -405,9 +393,9 @@ contract RewardsManager is Ownable, ReentrancyGuard {
         RewardPool storage pool = rewardPools[_reserve];
         require(pool.valid, "Unknown reserve pool in Reward Manager");
 
-        UserClaims storage claims = pool.claims[_user];
-        claims.items[uint256(_type)].nextClaimablePtr = pool.nextRewardPtr;
-        claims.items[uint256(_type)].accumReward = 0;
+        UserClaim storage claim = pool.claims[_user][uint256(_type)];
+        claim.nextClaimablePtr = pool.nextRewardPtr;
+        claim.accumReward = 0;
     }
 
     /**
