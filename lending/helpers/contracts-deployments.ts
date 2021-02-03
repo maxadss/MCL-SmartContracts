@@ -51,6 +51,11 @@ import {
   RewardsManagerFactory,
   IRewardVaultFactory,
   RewardVaultFactory,
+  RewardVault,
+  MockUSDCFactory,
+  LendingPoolLiquidationManager,
+  MockUSDT,
+  MockUSDC,
   //WETH9MockedFactory,
   //WETHGatewayFactory,
   //StableAndVariableTokensHelperFactory,
@@ -256,17 +261,19 @@ export const deployLendingRateOracle = async (verify?: boolean) =>
 //     verify
 //   );
 
-export const deployLendingPoolCollateralManager = async (verify?: boolean) => {
+export const deployLendingPoolLiquidationManager = async (
+  verify?: boolean
+): Promise<LendingPoolLiquidationManager> => {
   const collateralManagerImpl = await new LendingPoolLiquidationManagerFactory(
     await getFirstSigner()
   ).deploy();
   await insertContractAddressInDb(
-    eContractid.LendingPoolCollateralManagerImpl,
+    eContractid.LendingPoolLiquidationManager,
     collateralManagerImpl.address
   );
   return withSaveAndVerify(
     collateralManagerImpl,
-    eContractid.LendingPoolCollateralManager,
+    eContractid.LendingPoolLiquidationManager,
     [],
     verify
   );
@@ -629,16 +636,16 @@ export const deployRewardManager = async (
   );
 
 export const deployRewardVault = async (
-  address: tEthereumAddress,
   id: string,
   verify?: boolean
-) =>
-  withSaveAndVerify(
-    await new RewardVaultFactory(await getFirstSigner()).deploy(address),
+): Promise<RewardVault> => {
+  return withSaveAndVerify(
+    await new RewardVaultFactory(await getFirstSigner()).deploy(),
     id,
     [],
     verify
   );
+};
 
 export const deployMDAI = async (
   args: [tEthereumAddress, string, BigNumberish, string, string],
@@ -656,5 +663,26 @@ export const deployMockDAI = async (verify?: boolean) =>
     await new MockDAIFactory(await getFirstSigner()).deploy(),
     eContractid.MockDAI,
     [],
+    verify
+  );
+
+export const deployMockUSDC = async (verify?: boolean): Promise<MockUSDC> => {
+  return withSaveAndVerify(
+    await new MockUSDCFactory(await getFirstSigner()).deploy(),
+    eContractid.MockUSDC,
+    [],
+    verify
+  );
+};
+
+export const deployMintableErc20WithId = async (
+  id: string,
+  args: [string, string, string],
+  verify?: boolean
+) =>
+  withSaveAndVerify(
+    await new MintableERC20Factory(await getFirstSigner()).deploy(),
+    id,
+    args,
     verify
   );

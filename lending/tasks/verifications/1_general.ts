@@ -14,8 +14,8 @@ import {
   getLendingPool,
   getLendingPoolAddressesProvider,
   //getLendingPoolAddressesProviderRegistry,
-  getLendingPoolCollateralManager,
-  getLendingPoolCollateralManagerImpl,
+  getLendingPoolLiquidationManager,
+  getLendingPoolLiquidationManagerImpl,
   getLendingPoolConfiguratorImpl,
   getLendingPoolConfiguratorProxy,
   getLendingPoolImpl,
@@ -54,12 +54,12 @@ task("verify:general", "Deploy oracles for dev enviroment")
     //   : await getLendingPoolAddressesProviderRegistry();
     const lendingPoolProxy = await getLendingPool();
     const lendingPoolConfigurator = await getLendingPoolConfiguratorProxy();
-    const lendingPoolCollateralManager = await getLendingPoolCollateralManager();
+    const LendingPoolLiquidationManager = await getLendingPoolLiquidationManager();
 
     if (all) {
       const lendingPoolImpl = await getLendingPoolImpl();
       const lendingPoolConfiguratorImpl = await getLendingPoolConfiguratorImpl();
-      const lendingPoolCollateralManagerImpl = await getLendingPoolCollateralManagerImpl();
+      const LendingPoolLiquidationManagerImpl = await getLendingPoolLiquidationManagerImpl();
       const dataProvider = await getAaveProtocolDataProvider();
       const walletProvider = await getWalletProvider();
       // const wethGateway = await getWETHGateway();
@@ -84,7 +84,7 @@ task("verify:general", "Deploy oracles for dev enviroment")
       console.log(
         "\n- Verifying LendingPool Collateral Manager Implementation...\n"
       );
-      await verifyContract(lendingPoolCollateralManagerImpl.address, []);
+      await verifyContract(LendingPoolLiquidationManagerImpl.address, []);
 
       // Test helpers
       console.log("\n- Verifying  Aave  Provider Helpers...\n");
@@ -113,7 +113,7 @@ task("verify:general", "Deploy oracles for dev enviroment")
 
     // Proxy collateral manager
     console.log("\n- Verifying  Lending Pool Collateral Manager Proxy...\n");
-    await verifyContract(lendingPoolCollateralManager.address, []);
+    await verifyContract(LendingPoolLiquidationManager.address, []);
 
     // DelegatedAwareAToken
     console.log("\n- Verifying DelegatedAwareAToken...\n");

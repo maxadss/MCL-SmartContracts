@@ -124,7 +124,7 @@ makeSuite("LendingPool - stable rate economy tests", (testEnv: TestEnv) => {
     //user 2 deposits 5 ETH tries to borrow. needs to be reverted as you can't borrow more than 25% of the available reserve (250 DAI)
     const amountETHToDeposit = await convertToCurrencyDecimals(
       ETHEREUM_ADDRESS,
-      "100"
+      "30"
     );
     await _lendingPoolInstance
       .connect(users[2].signer)

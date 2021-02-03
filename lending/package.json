@@ -4,23 +4,7 @@
   "main": "index.js",
   "license": "AGPLv3",
   "scripts": {
-    "run-env": "npm i && tail -f /dev/null",
-    "buidler": "buidler",
-    "buidler-kovan": "buidler --network kovan",
-    "buidler-ropsten": "buidler --network ropsten",
-    "buidler-main": "buidler --network main",
-    "buidler help": "buidler help",
-    "compile": "buidler compile",
-    "types-gen": "typechain --target ethers-v5 --outDir ./types './build/contracts/*.json'",
-    "test": "buidler test",
-    "test-pei": "npm run test test/__setup.spec.ts test/bMXXIncentivesController/*.spec.ts",
-    "test-psi": "npm run test test/__setup.spec.ts test/StakedbMXX/stakedbMXX-basic.spec.ts test/StakedbMXX/stakedbMXX-redeem.spec.ts test/StakedbMXX/stakedbMXX-transfers.spec.ts",
-    "coverage": "buidler coverage",
-    "dev:deployment": "buidler dev-deployment",
-    "ropsten:deployment": "npm run buidler-ropsten -- common-deployment --verify",
-    "kovan:deployment": "npm run buidler-kovan -- common-deployment --verify",
-    "main:deployment": "npm run buidler-main -- common-deployment --verify",
-    "dev:prettier": "prettier --write ."
+    "types-gen": "typechain --target ethers-v5 --outDir ./types './build/contracts/*.json'"
   },
   "devDependencies": {
     "@nomiclabs/buidler": "^1.4.7",

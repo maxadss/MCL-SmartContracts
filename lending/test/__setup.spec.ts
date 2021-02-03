@@ -10,7 +10,7 @@ import {
   deployLendingPoolConfigurator,
   deployLendingPool,
   deployPriceOracle,
-  deployLendingPoolCollateralManager,
+  deployLendingPoolLiquidationManager,
   deployMockFlashLoanReceiver,
   deployWalletBalancerProvider,
   deployLengindPoolDataProvider,
@@ -25,6 +25,8 @@ import {
   deployMockDAI,
   deployRewardManager,
   deployRewardVault,
+  deployMintableErc20WithId,
+  deployMockUSDC,
 } from "../helpers/contracts-deployments";
 import { Signer } from "ethers";
 import {
@@ -62,7 +64,6 @@ import {
   getLendingPoolParameterProxy,
   getMockDAI,
   getRewardManager,
-  getMintableErc20,
   getLendingPoolProxy,
   getLendingPoolCoreProxy,
   getVault,
@@ -103,7 +104,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   console.time("setup");
   const aaveAdmin = await deployer.getAddress();
 
-  const mockTokens = await deployAllMockTokens(deployer);
+  // const mockTokens = await deployAllMockTokens(deployer);
 
   const addressesProvider = await deployLendingPoolAddressesProvider(
     AaveConfig.MarketId
@@ -201,7 +202,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
 
   //liquidation
 
-  const liq = await deployLendingPoolCollateralManager();
+  const liq = await deployLendingPoolLiquidationManager();
   await waitForTx(
     await addressesProvider.setLendingPoolLiquidationManager(liq.address)
   );
@@ -264,7 +265,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     18,
     daiInterest.address
   );
-  console.log("DAI daiInterest ", daiInterest.address);
+
   await lendingPoolConfiguratorProxy.activateReserve(dai.address);
   await lendingPoolConfiguratorProxy.enableBorrowingOnReserve(
     dai.address,
@@ -313,27 +314,63 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     ETHEREUM_ADDRESS
   );
 
+  // deploy usdc
+  const usdc = await deployMockUSDC();
+  const usdcInterest = await deployDefaultReserveInterestRateStrategy(
+    [
+      usdc.address,
+      addressesProvider.address,
+      "10000000000000000000000000",
+      "70000000000000000000000000",
+      "1500000000000000000000000000",
+      "60000000000000000000000000",
+      "1500000000000000000000000000",
+    ],
+    false
+  );
+
+  await lendingPoolConfiguratorProxy.initReserve(
+    usdc.address,
+    6,
+    usdcInterest.address
+  );
+
+  await lendingPoolConfiguratorProxy.activateReserve(usdc.address);
+  await lendingPoolConfiguratorProxy.enableBorrowingOnReserve(
+    usdc.address,
+    true
+  );
+  await lendingPoolConfiguratorProxy.enableReserveAsCollateral(
+    usdc.address,
+    "70",
+    "80",
+    "110"
+  );
+  await lendingPoolConfiguratorProxy.enableReserveStableBorrowRate(
+    usdc.address
+  );
+
   await lendingPoolConfiguratorProxy.refreshLendingPoolCoreConfiguration();
 
   const daiReserve = await dataProviderProxy.getReserveData(dai.address);
 
-  await insertContractAddressInDb(
-    eContractid.aDAI,
-    daiReserve.bMXXTokenAddress
-  );
+  await insertContractAddressInDb(eContractid.aDAI, daiReserve.mTokenAddress);
 
   const ethReserve = await dataProviderProxy.getReserveData(ETHEREUM_ADDRESS);
 
-  await insertContractAddressInDb(
-    eContractid.mETH,
-    ethReserve.bMXXTokenAddress
-  );
+  await insertContractAddressInDb(eContractid.mETH, ethReserve.mTokenAddress);
+
+  const usdcReserve = await dataProviderProxy.getReserveData(usdc.address);
+
+  await insertContractAddressInDb(eContractid.aUSDC, usdcReserve.mTokenAddress);
 
   //staking address
 
-  await deployMintableErc20(["stkMXX", "stkMXX", "18"]);
-
-  const stkMXX = await getMintableErc20();
+  const stkMXX = await deployMintableErc20WithId(eContractid.stkMXX, [
+    "stkMXX",
+    "stkMXX",
+    "18",
+  ]);
 
   await waitForTx(await addressesProvider.setStakingToken(stkMXX.address));
 
@@ -341,15 +378,17 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   await deployRewardManager(addressesProvider.address);
 
   const rewardsManager = await getRewardManager();
-  await waitForTx(
-    await addressesProvider.setRewardManager(rewardsManager.address)
-  );
 
   //deploy 3 vaults
-  await deployRewardVault(rewardsManager.address, eContractid.RewardVault1);
-  await deployRewardVault(rewardsManager.address, eContractid.RewardVault2);
-  await deployRewardVault(rewardsManager.address, eContractid.RewardVault3);
+  const vault1 = await deployRewardVault(eContractid.RewardVault1);
+  const vault2 = await deployRewardVault(eContractid.RewardVault2);
+  const vault3 = await deployRewardVault(eContractid.RewardVault3);
 
+  await waitForTx(await vault1.setRewardManager(rewardsManager.address));
+
+  await waitForTx(await vault2.setRewardManager(rewardsManager.address));
+
+  await waitForTx(await vault3.setRewardManager(rewardsManager.address));
   await waitForTx(
     await addressesProvider.setLpRewardVault(
       (await getVault(eContractid.RewardVault1)).address
@@ -365,6 +404,10 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
       (await getVault(eContractid.RewardVault3)).address
     )
   );
+  await waitForTx(
+    await addressesProvider.setRewardManager(rewardsManager.address)
+  );
+
   //register reward
   await waitForTx(await lendingPoolProxy.registerAllPoolsForReward());
 
@@ -373,9 +416,15 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   await waitForTx(
     await fallbackOracle.setAssetPrice(dai.address, "50000000000000000") //0.05 BNB
   );
+
   await waitForTx(
     await fallbackOracle.setAssetPrice(ETHEREUM_ADDRESS, "1000000000000000000") //1 BNB
   );
+
+  await waitForTx(
+    await fallbackOracle.setAssetPrice(usdc.address, "50000000000000000") //0.05 BNB
+  );
+
   // console.log(
   //   "dai price:",
   //   (await fallbackOracle.getAssetPrice(dai.address)).toString()
@@ -405,6 +454,13 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   );
 
   await waitForTx(
+    await lendingRateOracle.setMarketBorrowRate(
+      usdc.address,
+      "10000000000000000"
+    )
+  );
+
+  await waitForTx(
     await lendingRateOracle.setMarketLiquidityRate(
       dai.address,
       "10000000000000000"
@@ -414,6 +470,12 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   await waitForTx(
     await lendingRateOracle.setMarketLiquidityRate(
       ETHEREUM_ADDRESS,
+      "10000000000000000"
+    )
+  );
+  await waitForTx(
+    await lendingRateOracle.setMarketLiquidityRate(
+      usdc.address,
       "10000000000000000"
     )
   );

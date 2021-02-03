@@ -41,7 +41,7 @@ task("print-config", "Inits the DRE, to have access to all the plugins")
     console.log("LendingPool Proxy:", await addressesProvider.getLendingPool());
     console.log(
       "Lending Pool Collateral Manager",
-      await addressesProvider.getLendingPoolCollateralManager()
+      await addressesProvider.getLendingPoolLiquidationManager()
     );
     console.log(
       "Lending Pool Configurator proxy",

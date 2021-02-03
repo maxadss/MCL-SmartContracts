@@ -18,6 +18,7 @@ makeSuite("Interest rate strategy", (testEnv: TestEnv) => {
   let varSlope2: string;
   let stableSlope1: string;
   let stableSlope2: string;
+  let currentStableBorrowRate: string = "10000000000000000";
 
   before("Initializing test variables", async () => {
     _addressesProviderInstance = testEnv.addressesProvider;
@@ -130,6 +131,7 @@ makeSuite("Interest rate strategy", (testEnv: TestEnv) => {
         .times(RAY)
         .plus(stableSlope1)
         .plus(stableSlope2)
+        .plus(currentStableBorrowRate)
         .toFixed(0),
       "Invalid stable rate"
     );
