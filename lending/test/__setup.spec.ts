@@ -1,7 +1,3 @@
-import {
-  deployMockUSDC,
-  deployMintableErc20WithId,
-} from "./../helpers/contracts-deployments";
 import rawBRE from "hardhat";
 import { MockContract } from "ethereum-waffle";
 import {
@@ -29,6 +25,8 @@ import {
   deployMockDAI,
   deployRewardManager,
   deployRewardVault,
+  deployMintableErc20WithId,
+  deployMockUSDC,
 } from "../helpers/contracts-deployments";
 import { Signer } from "ethers";
 import {
@@ -356,24 +354,15 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
 
   const daiReserve = await dataProviderProxy.getReserveData(dai.address);
 
-  await insertContractAddressInDb(
-    eContractid.aDAI,
-    daiReserve.bMXXTokenAddress
-  );
+  await insertContractAddressInDb(eContractid.aDAI, daiReserve.mTokenAddress);
 
   const ethReserve = await dataProviderProxy.getReserveData(ETHEREUM_ADDRESS);
 
-  await insertContractAddressInDb(
-    eContractid.mETH,
-    ethReserve.bMXXTokenAddress
-  );
+  await insertContractAddressInDb(eContractid.mETH, ethReserve.mTokenAddress);
 
   const usdcReserve = await dataProviderProxy.getReserveData(usdc.address);
 
-  await insertContractAddressInDb(
-    eContractid.aUSDC,
-    usdcReserve.bMXXTokenAddress
-  );
+  await insertContractAddressInDb(eContractid.aUSDC, usdcReserve.mTokenAddress);
 
   //staking address
 
@@ -391,10 +380,15 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   const rewardsManager = await getRewardManager();
 
   //deploy 3 vaults
-  await deployRewardVault(rewardsManager.address, eContractid.RewardVault1);
-  await deployRewardVault(rewardsManager.address, eContractid.RewardVault2);
-  await deployRewardVault(rewardsManager.address, eContractid.RewardVault3);
+  const vault1 = await deployRewardVault(eContractid.RewardVault1);
+  const vault2 = await deployRewardVault(eContractid.RewardVault2);
+  const vault3 = await deployRewardVault(eContractid.RewardVault3);
 
+  await waitForTx(await vault1.setRewardManager(rewardsManager.address));
+
+  await waitForTx(await vault2.setRewardManager(rewardsManager.address));
+
+  await waitForTx(await vault3.setRewardManager(rewardsManager.address));
   await waitForTx(
     await addressesProvider.setLpRewardVault(
       (await getVault(eContractid.RewardVault1)).address
