@@ -1,7 +1,7 @@
 pragma solidity ^0.5.0;
 
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/token/ERC20/ERC20.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/token/ERC20/ERC20Detailed.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/ERC20Detailed.sol";
 
 import "../configuration/LendingPoolAddressesProvider.sol";
 import "../lendingpool/LendingPool.sol";
@@ -441,6 +441,14 @@ contract mToken is ERC20, ERC20Detailed {
     }
 
     /**
+        @dev return total principal supply of mToken
+        @return the current principal total supply
+    */
+    function principalTotalSupply() external view returns (uint256) {
+        return super.totalSupply();
+    }
+
+    /**
      * @dev calculates the total supply of the specific mToken
      * since the balance of every single user increases over time, the total
      * supply
@@ -680,7 +688,6 @@ contract mToken is ERC20, ERC20Detailed {
             0
         );
 
-        // zyn: This part need extensive testing //
         // RewardManager: Update the reward for these 2 users before transfering //
         updateLpReward(_from);
         updateLpReward(_to);

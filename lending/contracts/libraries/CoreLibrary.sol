@@ -1,6 +1,6 @@
 pragma solidity ^0.5.0;
 
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/math/SafeMath.sol";
+import "openzeppelin-solidity/contracts/math/SafeMath.sol";
 import "./WadRayMath.sol";
 
 /**
@@ -65,7 +65,7 @@ library CoreLibrary {
         //the decimals of the reserve asset
         uint256 decimals;
         /**
-         * @dev address of the bMXXToken representing the asset
+         * @dev address of the MToken representing the asset
          **/
         address mTokenAddress;
         /**

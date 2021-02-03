@@ -1,9 +1,9 @@
 pragma solidity ^0.5.0;
 
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/math/SafeMath.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/token/ERC20/SafeERC20.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/token/ERC20/ERC20.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contracts/utils/Address.sol";
+import "openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/SafeERC20.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
+import "openzeppelin-solidity/contracts/utils/Address.sol";
 import "../libraries/openzeppelin-upgradeability/VersionedInitializable.sol";
 
 import "../libraries/CoreLibrary.sol";
@@ -498,13 +498,8 @@ contract LendingPoolCore is VersionedInitializable {
             feeProvider.calculateRewards(_amount);
 
         // Create a Reward Item and send fees to vault //
-        uint256 totalLiquidity = getReserveTotalLiquidity(_token);
-        rewardManager.addRewardItem(
-            _token,
-            supplierAmt,
-            totalLiquidity,
-            govtAmt
-        );
+        uint256 liquidity = getTotalmTokenSupply(_token);
+        rewardManager.addRewardItem(_token, supplierAmt, liquidity, govtAmt);
 
         distributeFeestoVaults(_token, address(this), _amount, true);
     }
@@ -533,38 +528,31 @@ contract LendingPoolCore is VersionedInitializable {
                 "User is sending bnb along with the ERC20 transfer. Check the value attribute of the transaction"
             );
 
-            if (reward.supplier != 0) {
-                if (_transferFromCore) {
-                    ERC20(_token).safeTransfer(toLpVault, reward.supplier);
-                } else {
-                    ERC20(_token).safeTransferFrom(
-                        _user,
-                        toLpVault,
-                        reward.supplier
-                    );
-                }
-            }
+            ERC20 token = ERC20(_token);
 
-            if (reward.governance != 0) {
-                if (_transferFromCore) {
-                    ERC20(_token).safeTransfer(toGovtVault, reward.governance);
-                } else {
-                    ERC20(_token).safeTransferFrom(
+            if (_transferFromCore) {
+                if (reward.supplier != 0) {
+                    token.safeTransfer(toLpVault, reward.supplier);
+                }
+                if (reward.governance != 0) {
+                    token.safeTransfer(toGovtVault, reward.governance);
+                }
+                if (reward.safetyModule != 0) {
+                    token.safeTransfer(toSafetyVault, reward.safetyModule);
+                }
+            } else {
+                if (reward.supplier != 0) {
+                    token.safeTransferFrom(_user, toLpVault, reward.supplier);
+                }
+                if (reward.governance != 0) {
+                    token.safeTransferFrom(
                         _user,
                         toGovtVault,
                         reward.governance
                     );
                 }
-            }
-
-            if (reward.safetyModule != 0) {
-                if (_transferFromCore) {
-                    ERC20(_token).safeTransfer(
-                        toSafetyVault,
-                        reward.safetyModule
-                    );
-                } else {
-                    ERC20(_token).safeTransferFrom(
+                if (reward.safetyModule != 0) {
+                    token.safeTransferFrom(
                         _user,
                         toSafetyVault,
                         reward.safetyModule
@@ -703,7 +691,7 @@ contract LendingPoolCore is VersionedInitializable {
 
     /**
      * @dev gets the underlying asset balance of a user based on the
-     * corresponding bMXXToken balance.
+     * corresponding mToken balance.
      * @param _reserve the reserve address
      * @param _user the user address
      * @return the underlying deposit balance of the user
@@ -1296,6 +1284,15 @@ contract LendingPoolCore is VersionedInitializable {
         return (principal, compoundedBalance, compoundedBalance.sub(principal));
     }
 
+    function getTotalmTokenSupply(address _reserve)
+        public
+        view
+        returns (uint256)
+    {
+        mToken mToken = mToken(reserves[_reserve].mTokenAddress);
+        return mToken.principalTotalSupply();
+    }
+
     /**
      * @dev the variable borrow index of the user is 0 if the user is not
      * borrowing or borrowing at stable
@@ -1343,7 +1340,7 @@ contract LendingPoolCore is VersionedInitializable {
     /**
      * @dev initializes a reserve
      * @param _reserve the address of the reserve
-     * @param _mTokenAddress the address of the overlying bMXXToken contract
+     * @param _mTokenAddress the address of the overlying mToken contract
      * @param _decimals the decimals of the reserve currency
      * @param _interestRateStrategyAddress the address of the interest rate
      * strategy contract
