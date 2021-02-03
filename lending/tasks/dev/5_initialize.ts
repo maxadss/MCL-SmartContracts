@@ -1,9 +1,9 @@
 import { task } from "hardhat/config";
 import {
-  deployLendingPoolLiquidationManager,
   deployMockFlashLoanReceiver,
   deployWalletBalancerProvider,
   deployLengindPoolDataProvider,
+  deployLendingPoolLiquidationManager,
   // deployWETHGateway,
 } from "../../helpers/contracts-deployments";
 import {
