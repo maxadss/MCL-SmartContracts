@@ -62,12 +62,12 @@
       ]
     },
     {
-      "description": "User 0 Deposits 1000 USDC in an empty reserve",
+      "description": "User 0 Deposits 1000 DAI in an empty reserve",
       "actions": [
         {
           "name": "mint",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "1000",
             "user": "0"
           },
@@ -76,7 +76,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "user": "0"
           },
           "expected": "success"
@@ -84,7 +84,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "1000",
             "user": "0"
           },
@@ -93,12 +93,12 @@
       ]
     },
     {
-      "description": "User 0 redeems half of the deposited USDC",
+      "description": "User 0 redeems half of the deposited DAI",
       "actions": [
         {
           "name": "redeem",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "500",
             "user": "0"
           },
@@ -107,12 +107,12 @@
       ]
     },
     {
-      "description": "User 0 redeems remaining half of the deposited USDC",
+      "description": "User 0 redeems remaining half of the deposited DAI",
       "actions": [
         {
           "name": "redeem",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "-1",
             "user": "0"
           },
@@ -222,7 +222,7 @@
       ]
     },
     {
-      "description": "Users 0 deposits 1000 DAI, user 1 Deposit 1000 USDC and 1 ETH, borrows 100 DAI. User 1 tries to redeem all the USDC",
+      "description": "Users 0 deposits 1000 DAI, user 1 Deposit 1000 DAI and 1 ETH, borrows 100 DAI. User 1 tries to redeem all the DAI",
       "actions": [
         {
           "name": "mint",
@@ -253,7 +253,7 @@
         {
           "name": "mint",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "1000",
             "user": "1"
           },
@@ -262,7 +262,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "user": "1"
           },
           "expected": "success"
@@ -270,7 +270,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "1000",
             "user": "1"
           },
@@ -299,7 +299,7 @@
         {
           "name": "redeem",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "-1",
             "user": "1"
           },

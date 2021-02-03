@@ -231,12 +231,12 @@
       ]
     },
     {
-      "description": "User 1 deposits 1000 USDC, user 2 deposits 0.91928534104 ETH, tries to borrow 187.5 USDC which is the maximum amount he can borrow, if fees were not considered. (revert expected)",
+      "description": "User 1 deposits 1000 DAI, user 2 deposits 0.91928534104 ETH, tries to borrow 187.5 DAI which is the maximum amount he can borrow, if fees were not considered. (revert expected)",
       "actions": [
         {
           "name": "mint",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "1000",
             "user": "1"
           },
@@ -245,7 +245,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "user": "1"
           },
           "expected": "success"
@@ -253,7 +253,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "1000",
             "user": "1"
           },
@@ -272,7 +272,7 @@
         {
           "name": "borrow",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "187.5",
             "borrowRateMode": "stable",
             "user": "2"
@@ -292,7 +292,7 @@
         {
           "name": "redeem",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "-1",
             "user": "1"
           },

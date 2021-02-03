@@ -65,12 +65,12 @@
       ]
     },
     {
-      "description": "User 0 deposits 1000 USDC in an empty reserve",
+      "description": "User 0 deposits 1000 DAI in an empty reserve",
       "actions": [
         {
           "name": "mint",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "1000",
             "user": "0"
           },
@@ -79,7 +79,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "user": "0"
           },
           "expected": "success"
@@ -87,7 +87,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "1000",
             "user": "0"
           },
@@ -96,12 +96,12 @@
       ]
     },
     {
-      "description": "User 1 deposits 1000 USDC after user 0",
+      "description": "User 1 deposits 1000 DAI after user 0",
       "actions": [
         {
           "name": "mint",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "1000",
             "user": "1"
           },
@@ -110,7 +110,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "user": "1"
           },
           "expected": "success"
@@ -118,7 +118,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "1000",
             "user": "1"
           },

@@ -20,7 +20,12 @@ import {
   //getWETHMocked,
   //getWETHGateway,
 } from "../../helpers/contracts-getters";
-import { eEthereumNetwork, tEthereumAddress } from "../../helpers/types";
+import {
+  eEthereumNetwork,
+  tEthereumAddress,
+  IReserveParams,
+  eContractid,
+} from "../../helpers/types";
 import { LendingPool } from "../../types/LendingPool";
 import { LendingPoolDataProvider } from "../../types/LendingPoolDataProvider";
 import { MintableERC20 } from "../../types/MintableERC20";
@@ -39,6 +44,7 @@ import {
 } from "../../helpers/contracts-helpers";
 import { solidity } from "ethereum-waffle";
 import { AaveConfig } from "../../markets/aave";
+import { strategyDAI } from "../../markets/aave/reservesConfigs";
 import {
   FeeProvider,
   LendingPoolCore,
@@ -57,6 +63,7 @@ export interface SignerWithAddress {
   signer: Signer;
   address: tEthereumAddress;
 }
+
 export interface TestEnv {
   deployer: SignerWithAddress;
   users: SignerWithAddress[];
@@ -75,6 +82,7 @@ export interface TestEnv {
   mDAI: MToken;
   mETH: MToken;
   rewardMgr: RewardsManager;
+  getReservesParams: () => { [symbol: string]: IReserveParams };
 }
 
 let buidlerevmSnapshotId: string = "0x1";
@@ -102,6 +110,7 @@ const testEnv: TestEnv = {
   mDAI: {} as MToken,
   mETH: {} as MToken,
   rewardMgr: {} as RewardsManager,
+  getReservesParams: () => ({} as { [symbol: string]: IReserveParams }),
 } as TestEnv;
 
 export async function initializeMakeSuite() {
@@ -174,6 +183,7 @@ export async function initializeMakeSuite() {
   testEnv.mDAI = await getMDAI();
   testEnv.mETH = await getMETH();
   testEnv.rewardMgr = await getRewardManager();
+  testEnv.getReservesParams = () => AaveConfig.ReservesConfig;
 }
 
 export function makeSuite(name: string, tests: (testEnv: TestEnv) => void) {
