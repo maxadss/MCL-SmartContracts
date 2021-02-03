@@ -253,10 +253,9 @@ makeSuite(
       const amountToLiquidate = new BigNumber(
         userReserveDataBefore.currentBorrowBalance.toString()
       )
-        .div(4)
+        .div(10)
         .toFixed(0);
 
-      console.log("123456");
       console.log(
         "userReserveDataBefore.currentBorrowBalance ",
         userReserveDataBefore.currentBorrowBalance.toString()

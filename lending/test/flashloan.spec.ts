@@ -44,10 +44,8 @@ makeSuite("LendingPool FlashLoan function", (testEnv: TestEnv) => {
     _priceOracleInstance = testEnv.oracle;
     _mTokenInstances = testEnv.mDAI;
     _mockFlasLoanReceiverInstance = await getMockFlashLoanReceiver();
-    //_tokenInstances = await getAllTokenInstances();
     _daiAddress = testEnv.dai.address;
     _depositorAddress = testEnv.users[1].address;
-    // _tokenDistributor = tokenDistributorInstance;
 
     _initialDepositorETHBalance = await web3.eth.getBalance(_depositorAddress);
   });
@@ -73,7 +71,7 @@ makeSuite("LendingPool FlashLoan function", (testEnv: TestEnv) => {
   it("Takes ETH flashloan, returns the funds correctly", async () => {
     //move funds to the MockFlashLoanReceiver contract
     const { deployer } = testEnv;
-    let send = web3.eth.sendTransaction({
+    await web3.eth.sendTransaction({
       from: deployer.address,
       to: _mockFlasLoanReceiverInstance.address,
       value: web3.utils.toWei("0.5", "ether"),
@@ -249,87 +247,93 @@ makeSuite("LendingPool FlashLoan function", (testEnv: TestEnv) => {
       });
   });
 
-  // it("Takes out a 500 DAI flashloan, returns the funds correctly", async () => {
-  //   //const { DAI: daiInstance } = _tokenInstances;
+  it("Takes out a 500 DAI flashloan, returns the funds correctly", async () => {
+    //const { DAI: daiInstance } = _tokenInstances;
 
-  //   const { deployer, users, dai } = testEnv;
+    const { deployer, users, dai } = testEnv;
 
-  //   let send = web3.eth.sendTransaction({
-  //     from: deployer.address,
-  //     to: _mockFlasLoanReceiverInstance.address,
-  //     value: web3.utils.toWei("1", "ether"),
-  //   });
+    await web3.eth.sendTransaction({
+      from: deployer.address,
+      to: _mockFlasLoanReceiverInstance.address,
+      value: web3.utils.toWei("1", "ether"),
+    });
 
-  //   await dai
-  //     .connect(users[1].signer)
-  //     .mint(await convertToCurrencyDecimals(dai.address, "1000"), {
-  //       //  from: users[1].address,
-  //     });
+    await dai
+      .connect(users[1].signer)
+      .mint(await convertToCurrencyDecimals(dai.address, "1000"), {
+        //  from: users[1].address,
+      });
 
-  //   await dai
-  //     .connect(users[1].signer)
-  //     .transfer(
-  //       _mockFlasLoanReceiverInstance.address,
-  //       await convertToCurrencyDecimals(dai.address, "1000"),
-  //       {
-  //         //  from: users[1].address,
-  //       }
-  //     );
+    await dai
+      .connect(users[1].signer)
+      .transfer(
+        _mockFlasLoanReceiverInstance.address,
+        await convertToCurrencyDecimals(dai.address, "1000"),
+        {
+          //  from: users[1].address,
+        }
+      );
 
-  //   // const bal = await dai.balanceOf(_lendingPoolCoreInstance.address);
-  //   // console.log("core balance: ", bal.toString());
+    // const bal = await dai.balanceOf(_lendingPoolCoreInstance.address);
+    // console.log("core balance: ", bal.toString());
 
-  //   await _mockFlasLoanReceiverInstance.setFailExecutionTransfer(false);
+    await _mockFlasLoanReceiverInstance.setFailExecutionTransfer(false);
 
-  //   await _lendingPoolInstance.flashLoan(
-  //     _mockFlasLoanReceiverInstance.address,
-  //     ETHEREUM_ADDRESS,
-  //     new BigNumber(1).multipliedBy(oneEther).toString(),
-  //     "0x10"
-  //   );
+    await _lendingPoolInstance.flashLoan(
+      _mockFlasLoanReceiverInstance.address,
+      dai.address,
+      new BigNumber(1).multipliedBy(oneEther).toString(),
+      "0x10"
+    );
 
-  //   const reserveData: any = await _lendingPoolInstance.getReserveData(
-  //     _daiAddress
-  //   );
-  //   console.log(reserveData.availableLiquidity.toString());
+    const reserveData = await _lendingPoolInstance.getReserveData(dai.address);
+    console.log(reserveData.availableLiquidity.toString());
 
-  //   const userData: any = await _lendingPoolInstance.getUserReserveData(
-  //     _daiAddress,
-  //     deployer.address
-  //   );
+    const userData = await _lendingPoolInstance.getUserReserveData(
+      dai.address,
+      deployer.address
+    );
 
-  //   const totalLiquidity = reserveData.totalLiquidity.toString();
-  //   const currentLiqudityRate = reserveData.liquidityRate.toString();
-  //   const currentLiquidityIndex = reserveData.liquidityIndex.toString();
-  //   const currentUserBalance = userData.currentmTokenBalance.toString();
+    const totalLiquidity = reserveData.totalLiquidity.toString();
+    const currentLiqudityRate = reserveData.liquidityRate.toString();
+    const currentLiquidityIndex = reserveData.liquidityIndex.toString();
+    const currentUserBalance = userData.currentMTokenBalance.toString();
 
-  //   const expectedLiquidity = new BigNumber("1001.225")
-  //     .multipliedBy(oneEther)
-  //     .toFixed();
+    const expectedLiquidity = new BigNumber("1000.0")
+      .multipliedBy(oneEther)
+      .toFixed();
 
-  //   // const tokenDistributorBalance = await daiInstance.balanceOf(
-  //   //   _tokenDistributor.address
-  //   // );
+    const vault1 = await dai.balanceOf(
+      await testEnv.addressesProvider.getLpRewardVault()
+    );
 
-  //   expect(totalLiquidity).to.be.equal(
-  //     expectedLiquidity,
-  //     "Invalid total liquidity"
-  //   );
-  //   expect(currentLiqudityRate).to.be.equal("0", "Invalid liquidity rate");
-  //   expect(currentLiquidityIndex).to.be.equal(
-  //     new BigNumber("1.001225").multipliedBy(oneRay).toFixed(),
-  //     "Invalid liquidity index"
-  //   );
-  //   expect(currentUserBalance.toString()).to.be.equal(
-  //     expectedLiquidity,
-  //     "Invalid user balance"
-  //   );
+    const vault2 = await dai.balanceOf(
+      await testEnv.addressesProvider.getGovRewardVault()
+    );
 
-  //   // expect(tokenDistributorBalance.toString()).to.be.equal(
-  //   //   new BigNumber("0.525").multipliedBy(oneEther).toFixed(),
-  //   //   "Invalid token distributor balance"
-  //   // );
-  // });
+    const vault3 = await dai.balanceOf(
+      await testEnv.addressesProvider.getSafetyRewardVault()
+    );
+
+    expect(totalLiquidity).to.be.equal(
+      expectedLiquidity,
+      "Invalid total liquidity"
+    );
+    expect(currentLiqudityRate).to.be.equal("0", "Invalid liquidity rate");
+    expect(currentLiquidityIndex).to.be.equal(
+      new BigNumber("1.0").multipliedBy(oneRay).toFixed(),
+      "Invalid liquidity index"
+    );
+    expect(currentUserBalance.toString()).to.be.equal(
+      "0",
+      "Invalid user balance"
+    );
+
+    expect(vault1.toString()).to.be.equal(
+      new BigNumber("0.0006").times(0.7).times(oneEther).toFixed(),
+      "Invalid vault 1 balance"
+    );
+  });
 
   it("Takes out a 500 DAI flashloan, does not return the funds (revert expected)", async () => {
     //move funds to the MockFlashLoanReceiver contract

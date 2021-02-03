@@ -311,8 +311,10 @@ makeSuite("Reward - LP - Staking", (testEnv: TestEnv) => {
     //user 3 repay 5 USDC + fee
     const amountUSDCToRepay = await convertToCurrencyDecimals(
       usdc.address,
-      "5.1"
+      "5"
     );
+
+    console.log("Usđc address: ", usdc.address);
     await _lendingPoolInstance
       .connect(user3.signer)
       .repay(usdc.address, amountUSDCToRepay, user3.address, {});
@@ -640,6 +642,9 @@ makeSuite("Reward - LP - Staking", (testEnv: TestEnv) => {
       expected,
       "Invalid govt reward"
     );
+
+    await _lendingPoolInstance.connect(user2.signer).claimAllReward("0");
+    await _lendingPoolInstance.connect(user2.signer).claimAllReward("1");
   });
 
   //   it("User1 & user2 start to stake Govt system, LP record his stake amount", async () => {
@@ -668,12 +673,22 @@ makeSuite("Reward - LP - Staking", (testEnv: TestEnv) => {
   //   console.log("bl: ", bl.toString());
   // });
 
-  it("User1 transfer aUSDC token to User2, only User2 earn LP reward", async () => {
+  it("User1 transfer mUSDC token to User2, only User2 earn LP reward", async () => {
     const { users, dai, usdc, mUSDC } = testEnv;
 
     const user1 = users[2];
     const user2 = users[3];
     const user3 = users[4];
+
+    //user 1 deposit 10 DAI
+    const amountUSDCToDeposit = await convertToCurrencyDecimals(
+      usdc.address,
+      "10"
+    );
+
+    await _lendingPoolInstance
+      .connect(user1.signer)
+      .deposit(usdc.address, amountUSDCToDeposit, "0", {});
 
     //user 3 deposit 1 ETH
     await _lendingPoolInstance
@@ -727,6 +742,19 @@ makeSuite("Reward - LP - Staking", (testEnv: TestEnv) => {
     );
     expect(user1RewardAfter.toString()).to.be.equal("0", "Invalid reward");
 
+    //user1 earn 0.000004 usdc govt reward
+    const user1GovtRewardAfter = await _rewardManager.readRewards(
+      usdc.address,
+      user1.address,
+      "1",
+      (await convertToCurrencyDecimals(dai.address, "20")).toString()
+    );
+
+    expect(user1GovtRewardAfter.toString()).to.be.equal(
+      "4",
+      "Invalid govt reward"
+    );
+
     //user2 earn lp reward 0.000035 usdc
 
     const user2RewardAfter = await _rewardManager.readRewards(
@@ -741,19 +769,6 @@ makeSuite("Reward - LP - Staking", (testEnv: TestEnv) => {
       ).currentMTokenBalance.toString()
     );
     expect(user2RewardAfter.toString()).to.be.equal("35", "Invalid reward");
-
-    //user1 earn 0.000004 usdc govt reward
-    const user1GovtRewardAfter = await _rewardManager.readRewards(
-      usdc.address,
-      user1.address,
-      "1",
-      (await convertToCurrencyDecimals(dai.address, "20")).toString()
-    );
-
-    expect(user1GovtRewardAfter.toString()).to.be.equal(
-      "4",
-      "Invalid govt reward"
-    );
 
     //user2 earn 0.000006 usdc govt reward
     const user2GovtRewardAfter = await _rewardManager.readRewards(
@@ -809,7 +824,9 @@ makeSuite("Reward - LP - Staking", (testEnv: TestEnv) => {
       .connect(user3.signer)
       .repay(usdc.address, amountUSDCToRepay, user3.address, {});
 
-    //user1 earn 0.000004 usdc govt reward
+    // console.log("user 1: ",  (await stakeToken.balanceOf(user1.address)).toString());
+    // console.log("user 2: ",  (await stakeToken.balanceOf(user2.address)).toString());
+    //user1 earn 0 usdc govt reward
     const user1GovtRewardAfter = await _rewardManager.readRewards(
       usdc.address,
       user1.address,
@@ -831,7 +848,7 @@ makeSuite("Reward - LP - Staking", (testEnv: TestEnv) => {
     );
 
     expect(user2GovtRewardAfter.toString()).to.be.equal(
-      "16",
+      "20",
       "Invalid govt reward"
     );
   });
