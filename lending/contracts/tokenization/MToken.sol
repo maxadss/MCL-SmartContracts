@@ -230,6 +230,9 @@ contract mToken is ERC20, ERC20Detailed {
     function redeem(uint256 _amount) external {
         require(_amount > 0, "Amount to redeem needs to be > 0");
 
+        // RewardManager: Update LP for this user and accumulate his rewards //
+        updateLpReward(msg.sender);
+
         //cumulates the balance of the user
         (, uint256 currentBalance, uint256 balanceIncrease, uint256 index) =
             cumulateBalanceInternal(msg.sender);
@@ -261,9 +264,6 @@ contract mToken is ERC20, ERC20Detailed {
             balanceIncrease,
             amountToRedeem
         );
-
-        // RewardManager: Update LP for this user and accumulate his rewards before his burn //
-        updateLpReward(msg.sender);
 
         // burns tokens equivalent to the amount requested
         _burn(msg.sender, amountToRedeem);
@@ -301,6 +301,9 @@ contract mToken is ERC20, ERC20Detailed {
         external
         onlyLendingPool
     {
+        // RewardManager: Update LP for this user and accumulate his rewards //
+        updateLpReward(_account);
+
         //cumulates the balance of the user
         (, , uint256 balanceIncrease, uint256 index) =
             cumulateBalanceInternal(_account);
@@ -313,10 +316,7 @@ contract mToken is ERC20, ERC20Detailed {
             balanceIncrease.add(_amount),
             0
         );
-
-        // RewardManager: Update LP for this user and accumulate his rewards before minting //
-        updateLpReward(_account);
-
+        
         // mint an equivalent amount of tokens to cover the new deposit
         _mint(_account, _amount);
 
@@ -336,6 +336,9 @@ contract mToken is ERC20, ERC20Detailed {
         external
         onlyLendingPool
     {
+        // RewardManager: Update LP for this user and accumulate his rewards before burning //
+        updateLpReward(_account);
+
         // cumulates the balance of the user being liquidated
         (, uint256 accountBalance, uint256 balanceIncrease, uint256 index) =
             cumulateBalanceInternal(_account);
@@ -347,9 +350,6 @@ contract mToken is ERC20, ERC20Detailed {
             balanceIncrease,
             _value
         );
-
-        // RewardManager: Update LP for this user and accumulate his rewards before burning //
-        updateLpReward(_account);
 
         // burns the requested amount of tokens
         _burn(_account, _value);
@@ -657,6 +657,10 @@ contract mToken is ERC20, ERC20Detailed {
     ) internal {
         require(_value > 0, "Transferred amount needs to be greater than zero");
 
+        // RewardManager: Update the reward for these 2 users //
+        updateLpReward(_from);
+        updateLpReward(_to);
+
         // cumulate the balance of the sender
         (
             ,
@@ -687,10 +691,6 @@ contract mToken is ERC20, ERC20Detailed {
             toBalanceIncrease.add(_value),
             0
         );
-
-        // RewardManager: Update the reward for these 2 users before transfering //
-        updateLpReward(_from);
-        updateLpReward(_to);
 
         // performs the transfer
         super._transfer(_from, _to, _value);
