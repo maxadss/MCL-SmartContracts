@@ -248,6 +248,11 @@ makeSuite(
         _borrowerAddress.address
       );
 
+      const availableCollateral = (
+        await _lendingPoolInstance.getReserveData(ETHEREUM_ADDRESS)
+      ).availableLiquidity;
+      console.log(`availableCollateral: `, availableCollateral.toString());
+
       //console.log("currentMTokenBalance ", userReserveDataBeforeeth.currentMTokenBalance.toString());
       console.log("userData.HF ", userData.healthFactor.toString());
       const amountToLiquidate = new BigNumber(
@@ -277,7 +282,8 @@ makeSuite(
           dai.address,
           _borrowerAddress.address,
           amountToLiquidate,
-          false
+          false,
+          {}
         );
 
       console.log(r);
