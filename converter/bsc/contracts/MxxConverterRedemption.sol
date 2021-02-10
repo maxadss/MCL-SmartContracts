@@ -45,6 +45,7 @@ contract MxxConverterRedemption is Ownable, ReentrancyGuard {
     struct RedeemRecord {
         uint256 amtMxx;
         uint256 amtbMxx;
+        uint256 feePcnt;
         address fromAddress;
         address toAddress;
         uint48 time;
@@ -54,6 +55,13 @@ contract MxxConverterRedemption is Ownable, ReentrancyGuard {
     /**
      * @dev - Events
      */
+    event RedeemedRecorded(
+        uint256 index,
+        address from,
+        address to,
+        uint256 amtbMxx
+    );
+
     event RedeemedSuccess(
         uint256 index,
         address from,
@@ -79,44 +87,83 @@ contract MxxConverterRedemption is Ownable, ReentrancyGuard {
 
     address public bMxxTokenAddress;
 
-    constructor(address _bMxxAdress) public Ownable() {
+    uint256 public constant COOL_DOWN = 15 minutes;
+
+    address public pauserAddress;
+    bool    public paused;
+
+    constructor(address _bMxxAdress, address _pauserAddress) public Ownable() {
+        pauserAddress = _pauserAddress;
         availablebMxxAmt = MAX_AVAIL_BMXX_FOR_CONVERSION;
         bMxxTokenAddress = _bMxxAdress;
     }
 
-    function redeem(
+    modifier onlyPauser() {
+        require(msg.sender == pauserAddress, "Invalid pauser");
+        _;
+    }
+
+    modifier onlyNotPaused() {
+        require(!paused, "Must not be paused");
+        _;
+    }
+
+    function setPaused(bool _pause) external onlyPauser {
+        paused = _pause;
+    }
+
+    function recordRedeem(
         uint256 _id,
         address _fromAddress,
         address _toBscAddress,
         uint256 _mxxAmt,
         uint256 _feePcnt
-    ) external payable nonReentrant() onlyOwner() {
+    ) external payable nonReentrant() onlyNotPaused onlyOwner {
         RedeemRecord memory record = allRedemptions[_id];
         require(record.status == Status.Invalid, "Already exist");
 
         require(msg.value == 0, "Wrong fund is sent");
-
         require(_mxxAmt != 0, "Amount cannot be 0");
 
         uint256 bMxxAmt = _mxxAmt.mul(CONVERT_RATE);
 
         require(bMxxAmt <= availablebMxxAmt, "Amount exceeded");
 
-        bMXX token = bMXX(bMxxTokenAddress);
-        token.redeemWithDeed(bMxxAmt, _toBscAddress, _feePcnt);
-
         allRedemptions[_id] = RedeemRecord(
             _mxxAmt,
             bMxxAmt,
+            _feePcnt,
             _fromAddress,
             _toBscAddress,
             uint48(now),
-            Status.Completed
+            Status.New
         );
 
-        emit RedeemedSuccess(_id, _fromAddress, _toBscAddress, bMxxAmt);
+        emit RedeemedRecorded(_id, _fromAddress, _toBscAddress, bMxxAmt);
 
         count = count.add(1);
         availablebMxxAmt = availablebMxxAmt.sub(bMxxAmt);
+    }
+
+     function approveRedeem(
+        uint256 _id
+    ) external payable nonReentrant() onlyNotPaused onlyOwner {
+
+        RedeemRecord storage record = allRedemptions[_id];
+        require(record.status == Status.New, "Status must be New");
+
+        // Check for cool-down duration //
+        require(
+            block.timestamp > uint256(record.time).add(COOL_DOWN),
+            "Insufficient cool-down"
+        );
+
+        bMXX token = bMXX(bMxxTokenAddress);
+        token.redeemWithDeed(record.amtbMxx, record.toAddress, record.feePcnt);
+
+        record.status = Status.Completed;
+        record.time = uint48(now);
+
+        emit RedeemedSuccess(_id, record.fromAddress, record.toAddress, record.amtbMxx);
     }
 }
