@@ -104,6 +104,7 @@ contract MxxConverter is Ownable, ReentrancyGuard {
     {
         require(_amount != 0, "Amount cannot be 0");
         require(_amount <= availableMxxAmt, "Amount exceeded");
+        require(_toBscAddress != address(0), "Invalid BSC address");
 
         ERC20(MXX_ADDRESS).safeTransferFrom(msg.sender, address(this), _amount);
 
