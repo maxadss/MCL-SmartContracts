@@ -100,13 +100,9 @@ contract MxxConverter is Ownable, ReentrancyGuard {
 
     function depositForConversion(address _toBscAddress, uint256 _amount)
         external
-        payable
         nonReentrant()
     {
-        require(msg.value == 0, "Wrong fund is sent");
-
         require(_amount != 0, "Amount cannot be 0");
-
         require(_amount <= availableMxxAmt, "Amount exceeded");
 
         ERC20(MXX_ADDRESS).safeTransferFrom(msg.sender, address(this), _amount);

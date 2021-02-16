@@ -118,11 +118,9 @@ contract MxxConverterRedemption is Ownable, ReentrancyGuard {
         address _toBscAddress,
         uint256 _mxxAmt,
         uint256 _feePcnt
-    ) external payable nonReentrant() onlyNotPaused onlyOwner {
+    ) external  nonReentrant() onlyNotPaused onlyOwner {
         RedeemRecord memory record = allRedemptions[_id];
         require(record.status == Status.Invalid, "Already exist");
-
-        require(msg.value == 0, "Wrong fund is sent");
         require(_mxxAmt != 0, "Amount cannot be 0");
 
         uint256 bMxxAmt = _mxxAmt.mul(CONVERT_RATE);
@@ -147,7 +145,7 @@ contract MxxConverterRedemption is Ownable, ReentrancyGuard {
 
      function approveRedeem(
         uint256 _id
-    ) external payable nonReentrant() onlyNotPaused onlyOwner {
+    ) external nonReentrant() onlyNotPaused onlyOwner {
 
         RedeemRecord storage record = allRedemptions[_id];
         require(record.status == Status.New, "Status must be New");
