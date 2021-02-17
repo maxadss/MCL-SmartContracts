@@ -13,7 +13,6 @@
 
 pragma solidity ^0.5.0;
 
-// Importing libraries
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "openzeppelin-solidity/contracts/utils/ReentrancyGuard.sol";
 import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
@@ -46,9 +45,9 @@ contract MxxConverter is Ownable, ReentrancyGuard {
         uint256 feePcnt;
         address fromAddress;
         address toAddress;
-        uint48 startTime;
-        uint48 endTime;
-        Status status;
+        uint48  startTime;
+        uint48  endTime;
+        Status  status;
     }
 
     /**
@@ -65,7 +64,7 @@ contract MxxConverter is Ownable, ReentrancyGuard {
         address indexed to,
         uint256 amount,
         uint256 feePcnt,
-        uint48 time
+        uint256 timeStamp
     );
     event ConversionCompleted(uint256 id);
     event ConversionRefunded(uint256 id);
@@ -85,12 +84,24 @@ contract MxxConverter is Ownable, ReentrancyGuard {
      */
     uint256 internal constant MAX_CONVERTABLE = 415_000_000e8;
 
+    /**
+     * @dev - The remaining amount of Mxx availabe for conversion.
+     */
     uint256 public availableMxxAmt;
 
+    /**
+     * @dev - An incremental number to track the index of the next conversion.
+     */
     uint256 public index;
 
+    /**
+     * @dev - An mapping for all conversion details.
+     */
     mapping(uint256 => ConversionDetails) public allConversions;
 
+    /**
+     * @dev - The fee percent for each conversion.
+     */
     uint256 public feePcnt = 1_000_000;
 
     constructor(address mxx, address burnAddress) public Ownable() {
@@ -99,6 +110,11 @@ contract MxxConverter is Ownable, ReentrancyGuard {
         BURN_ADDRESS = burnAddress;
     }
 
+    /**
+     * @dev This function allows a user to deposit Mxx and start a conversion.
+     * @param _toBscAddress - The BSC destination address.
+     * @param _amount - The amount of Mxx to convert.
+     */
     function depositForConversion(address _toBscAddress, uint256 _amount)
         external
         nonReentrant()
@@ -132,6 +148,11 @@ contract MxxConverter is Ownable, ReentrancyGuard {
         availableMxxAmt = availableMxxAmt.sub(_amount);
     }
 
+    /**
+     * @dev This function allows owner to set a conversion as completed.
+     * @param _index - The index of the conversion
+     * Access Control: Only Owner
+     */
     function completeConversion(uint256 _index)
         external
         onlyOwner()
@@ -151,6 +172,11 @@ contract MxxConverter is Ownable, ReentrancyGuard {
         emit ConversionCompleted(_index);
     }
 
+    /**
+     * @dev This function allows owner to perform a refund for a conversion item.
+     * @param _index - The index of the conversion
+     * Access Control: Only Owner
+     */
     function refund(uint256 _index) external onlyOwner() nonReentrant() {
         require(_index < index, "Index out of range");
 
@@ -166,6 +192,11 @@ contract MxxConverter is Ownable, ReentrancyGuard {
         emit ConversionRefunded(_index);
     }
 
+    /**
+     * @dev This function allows owner to set a new fee.
+     * @param _fee - The fee
+     * Access Control: Only Owner
+     */
     function setFee(uint256 _fee) external onlyOwner() {
         feePcnt = _fee;
     }

@@ -36,8 +36,19 @@ contract bMXX is
         ERC20Capped(MAX_SUPPLY)
     {}
 
+    /**
+     * @dev - The max supply.
+     */
     uint256 internal constant MAX_SUPPLY = 26_930_000e18;
+
+    /**
+     * @dev - The Deed token address.
+     */
     address public deedTokenAddress;
+
+    /**
+     * @dev - The converter address.
+     */
     address public converterAddress;
 
     modifier onlyConverter {
@@ -48,6 +59,12 @@ contract bMXX is
         _;
     }
 
+    /**
+     * @dev This function assign the converter and deed token address.
+     * @param _converter - The address of the converter.
+     * @param _deed - The address of the Deed token.
+     * Access Control: Only Owner.
+     */
     function setupConverter(address _converter, address _deed)
         public
         onlyOwner
@@ -58,6 +75,13 @@ contract bMXX is
         deedTokenAddress = _deed;
     }
 
+    /**
+     * @dev This function redeem bMxx tooken with Deed token.
+     * @param _deedAmount - The amount of Deed token to use.
+     * @param _toAddress - The destination address to mint the bMxx token.
+     * @param _feePcnt - The fee percent.
+     * Access Control: Only Converter.
+     */
     function redeemWithDeed(
         uint256 _deedAmount,
         address _toAddress,

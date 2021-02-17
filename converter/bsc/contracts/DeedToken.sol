@@ -22,7 +22,14 @@ contract Deed is ERC20Detailed, ERC20Mintable {
      */
     uint256 internal constant MAX_SUPPLY = 4_150_000e18;
 
+    /**
+     * @dev - The bMxx token address.
+     */
     address bMxxAddress;
+
+    /**
+     * @dev - The address that hold the minted deed tokens.
+     */
     address deedHolder;
 
     modifier onlyFrombMxx {
@@ -42,6 +49,11 @@ contract Deed is ERC20Detailed, ERC20Mintable {
         _mint(deedHolder, MAX_SUPPLY);
     }
 
+    /**
+     * @dev This function burns the deed token.
+     * @param _amount - The amount of deed token to burn.
+     * Access Control: Only from bMxx token.
+     */
     function burnIt(uint256 _amount) external onlyFrombMxx {
         _burn(deedHolder, _amount);
     }

@@ -13,7 +13,6 @@
 
 pragma solidity ^0.5.0;
 
-// Importing libraries
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "openzeppelin-solidity/contracts/utils/ReentrancyGuard.sol";
 import "openzeppelin-solidity/contracts/math/SafeMath.sol";
@@ -79,17 +78,39 @@ contract MxxConverterRedemption is Ownable, ReentrancyGuard {
      */
     uint256 internal constant MAX_AVAIL_BMXX_FOR_CONVERSION = 4_150_000e18;
 
+    /**
+     * @dev - The remaining amount of bMxx availabe for conversion.
+     */
     uint256 public availablebMxxAmt;
 
+    /**
+     * @dev - The total number of conversion.
+     */
     uint256 public count;
 
+    /**
+     * @dev - An mapping for all redemption details.
+     */
     mapping(uint256 => RedeemRecord) public allRedemptions;
 
+    /**
+     * @dev - The address of bMxx token.
+     */
     address public bMxxTokenAddress;
 
+    /**
+     * @dev - A cool-down period of 15 minutes.
+     */
     uint256 public constant COOL_DOWN = 15 minutes;
 
+    /**
+     * @dev - The pauser role address.
+     */
     address public pauserAddress;
+
+    /**
+     * @dev - Indicate whether it is paused or not.
+     */
     bool    public paused;
 
     constructor(address _bMxxAdress, address _pauserAddress) public Ownable() {
@@ -108,10 +129,24 @@ contract MxxConverterRedemption is Ownable, ReentrancyGuard {
         _;
     }
 
+    /**
+     * @dev Emergency pause function.
+     * @param _pause - Set pause or un-pause.
+     * Access Control: Only Pauser.
+     */
     function setPaused(bool _pause) external onlyPauser {
         paused = _pause;
     }
 
+    /**
+     * @dev This function adds a new redeem record and starts the cool-down timestamp.
+     * @param _id - The id of the redeem record.
+     * @param _fromAddress - The source address on ETH blockchain.
+     * @param _toBscAddress - The destination address on BSC blockchain.
+     * @param _mxxAmt - The amount of Mxx token for the conversion.
+     * @param _feePcnt - The fee percent.
+     * Access Control: Only Owner, Not Paused.
+     */
     function recordRedeem(
         uint256 _id,
         address _fromAddress,
@@ -143,6 +178,11 @@ contract MxxConverterRedemption is Ownable, ReentrancyGuard {
         availablebMxxAmt = availablebMxxAmt.sub(bMxxAmt);
     }
 
+    /**
+     * @dev This function approves the redeem after the cool-down period.
+     * @param _id - The id of the redeem record.
+     * Access Control: Only Owner, Not Paused.
+     */
      function approveRedeem(
         uint256 _id
     ) external nonReentrant() onlyNotPaused onlyOwner {
