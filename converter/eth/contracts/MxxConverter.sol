@@ -64,7 +64,8 @@ contract MxxConverter is Ownable, ReentrancyGuard {
         address indexed from,
         address indexed to,
         uint256 amount,
-        uint256 feePcnt
+        uint256 feePcnt,
+        uint48 time
     );
     event ConversionCompleted(uint256 id);
     event ConversionRefunded(uint256 id);
@@ -118,7 +119,14 @@ contract MxxConverter is Ownable, ReentrancyGuard {
             Status.New
         );
 
-        emit NewConversion(index, msg.sender, _toBscAddress, _amount, feePcnt);
+        emit NewConversion(
+            index,
+            msg.sender,
+            _toBscAddress,
+            _amount,
+            feePcnt,
+            block.timestamp
+        );
 
         index = index.add(1);
         availableMxxAmt = availableMxxAmt.sub(_amount);
