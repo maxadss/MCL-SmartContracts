@@ -51,17 +51,41 @@ export class IERC20DetailedBytes extends Contract {
   interface: IERC20DetailedBytesInterface;
 
   functions: {
-    decimals(overrides?: CallOverrides): Promise<[BigNumber]>;
+    decimals(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "decimals()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "decimals()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    name(overrides?: CallOverrides): Promise<[string]>;
+    name(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "name()"(overrides?: CallOverrides): Promise<[string]>;
+    "name()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    symbol(overrides?: CallOverrides): Promise<[string]>;
+    symbol(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "symbol()"(overrides?: CallOverrides): Promise<[string]>;
+    "symbol()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
   };
 
   decimals(overrides?: CallOverrides): Promise<BigNumber>;

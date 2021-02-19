@@ -172,25 +172,53 @@ export class DefaultReserveInterestRateStrategy extends Contract {
   interface: DefaultReserveInterestRateStrategyInterface;
 
   functions: {
-    EXCESS_UTILIZATION_RATE(overrides?: CallOverrides): Promise<[BigNumber]>;
+    EXCESS_UTILIZATION_RATE(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "EXCESS_UTILIZATION_RATE()"(
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    OPTIMAL_UTILIZATION_RATE(overrides?: CallOverrides): Promise<[BigNumber]>;
+    OPTIMAL_UTILIZATION_RATE(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "OPTIMAL_UTILIZATION_RATE()"(
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    addressesProvider(overrides?: CallOverrides): Promise<[string]>;
+    addressesProvider(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "addressesProvider()"(overrides?: CallOverrides): Promise<[string]>;
+    "addressesProvider()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    baseVariableBorrowRate(overrides?: CallOverrides): Promise<[BigNumber]>;
+    baseVariableBorrowRate(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "baseVariableBorrowRate()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "baseVariableBorrowRate()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     calculateInterestRates(
       _reserve: string,
@@ -199,13 +227,14 @@ export class DefaultReserveInterestRateStrategy extends Contract {
       _totalBorrowsVariable: BigNumberish,
       _averageStableBorrowRate: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber, BigNumber] & {
-        currentLiquidityRate: BigNumber;
-        currentStableBorrowRate: BigNumber;
-        currentVariableBorrowRate: BigNumber;
-      }
-    >;
+    ): Promise<{
+      currentLiquidityRate: BigNumber;
+      currentStableBorrowRate: BigNumber;
+      currentVariableBorrowRate: BigNumber;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+    }>;
 
     "calculateInterestRates(address,uint256,uint256,uint256,uint256)"(
       _reserve: string,
@@ -214,55 +243,134 @@ export class DefaultReserveInterestRateStrategy extends Contract {
       _totalBorrowsVariable: BigNumberish,
       _averageStableBorrowRate: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber, BigNumber] & {
-        currentLiquidityRate: BigNumber;
-        currentStableBorrowRate: BigNumber;
-        currentVariableBorrowRate: BigNumber;
-      }
-    >;
+    ): Promise<{
+      currentLiquidityRate: BigNumber;
+      currentStableBorrowRate: BigNumber;
+      currentVariableBorrowRate: BigNumber;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+    }>;
 
-    getBaseVariableBorrowRate(overrides?: CallOverrides): Promise<[BigNumber]>;
+    getBaseVariableBorrowRate(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getBaseVariableBorrowRate()"(
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    getStableRateSlope1(overrides?: CallOverrides): Promise<[BigNumber]>;
+    getStableRateSlope1(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "getStableRateSlope1()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "getStableRateSlope1()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    getStableRateSlope2(overrides?: CallOverrides): Promise<[BigNumber]>;
+    getStableRateSlope2(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "getStableRateSlope2()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "getStableRateSlope2()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    getVariableRateSlope1(overrides?: CallOverrides): Promise<[BigNumber]>;
+    getVariableRateSlope1(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "getVariableRateSlope1()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "getVariableRateSlope1()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    getVariableRateSlope2(overrides?: CallOverrides): Promise<[BigNumber]>;
+    getVariableRateSlope2(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "getVariableRateSlope2()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "getVariableRateSlope2()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    reserve(overrides?: CallOverrides): Promise<[string]>;
+    reserve(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "reserve()"(overrides?: CallOverrides): Promise<[string]>;
+    "reserve()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    stableRateSlope1(overrides?: CallOverrides): Promise<[BigNumber]>;
+    stableRateSlope1(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "stableRateSlope1()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "stableRateSlope1()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    stableRateSlope2(overrides?: CallOverrides): Promise<[BigNumber]>;
+    stableRateSlope2(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "stableRateSlope2()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "stableRateSlope2()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    variableRateSlope1(overrides?: CallOverrides): Promise<[BigNumber]>;
+    variableRateSlope1(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "variableRateSlope1()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "variableRateSlope1()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    variableRateSlope2(overrides?: CallOverrides): Promise<[BigNumber]>;
+    variableRateSlope2(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "variableRateSlope2()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "variableRateSlope2()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
   };
 
   EXCESS_UTILIZATION_RATE(overrides?: CallOverrides): Promise<BigNumber>;
@@ -288,13 +396,14 @@ export class DefaultReserveInterestRateStrategy extends Contract {
     _totalBorrowsVariable: BigNumberish,
     _averageStableBorrowRate: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, BigNumber, BigNumber] & {
-      currentLiquidityRate: BigNumber;
-      currentStableBorrowRate: BigNumber;
-      currentVariableBorrowRate: BigNumber;
-    }
-  >;
+  ): Promise<{
+    currentLiquidityRate: BigNumber;
+    currentStableBorrowRate: BigNumber;
+    currentVariableBorrowRate: BigNumber;
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+  }>;
 
   "calculateInterestRates(address,uint256,uint256,uint256,uint256)"(
     _reserve: string,
@@ -303,13 +412,14 @@ export class DefaultReserveInterestRateStrategy extends Contract {
     _totalBorrowsVariable: BigNumberish,
     _averageStableBorrowRate: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, BigNumber, BigNumber] & {
-      currentLiquidityRate: BigNumber;
-      currentStableBorrowRate: BigNumber;
-      currentVariableBorrowRate: BigNumber;
-    }
-  >;
+  ): Promise<{
+    currentLiquidityRate: BigNumber;
+    currentStableBorrowRate: BigNumber;
+    currentVariableBorrowRate: BigNumber;
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+  }>;
 
   getBaseVariableBorrowRate(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -375,13 +485,14 @@ export class DefaultReserveInterestRateStrategy extends Contract {
       _totalBorrowsVariable: BigNumberish,
       _averageStableBorrowRate: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber, BigNumber] & {
-        currentLiquidityRate: BigNumber;
-        currentStableBorrowRate: BigNumber;
-        currentVariableBorrowRate: BigNumber;
-      }
-    >;
+    ): Promise<{
+      currentLiquidityRate: BigNumber;
+      currentStableBorrowRate: BigNumber;
+      currentVariableBorrowRate: BigNumber;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+    }>;
 
     "calculateInterestRates(address,uint256,uint256,uint256,uint256)"(
       _reserve: string,
@@ -390,13 +501,14 @@ export class DefaultReserveInterestRateStrategy extends Contract {
       _totalBorrowsVariable: BigNumberish,
       _averageStableBorrowRate: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber, BigNumber] & {
-        currentLiquidityRate: BigNumber;
-        currentStableBorrowRate: BigNumber;
-        currentVariableBorrowRate: BigNumber;
-      }
-    >;
+    ): Promise<{
+      currentLiquidityRate: BigNumber;
+      currentStableBorrowRate: BigNumber;
+      currentVariableBorrowRate: BigNumber;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+    }>;
 
     getBaseVariableBorrowRate(overrides?: CallOverrides): Promise<BigNumber>;
 

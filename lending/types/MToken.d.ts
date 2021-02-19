@@ -38,6 +38,7 @@ interface MTokenInterface extends ethers.utils.Interface {
     "mintOnDeposit(address,uint256)": FunctionFragment;
     "name()": FunctionFragment;
     "principalBalanceOf(address)": FunctionFragment;
+    "principalTotalSupply()": FunctionFragment;
     "redeem(uint256)": FunctionFragment;
     "redirectInterestStream(address)": FunctionFragment;
     "redirectInterestStreamOf(address,address)": FunctionFragment;
@@ -103,6 +104,10 @@ interface MTokenInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "principalBalanceOf",
     values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "principalTotalSupply",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "redeem",
@@ -187,6 +192,10 @@ interface MTokenInterface extends ethers.utils.Interface {
     functionFragment: "principalBalanceOf",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "principalTotalSupply",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "redeem", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "redirectInterestStream",
@@ -254,9 +263,17 @@ export class MToken extends Contract {
   interface: MTokenInterface;
 
   functions: {
-    UINT_MAX_VALUE(overrides?: CallOverrides): Promise<[BigNumber]>;
+    UINT_MAX_VALUE(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "UINT_MAX_VALUE()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "UINT_MAX_VALUE()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     allowInterestRedirectionTo(
       _to: string,
@@ -272,13 +289,17 @@ export class MToken extends Contract {
       owner: string,
       spender: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "allowance(address,address)"(
       owner: string,
       spender: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     approve(
       spender: string,
@@ -292,12 +313,19 @@ export class MToken extends Contract {
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    balanceOf(_user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(
+      _user: string,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "balanceOf(address)"(
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     burnOnLiquidation(
       _account: string,
@@ -311,9 +339,17 @@ export class MToken extends Contract {
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    decimals(overrides?: CallOverrides): Promise<[number]>;
+    decimals(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: number;
+    }>;
 
-    "decimals()"(overrides?: CallOverrides): Promise<[number]>;
+    "decimals()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: number;
+    }>;
 
     decreaseAllowance(
       spender: string,
@@ -330,32 +366,44 @@ export class MToken extends Contract {
     getInterestRedirectionAddress(
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<{
+      0: string;
+    }>;
 
     "getInterestRedirectionAddress(address)"(
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<{
+      0: string;
+    }>;
 
     getRedirectedBalance(
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getRedirectedBalance(address)"(
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getUserIndex(
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getUserIndex(address)"(
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     increaseAllowance(
       spender: string,
@@ -373,13 +421,17 @@ export class MToken extends Contract {
       _user: string,
       _amount: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    ): Promise<{
+      0: boolean;
+    }>;
 
     "isTransferAllowed(address,uint256)"(
       _user: string,
       _amount: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    ): Promise<{
+      0: boolean;
+    }>;
 
     mintOnDeposit(
       _account: string,
@@ -393,19 +445,43 @@ export class MToken extends Contract {
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    name(overrides?: CallOverrides): Promise<[string]>;
+    name(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "name()"(overrides?: CallOverrides): Promise<[string]>;
+    "name()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
     principalBalanceOf(
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "principalBalanceOf(address)"(
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
+
+    principalTotalSupply(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
+
+    "principalTotalSupply()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     redeem(
       _amount: BigNumberish,
@@ -439,13 +515,29 @@ export class MToken extends Contract {
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    symbol(overrides?: CallOverrides): Promise<[string]>;
+    symbol(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "symbol()"(overrides?: CallOverrides): Promise<[string]>;
+    "symbol()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalSupply(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "totalSupply()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "totalSupply()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     transfer(
       recipient: string,
@@ -487,9 +579,17 @@ export class MToken extends Contract {
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    underlyingAssetAddress(overrides?: CallOverrides): Promise<[string]>;
+    underlyingAssetAddress(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "underlyingAssetAddress()"(overrides?: CallOverrides): Promise<[string]>;
+    "underlyingAssetAddress()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
   };
 
   UINT_MAX_VALUE(overrides?: CallOverrides): Promise<BigNumber>;
@@ -641,6 +741,10 @@ export class MToken extends Contract {
     _user: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
+
+  principalTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+  "principalTotalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
 
   redeem(
     _amount: BigNumberish,
@@ -876,6 +980,10 @@ export class MToken extends Contract {
       _user: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    principalTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "principalTotalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     redeem(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
@@ -1172,6 +1280,10 @@ export class MToken extends Contract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    principalTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "principalTotalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     redeem(_amount: BigNumberish, overrides?: Overrides): Promise<BigNumber>;
 
     "redeem(uint256)"(
@@ -1410,6 +1522,14 @@ export class MToken extends Contract {
 
     "principalBalanceOf(address)"(
       _user: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    principalTotalSupply(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "principalTotalSupply()"(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

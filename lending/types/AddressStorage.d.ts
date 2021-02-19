@@ -48,12 +48,19 @@ export class AddressStorage extends Contract {
   interface: AddressStorageInterface;
 
   functions: {
-    getAddress(_key: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    getAddress(
+      _key: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
     "getAddress(bytes32)"(
       _key: BytesLike,
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<{
+      0: string;
+    }>;
   };
 
   getAddress(_key: BytesLike, overrides?: CallOverrides): Promise<string>;

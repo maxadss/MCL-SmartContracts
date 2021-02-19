@@ -55,9 +55,17 @@ export class MockAggregatorTUSD extends Contract {
   interface: MockAggregatorTUSDInterface;
 
   functions: {
-    latestAnswer(overrides?: CallOverrides): Promise<[BigNumber]>;
+    latestAnswer(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "latestAnswer()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "latestAnswer()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
   };
 
   latestAnswer(overrides?: CallOverrides): Promise<BigNumber>;

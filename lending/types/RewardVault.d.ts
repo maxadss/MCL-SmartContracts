@@ -22,9 +22,14 @@ import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 
 interface RewardVaultInterface extends ethers.utils.Interface {
   functions: {
+    "EMERGENCY_COOLDOWN_PERIOD()": FunctionFragment;
+    "EMERGENCY_WITHDRAW_WINDOW_PERIOD()": FunctionFragment;
+    "activateEmergencyCooldown()": FunctionFragment;
+    "coolDownStart()": FunctionFragment;
     "emergencyWithdraw(address,address,uint256)": FunctionFragment;
     "isOwner()": FunctionFragment;
     "owner()": FunctionFragment;
+    "paused()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "rewardManager()": FunctionFragment;
     "setPaused(bool)": FunctionFragment;
@@ -34,11 +39,28 @@ interface RewardVaultInterface extends ethers.utils.Interface {
   };
 
   encodeFunctionData(
+    functionFragment: "EMERGENCY_COOLDOWN_PERIOD",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "EMERGENCY_WITHDRAW_WINDOW_PERIOD",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "activateEmergencyCooldown",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "coolDownStart",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "emergencyWithdraw",
     values: [string, string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "isOwner", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(functionFragment: "paused", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
@@ -62,11 +84,28 @@ interface RewardVaultInterface extends ethers.utils.Interface {
   ): string;
 
   decodeFunctionResult(
+    functionFragment: "EMERGENCY_COOLDOWN_PERIOD",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "EMERGENCY_WITHDRAW_WINDOW_PERIOD",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "activateEmergencyCooldown",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "coolDownStart",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "emergencyWithdraw",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "isOwner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
     data: BytesLike
@@ -87,9 +126,13 @@ interface RewardVaultInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
   events: {
+    "EmergencyWithdrawlCooldown(address,uint256)": EventFragment;
+    "EmergencyWithdrawlExecuted(address,address,uint256,address,uint256)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: "EmergencyWithdrawlCooldown"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EmergencyWithdrawlExecuted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
 }
 
@@ -107,6 +150,50 @@ export class RewardVault extends Contract {
   interface: RewardVaultInterface;
 
   functions: {
+    EMERGENCY_COOLDOWN_PERIOD(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
+
+    "EMERGENCY_COOLDOWN_PERIOD()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
+
+    EMERGENCY_WITHDRAW_WINDOW_PERIOD(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
+
+    "EMERGENCY_WITHDRAW_WINDOW_PERIOD()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
+
+    activateEmergencyCooldown(
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "activateEmergencyCooldown()"(
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    coolDownStart(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
+
+    "coolDownStart()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
+
     emergencyWithdraw(
       _token: string,
       _to: string,
@@ -121,21 +208,57 @@ export class RewardVault extends Contract {
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    isOwner(overrides?: CallOverrides): Promise<[boolean]>;
+    isOwner(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: boolean;
+    }>;
 
-    "isOwner()"(overrides?: CallOverrides): Promise<[boolean]>;
+    "isOwner()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: boolean;
+    }>;
 
-    owner(overrides?: CallOverrides): Promise<[string]>;
+    owner(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "owner()"(overrides?: CallOverrides): Promise<[string]>;
+    "owner()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
+
+    paused(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: boolean;
+    }>;
+
+    "paused()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: boolean;
+    }>;
 
     renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
 
     "renounceOwnership()"(overrides?: Overrides): Promise<ContractTransaction>;
 
-    rewardManager(overrides?: CallOverrides): Promise<[string]>;
+    rewardManager(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "rewardManager()"(overrides?: CallOverrides): Promise<[string]>;
+    "rewardManager()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
     setPaused(
       _pause: boolean,
@@ -182,6 +305,30 @@ export class RewardVault extends Contract {
     ): Promise<ContractTransaction>;
   };
 
+  EMERGENCY_COOLDOWN_PERIOD(overrides?: CallOverrides): Promise<BigNumber>;
+
+  "EMERGENCY_COOLDOWN_PERIOD()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+  EMERGENCY_WITHDRAW_WINDOW_PERIOD(
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  "EMERGENCY_WITHDRAW_WINDOW_PERIOD()"(
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  activateEmergencyCooldown(
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "activateEmergencyCooldown()"(
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  coolDownStart(overrides?: CallOverrides): Promise<BigNumber>;
+
+  "coolDownStart()"(overrides?: CallOverrides): Promise<BigNumber>;
+
   emergencyWithdraw(
     _token: string,
     _to: string,
@@ -203,6 +350,10 @@ export class RewardVault extends Contract {
   owner(overrides?: CallOverrides): Promise<string>;
 
   "owner()"(overrides?: CallOverrides): Promise<string>;
+
+  paused(overrides?: CallOverrides): Promise<boolean>;
+
+  "paused()"(overrides?: CallOverrides): Promise<boolean>;
 
   renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
 
@@ -257,6 +408,28 @@ export class RewardVault extends Contract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    EMERGENCY_COOLDOWN_PERIOD(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "EMERGENCY_COOLDOWN_PERIOD()"(
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    EMERGENCY_WITHDRAW_WINDOW_PERIOD(
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "EMERGENCY_WITHDRAW_WINDOW_PERIOD()"(
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    activateEmergencyCooldown(overrides?: CallOverrides): Promise<void>;
+
+    "activateEmergencyCooldown()"(overrides?: CallOverrides): Promise<void>;
+
+    coolDownStart(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "coolDownStart()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     emergencyWithdraw(
       _token: string,
       _to: string,
@@ -278,6 +451,10 @@ export class RewardVault extends Contract {
     owner(overrides?: CallOverrides): Promise<string>;
 
     "owner()"(overrides?: CallOverrides): Promise<string>;
+
+    paused(overrides?: CallOverrides): Promise<boolean>;
+
+    "paused()"(overrides?: CallOverrides): Promise<boolean>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -330,6 +507,19 @@ export class RewardVault extends Contract {
   };
 
   filters: {
+    EmergencyWithdrawlCooldown(
+      _vaultAddress: string | null,
+      _timestampWithdrawable: null
+    ): EventFilter;
+
+    EmergencyWithdrawlExecuted(
+      _vaultAddress: string | null,
+      _reserve: null,
+      _amount: null,
+      _destination: null,
+      _timestamp: null
+    ): EventFilter;
+
     OwnershipTransferred(
       previousOwner: string | null,
       newOwner: string | null
@@ -337,6 +527,28 @@ export class RewardVault extends Contract {
   };
 
   estimateGas: {
+    EMERGENCY_COOLDOWN_PERIOD(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "EMERGENCY_COOLDOWN_PERIOD()"(
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    EMERGENCY_WITHDRAW_WINDOW_PERIOD(
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "EMERGENCY_WITHDRAW_WINDOW_PERIOD()"(
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    activateEmergencyCooldown(overrides?: Overrides): Promise<BigNumber>;
+
+    "activateEmergencyCooldown()"(overrides?: Overrides): Promise<BigNumber>;
+
+    coolDownStart(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "coolDownStart()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     emergencyWithdraw(
       _token: string,
       _to: string,
@@ -358,6 +570,10 @@ export class RewardVault extends Contract {
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     "owner()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    paused(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "paused()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(overrides?: Overrides): Promise<BigNumber>;
 
@@ -410,6 +626,34 @@ export class RewardVault extends Contract {
   };
 
   populateTransaction: {
+    EMERGENCY_COOLDOWN_PERIOD(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "EMERGENCY_COOLDOWN_PERIOD()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    EMERGENCY_WITHDRAW_WINDOW_PERIOD(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "EMERGENCY_WITHDRAW_WINDOW_PERIOD()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    activateEmergencyCooldown(
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "activateEmergencyCooldown()"(
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    coolDownStart(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "coolDownStart()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     emergencyWithdraw(
       _token: string,
       _to: string,
@@ -431,6 +675,10 @@ export class RewardVault extends Contract {
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "owner()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "paused()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(overrides?: Overrides): Promise<PopulatedTransaction>;
 

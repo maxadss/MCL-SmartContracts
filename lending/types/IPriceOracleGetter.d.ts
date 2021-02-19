@@ -54,12 +54,16 @@ export class IPriceOracleGetter extends Contract {
     getAssetPrice(
       _asset: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getAssetPrice(address)"(
       _asset: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
   };
 
   getAssetPrice(_asset: string, overrides?: CallOverrides): Promise<BigNumber>;

@@ -155,35 +155,59 @@ export class LendingPoolDataProvider extends Contract {
   interface: LendingPoolDataProviderInterface;
 
   functions: {
-    DATA_PROVIDER_REVISION(overrides?: CallOverrides): Promise<[BigNumber]>;
+    DATA_PROVIDER_REVISION(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "DATA_PROVIDER_REVISION()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "DATA_PROVIDER_REVISION()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     HEALTH_FACTOR_LIQUIDATION_THRESHOLD(
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "HEALTH_FACTOR_LIQUIDATION_THRESHOLD()"(
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    addressesProvider(overrides?: CallOverrides): Promise<[string]>;
+    addressesProvider(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "addressesProvider()"(overrides?: CallOverrides): Promise<[string]>;
+    "addressesProvider()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
     balanceDecreaseAllowed(
       _reserve: string,
       _user: string,
       _amount: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    ): Promise<{
+      0: boolean;
+    }>;
 
     "balanceDecreaseAllowed(address,address,uint256)"(
       _reserve: string,
       _user: string,
       _amount: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    ): Promise<{
+      0: boolean;
+    }>;
 
     calculateCollateralNeededInBNB(
       _reserve: string,
@@ -193,7 +217,9 @@ export class LendingPoolDataProvider extends Contract {
       _userCurrentFeesBNB: BigNumberish,
       _userCurrentLtv: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "calculateCollateralNeededInBNB(address,uint256,uint256,uint256,uint256,uint256)"(
       _reserve: string,
@@ -203,299 +229,283 @@ export class LendingPoolDataProvider extends Contract {
       _userCurrentFeesBNB: BigNumberish,
       _userCurrentLtv: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     calculateUserGlobalData(
       _user: string,
       overrides?: CallOverrides
-    ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        boolean
-      ] & {
-        totalLiquidityBalanceBNB: BigNumber;
-        totalCollateralBalanceBNB: BigNumber;
-        totalBorrowBalanceBNB: BigNumber;
-        totalFeesBNB: BigNumber;
-        currentLtv: BigNumber;
-        currentLiquidationThreshold: BigNumber;
-        healthFactor: BigNumber;
-        healthFactorBelowThreshold: boolean;
-      }
-    >;
+    ): Promise<{
+      totalLiquidityBalanceBNB: BigNumber;
+      totalCollateralBalanceBNB: BigNumber;
+      totalBorrowBalanceBNB: BigNumber;
+      totalFeesBNB: BigNumber;
+      currentLtv: BigNumber;
+      currentLiquidationThreshold: BigNumber;
+      healthFactor: BigNumber;
+      healthFactorBelowThreshold: boolean;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: BigNumber;
+      4: BigNumber;
+      5: BigNumber;
+      6: BigNumber;
+      7: boolean;
+    }>;
 
     "calculateUserGlobalData(address)"(
       _user: string,
       overrides?: CallOverrides
-    ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        boolean
-      ] & {
-        totalLiquidityBalanceBNB: BigNumber;
-        totalCollateralBalanceBNB: BigNumber;
-        totalBorrowBalanceBNB: BigNumber;
-        totalFeesBNB: BigNumber;
-        currentLtv: BigNumber;
-        currentLiquidationThreshold: BigNumber;
-        healthFactor: BigNumber;
-        healthFactorBelowThreshold: boolean;
-      }
-    >;
+    ): Promise<{
+      totalLiquidityBalanceBNB: BigNumber;
+      totalCollateralBalanceBNB: BigNumber;
+      totalBorrowBalanceBNB: BigNumber;
+      totalFeesBNB: BigNumber;
+      currentLtv: BigNumber;
+      currentLiquidationThreshold: BigNumber;
+      healthFactor: BigNumber;
+      healthFactorBelowThreshold: boolean;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: BigNumber;
+      4: BigNumber;
+      5: BigNumber;
+      6: BigNumber;
+      7: boolean;
+    }>;
 
-    core(overrides?: CallOverrides): Promise<[string]>;
+    core(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "core()"(overrides?: CallOverrides): Promise<[string]>;
+    "core()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
     getHealthFactorLiquidationThreshold(
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getHealthFactorLiquidationThreshold()"(
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getReserveConfigurationData(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        string,
-        boolean,
-        boolean,
-        boolean,
-        boolean
-      ] & {
-        ltv: BigNumber;
-        liquidationThreshold: BigNumber;
-        liquidationBonus: BigNumber;
-        rateStrategyAddress: string;
-        usageAsCollateralEnabled: boolean;
-        borrowingEnabled: boolean;
-        stableBorrowRateEnabled: boolean;
-        isActive: boolean;
-      }
-    >;
+    ): Promise<{
+      ltv: BigNumber;
+      liquidationThreshold: BigNumber;
+      liquidationBonus: BigNumber;
+      rateStrategyAddress: string;
+      usageAsCollateralEnabled: boolean;
+      borrowingEnabled: boolean;
+      stableBorrowRateEnabled: boolean;
+      isActive: boolean;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: string;
+      4: boolean;
+      5: boolean;
+      6: boolean;
+      7: boolean;
+    }>;
 
     "getReserveConfigurationData(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        string,
-        boolean,
-        boolean,
-        boolean,
-        boolean
-      ] & {
-        ltv: BigNumber;
-        liquidationThreshold: BigNumber;
-        liquidationBonus: BigNumber;
-        rateStrategyAddress: string;
-        usageAsCollateralEnabled: boolean;
-        borrowingEnabled: boolean;
-        stableBorrowRateEnabled: boolean;
-        isActive: boolean;
-      }
-    >;
+    ): Promise<{
+      ltv: BigNumber;
+      liquidationThreshold: BigNumber;
+      liquidationBonus: BigNumber;
+      rateStrategyAddress: string;
+      usageAsCollateralEnabled: boolean;
+      borrowingEnabled: boolean;
+      stableBorrowRateEnabled: boolean;
+      isActive: boolean;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: string;
+      4: boolean;
+      5: boolean;
+      6: boolean;
+      7: boolean;
+    }>;
 
     getReserveData(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        string,
-        number
-      ] & {
-        totalLiquidity: BigNumber;
-        availableLiquidity: BigNumber;
-        totalBorrowsStable: BigNumber;
-        totalBorrowsVariable: BigNumber;
-        liquidityRate: BigNumber;
-        variableBorrowRate: BigNumber;
-        stableBorrowRate: BigNumber;
-        averageStableBorrowRate: BigNumber;
-        utilizationRate: BigNumber;
-        liquidityIndex: BigNumber;
-        variableBorrowIndex: BigNumber;
-        bMXXTokenAddress: string;
-        lastUpdateTimestamp: number;
-      }
-    >;
+    ): Promise<{
+      totalLiquidity: BigNumber;
+      availableLiquidity: BigNumber;
+      totalBorrowsStable: BigNumber;
+      totalBorrowsVariable: BigNumber;
+      liquidityRate: BigNumber;
+      variableBorrowRate: BigNumber;
+      stableBorrowRate: BigNumber;
+      averageStableBorrowRate: BigNumber;
+      utilizationRate: BigNumber;
+      liquidityIndex: BigNumber;
+      variableBorrowIndex: BigNumber;
+      mTokenAddress: string;
+      lastUpdateTimestamp: number;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: BigNumber;
+      4: BigNumber;
+      5: BigNumber;
+      6: BigNumber;
+      7: BigNumber;
+      8: BigNumber;
+      9: BigNumber;
+      10: BigNumber;
+      11: string;
+      12: number;
+    }>;
 
     "getReserveData(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        string,
-        number
-      ] & {
-        totalLiquidity: BigNumber;
-        availableLiquidity: BigNumber;
-        totalBorrowsStable: BigNumber;
-        totalBorrowsVariable: BigNumber;
-        liquidityRate: BigNumber;
-        variableBorrowRate: BigNumber;
-        stableBorrowRate: BigNumber;
-        averageStableBorrowRate: BigNumber;
-        utilizationRate: BigNumber;
-        liquidityIndex: BigNumber;
-        variableBorrowIndex: BigNumber;
-        bMXXTokenAddress: string;
-        lastUpdateTimestamp: number;
-      }
-    >;
+    ): Promise<{
+      totalLiquidity: BigNumber;
+      availableLiquidity: BigNumber;
+      totalBorrowsStable: BigNumber;
+      totalBorrowsVariable: BigNumber;
+      liquidityRate: BigNumber;
+      variableBorrowRate: BigNumber;
+      stableBorrowRate: BigNumber;
+      averageStableBorrowRate: BigNumber;
+      utilizationRate: BigNumber;
+      liquidityIndex: BigNumber;
+      variableBorrowIndex: BigNumber;
+      mTokenAddress: string;
+      lastUpdateTimestamp: number;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: BigNumber;
+      4: BigNumber;
+      5: BigNumber;
+      6: BigNumber;
+      7: BigNumber;
+      8: BigNumber;
+      9: BigNumber;
+      10: BigNumber;
+      11: string;
+      12: number;
+    }>;
 
     getUserAccountData(
       _user: string,
       overrides?: CallOverrides
-    ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber
-      ] & {
-        totalLiquidityBNB: BigNumber;
-        totalCollateralBNB: BigNumber;
-        totalBorrowsBNB: BigNumber;
-        totalFeesBNB: BigNumber;
-        availableBorrowsBNB: BigNumber;
-        currentLiquidationThreshold: BigNumber;
-        ltv: BigNumber;
-        healthFactor: BigNumber;
-      }
-    >;
+    ): Promise<{
+      totalLiquidityBNB: BigNumber;
+      totalCollateralBNB: BigNumber;
+      totalBorrowsBNB: BigNumber;
+      totalFeesBNB: BigNumber;
+      availableBorrowsBNB: BigNumber;
+      currentLiquidationThreshold: BigNumber;
+      ltv: BigNumber;
+      healthFactor: BigNumber;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: BigNumber;
+      4: BigNumber;
+      5: BigNumber;
+      6: BigNumber;
+      7: BigNumber;
+    }>;
 
     "getUserAccountData(address)"(
       _user: string,
       overrides?: CallOverrides
-    ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber
-      ] & {
-        totalLiquidityBNB: BigNumber;
-        totalCollateralBNB: BigNumber;
-        totalBorrowsBNB: BigNumber;
-        totalFeesBNB: BigNumber;
-        availableBorrowsBNB: BigNumber;
-        currentLiquidationThreshold: BigNumber;
-        ltv: BigNumber;
-        healthFactor: BigNumber;
-      }
-    >;
+    ): Promise<{
+      totalLiquidityBNB: BigNumber;
+      totalCollateralBNB: BigNumber;
+      totalBorrowsBNB: BigNumber;
+      totalFeesBNB: BigNumber;
+      availableBorrowsBNB: BigNumber;
+      currentLiquidationThreshold: BigNumber;
+      ltv: BigNumber;
+      healthFactor: BigNumber;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: BigNumber;
+      4: BigNumber;
+      5: BigNumber;
+      6: BigNumber;
+      7: BigNumber;
+    }>;
 
     getUserReserveData(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        boolean
-      ] & {
-        currentmTokenBalance: BigNumber;
-        currentBorrowBalance: BigNumber;
-        principalBorrowBalance: BigNumber;
-        borrowRateMode: BigNumber;
-        borrowRate: BigNumber;
-        liquidityRate: BigNumber;
-        originationFee: BigNumber;
-        variableBorrowIndex: BigNumber;
-        lastUpdateTimestamp: BigNumber;
-        usageAsCollateralEnabled: boolean;
-      }
-    >;
+    ): Promise<{
+      currentmTokenBalance: BigNumber;
+      currentBorrowBalance: BigNumber;
+      principalBorrowBalance: BigNumber;
+      borrowRateMode: BigNumber;
+      borrowRate: BigNumber;
+      liquidityRate: BigNumber;
+      originationFee: BigNumber;
+      variableBorrowIndex: BigNumber;
+      lastUpdateTimestamp: BigNumber;
+      usageAsCollateralEnabled: boolean;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: BigNumber;
+      4: BigNumber;
+      5: BigNumber;
+      6: BigNumber;
+      7: BigNumber;
+      8: BigNumber;
+      9: boolean;
+    }>;
 
     "getUserReserveData(address,address)"(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        boolean
-      ] & {
-        currentmTokenBalance: BigNumber;
-        currentBorrowBalance: BigNumber;
-        principalBorrowBalance: BigNumber;
-        borrowRateMode: BigNumber;
-        borrowRate: BigNumber;
-        liquidityRate: BigNumber;
-        originationFee: BigNumber;
-        variableBorrowIndex: BigNumber;
-        lastUpdateTimestamp: BigNumber;
-        usageAsCollateralEnabled: boolean;
-      }
-    >;
+    ): Promise<{
+      currentmTokenBalance: BigNumber;
+      currentBorrowBalance: BigNumber;
+      principalBorrowBalance: BigNumber;
+      borrowRateMode: BigNumber;
+      borrowRate: BigNumber;
+      liquidityRate: BigNumber;
+      originationFee: BigNumber;
+      variableBorrowIndex: BigNumber;
+      lastUpdateTimestamp: BigNumber;
+      usageAsCollateralEnabled: boolean;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: BigNumber;
+      4: BigNumber;
+      5: BigNumber;
+      6: BigNumber;
+      7: BigNumber;
+      8: BigNumber;
+      9: boolean;
+    }>;
 
     initialize(
       _addressesProvider: string,
@@ -561,52 +571,46 @@ export class LendingPoolDataProvider extends Contract {
   calculateUserGlobalData(
     _user: string,
     overrides?: CallOverrides
-  ): Promise<
-    [
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      boolean
-    ] & {
-      totalLiquidityBalanceBNB: BigNumber;
-      totalCollateralBalanceBNB: BigNumber;
-      totalBorrowBalanceBNB: BigNumber;
-      totalFeesBNB: BigNumber;
-      currentLtv: BigNumber;
-      currentLiquidationThreshold: BigNumber;
-      healthFactor: BigNumber;
-      healthFactorBelowThreshold: boolean;
-    }
-  >;
+  ): Promise<{
+    totalLiquidityBalanceBNB: BigNumber;
+    totalCollateralBalanceBNB: BigNumber;
+    totalBorrowBalanceBNB: BigNumber;
+    totalFeesBNB: BigNumber;
+    currentLtv: BigNumber;
+    currentLiquidationThreshold: BigNumber;
+    healthFactor: BigNumber;
+    healthFactorBelowThreshold: boolean;
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+    3: BigNumber;
+    4: BigNumber;
+    5: BigNumber;
+    6: BigNumber;
+    7: boolean;
+  }>;
 
   "calculateUserGlobalData(address)"(
     _user: string,
     overrides?: CallOverrides
-  ): Promise<
-    [
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      boolean
-    ] & {
-      totalLiquidityBalanceBNB: BigNumber;
-      totalCollateralBalanceBNB: BigNumber;
-      totalBorrowBalanceBNB: BigNumber;
-      totalFeesBNB: BigNumber;
-      currentLtv: BigNumber;
-      currentLiquidationThreshold: BigNumber;
-      healthFactor: BigNumber;
-      healthFactorBelowThreshold: boolean;
-    }
-  >;
+  ): Promise<{
+    totalLiquidityBalanceBNB: BigNumber;
+    totalCollateralBalanceBNB: BigNumber;
+    totalBorrowBalanceBNB: BigNumber;
+    totalFeesBNB: BigNumber;
+    currentLtv: BigNumber;
+    currentLiquidationThreshold: BigNumber;
+    healthFactor: BigNumber;
+    healthFactorBelowThreshold: boolean;
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+    3: BigNumber;
+    4: BigNumber;
+    5: BigNumber;
+    6: BigNumber;
+    7: boolean;
+  }>;
 
   core(overrides?: CallOverrides): Promise<string>;
 
@@ -623,232 +627,208 @@ export class LendingPoolDataProvider extends Contract {
   getReserveConfigurationData(
     _reserve: string,
     overrides?: CallOverrides
-  ): Promise<
-    [
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      string,
-      boolean,
-      boolean,
-      boolean,
-      boolean
-    ] & {
-      ltv: BigNumber;
-      liquidationThreshold: BigNumber;
-      liquidationBonus: BigNumber;
-      rateStrategyAddress: string;
-      usageAsCollateralEnabled: boolean;
-      borrowingEnabled: boolean;
-      stableBorrowRateEnabled: boolean;
-      isActive: boolean;
-    }
-  >;
+  ): Promise<{
+    ltv: BigNumber;
+    liquidationThreshold: BigNumber;
+    liquidationBonus: BigNumber;
+    rateStrategyAddress: string;
+    usageAsCollateralEnabled: boolean;
+    borrowingEnabled: boolean;
+    stableBorrowRateEnabled: boolean;
+    isActive: boolean;
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+    3: string;
+    4: boolean;
+    5: boolean;
+    6: boolean;
+    7: boolean;
+  }>;
 
   "getReserveConfigurationData(address)"(
     _reserve: string,
     overrides?: CallOverrides
-  ): Promise<
-    [
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      string,
-      boolean,
-      boolean,
-      boolean,
-      boolean
-    ] & {
-      ltv: BigNumber;
-      liquidationThreshold: BigNumber;
-      liquidationBonus: BigNumber;
-      rateStrategyAddress: string;
-      usageAsCollateralEnabled: boolean;
-      borrowingEnabled: boolean;
-      stableBorrowRateEnabled: boolean;
-      isActive: boolean;
-    }
-  >;
+  ): Promise<{
+    ltv: BigNumber;
+    liquidationThreshold: BigNumber;
+    liquidationBonus: BigNumber;
+    rateStrategyAddress: string;
+    usageAsCollateralEnabled: boolean;
+    borrowingEnabled: boolean;
+    stableBorrowRateEnabled: boolean;
+    isActive: boolean;
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+    3: string;
+    4: boolean;
+    5: boolean;
+    6: boolean;
+    7: boolean;
+  }>;
 
   getReserveData(
     _reserve: string,
     overrides?: CallOverrides
-  ): Promise<
-    [
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      string,
-      number
-    ] & {
-      totalLiquidity: BigNumber;
-      availableLiquidity: BigNumber;
-      totalBorrowsStable: BigNumber;
-      totalBorrowsVariable: BigNumber;
-      liquidityRate: BigNumber;
-      variableBorrowRate: BigNumber;
-      stableBorrowRate: BigNumber;
-      averageStableBorrowRate: BigNumber;
-      utilizationRate: BigNumber;
-      liquidityIndex: BigNumber;
-      variableBorrowIndex: BigNumber;
-      bMXXTokenAddress: string;
-      lastUpdateTimestamp: number;
-    }
-  >;
+  ): Promise<{
+    totalLiquidity: BigNumber;
+    availableLiquidity: BigNumber;
+    totalBorrowsStable: BigNumber;
+    totalBorrowsVariable: BigNumber;
+    liquidityRate: BigNumber;
+    variableBorrowRate: BigNumber;
+    stableBorrowRate: BigNumber;
+    averageStableBorrowRate: BigNumber;
+    utilizationRate: BigNumber;
+    liquidityIndex: BigNumber;
+    variableBorrowIndex: BigNumber;
+    mTokenAddress: string;
+    lastUpdateTimestamp: number;
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+    3: BigNumber;
+    4: BigNumber;
+    5: BigNumber;
+    6: BigNumber;
+    7: BigNumber;
+    8: BigNumber;
+    9: BigNumber;
+    10: BigNumber;
+    11: string;
+    12: number;
+  }>;
 
   "getReserveData(address)"(
     _reserve: string,
     overrides?: CallOverrides
-  ): Promise<
-    [
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      string,
-      number
-    ] & {
-      totalLiquidity: BigNumber;
-      availableLiquidity: BigNumber;
-      totalBorrowsStable: BigNumber;
-      totalBorrowsVariable: BigNumber;
-      liquidityRate: BigNumber;
-      variableBorrowRate: BigNumber;
-      stableBorrowRate: BigNumber;
-      averageStableBorrowRate: BigNumber;
-      utilizationRate: BigNumber;
-      liquidityIndex: BigNumber;
-      variableBorrowIndex: BigNumber;
-      bMXXTokenAddress: string;
-      lastUpdateTimestamp: number;
-    }
-  >;
+  ): Promise<{
+    totalLiquidity: BigNumber;
+    availableLiquidity: BigNumber;
+    totalBorrowsStable: BigNumber;
+    totalBorrowsVariable: BigNumber;
+    liquidityRate: BigNumber;
+    variableBorrowRate: BigNumber;
+    stableBorrowRate: BigNumber;
+    averageStableBorrowRate: BigNumber;
+    utilizationRate: BigNumber;
+    liquidityIndex: BigNumber;
+    variableBorrowIndex: BigNumber;
+    mTokenAddress: string;
+    lastUpdateTimestamp: number;
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+    3: BigNumber;
+    4: BigNumber;
+    5: BigNumber;
+    6: BigNumber;
+    7: BigNumber;
+    8: BigNumber;
+    9: BigNumber;
+    10: BigNumber;
+    11: string;
+    12: number;
+  }>;
 
   getUserAccountData(
     _user: string,
     overrides?: CallOverrides
-  ): Promise<
-    [
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber
-    ] & {
-      totalLiquidityBNB: BigNumber;
-      totalCollateralBNB: BigNumber;
-      totalBorrowsBNB: BigNumber;
-      totalFeesBNB: BigNumber;
-      availableBorrowsBNB: BigNumber;
-      currentLiquidationThreshold: BigNumber;
-      ltv: BigNumber;
-      healthFactor: BigNumber;
-    }
-  >;
+  ): Promise<{
+    totalLiquidityBNB: BigNumber;
+    totalCollateralBNB: BigNumber;
+    totalBorrowsBNB: BigNumber;
+    totalFeesBNB: BigNumber;
+    availableBorrowsBNB: BigNumber;
+    currentLiquidationThreshold: BigNumber;
+    ltv: BigNumber;
+    healthFactor: BigNumber;
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+    3: BigNumber;
+    4: BigNumber;
+    5: BigNumber;
+    6: BigNumber;
+    7: BigNumber;
+  }>;
 
   "getUserAccountData(address)"(
     _user: string,
     overrides?: CallOverrides
-  ): Promise<
-    [
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber
-    ] & {
-      totalLiquidityBNB: BigNumber;
-      totalCollateralBNB: BigNumber;
-      totalBorrowsBNB: BigNumber;
-      totalFeesBNB: BigNumber;
-      availableBorrowsBNB: BigNumber;
-      currentLiquidationThreshold: BigNumber;
-      ltv: BigNumber;
-      healthFactor: BigNumber;
-    }
-  >;
+  ): Promise<{
+    totalLiquidityBNB: BigNumber;
+    totalCollateralBNB: BigNumber;
+    totalBorrowsBNB: BigNumber;
+    totalFeesBNB: BigNumber;
+    availableBorrowsBNB: BigNumber;
+    currentLiquidationThreshold: BigNumber;
+    ltv: BigNumber;
+    healthFactor: BigNumber;
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+    3: BigNumber;
+    4: BigNumber;
+    5: BigNumber;
+    6: BigNumber;
+    7: BigNumber;
+  }>;
 
   getUserReserveData(
     _reserve: string,
     _user: string,
     overrides?: CallOverrides
-  ): Promise<
-    [
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      boolean
-    ] & {
-      currentmTokenBalance: BigNumber;
-      currentBorrowBalance: BigNumber;
-      principalBorrowBalance: BigNumber;
-      borrowRateMode: BigNumber;
-      borrowRate: BigNumber;
-      liquidityRate: BigNumber;
-      originationFee: BigNumber;
-      variableBorrowIndex: BigNumber;
-      lastUpdateTimestamp: BigNumber;
-      usageAsCollateralEnabled: boolean;
-    }
-  >;
+  ): Promise<{
+    currentmTokenBalance: BigNumber;
+    currentBorrowBalance: BigNumber;
+    principalBorrowBalance: BigNumber;
+    borrowRateMode: BigNumber;
+    borrowRate: BigNumber;
+    liquidityRate: BigNumber;
+    originationFee: BigNumber;
+    variableBorrowIndex: BigNumber;
+    lastUpdateTimestamp: BigNumber;
+    usageAsCollateralEnabled: boolean;
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+    3: BigNumber;
+    4: BigNumber;
+    5: BigNumber;
+    6: BigNumber;
+    7: BigNumber;
+    8: BigNumber;
+    9: boolean;
+  }>;
 
   "getUserReserveData(address,address)"(
     _reserve: string,
     _user: string,
     overrides?: CallOverrides
-  ): Promise<
-    [
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      boolean
-    ] & {
-      currentmTokenBalance: BigNumber;
-      currentBorrowBalance: BigNumber;
-      principalBorrowBalance: BigNumber;
-      borrowRateMode: BigNumber;
-      borrowRate: BigNumber;
-      liquidityRate: BigNumber;
-      originationFee: BigNumber;
-      variableBorrowIndex: BigNumber;
-      lastUpdateTimestamp: BigNumber;
-      usageAsCollateralEnabled: boolean;
-    }
-  >;
+  ): Promise<{
+    currentmTokenBalance: BigNumber;
+    currentBorrowBalance: BigNumber;
+    principalBorrowBalance: BigNumber;
+    borrowRateMode: BigNumber;
+    borrowRate: BigNumber;
+    liquidityRate: BigNumber;
+    originationFee: BigNumber;
+    variableBorrowIndex: BigNumber;
+    lastUpdateTimestamp: BigNumber;
+    usageAsCollateralEnabled: boolean;
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+    3: BigNumber;
+    4: BigNumber;
+    5: BigNumber;
+    6: BigNumber;
+    7: BigNumber;
+    8: BigNumber;
+    9: boolean;
+  }>;
 
   initialize(
     _addressesProvider: string,
@@ -914,52 +894,46 @@ export class LendingPoolDataProvider extends Contract {
     calculateUserGlobalData(
       _user: string,
       overrides?: CallOverrides
-    ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        boolean
-      ] & {
-        totalLiquidityBalanceBNB: BigNumber;
-        totalCollateralBalanceBNB: BigNumber;
-        totalBorrowBalanceBNB: BigNumber;
-        totalFeesBNB: BigNumber;
-        currentLtv: BigNumber;
-        currentLiquidationThreshold: BigNumber;
-        healthFactor: BigNumber;
-        healthFactorBelowThreshold: boolean;
-      }
-    >;
+    ): Promise<{
+      totalLiquidityBalanceBNB: BigNumber;
+      totalCollateralBalanceBNB: BigNumber;
+      totalBorrowBalanceBNB: BigNumber;
+      totalFeesBNB: BigNumber;
+      currentLtv: BigNumber;
+      currentLiquidationThreshold: BigNumber;
+      healthFactor: BigNumber;
+      healthFactorBelowThreshold: boolean;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: BigNumber;
+      4: BigNumber;
+      5: BigNumber;
+      6: BigNumber;
+      7: boolean;
+    }>;
 
     "calculateUserGlobalData(address)"(
       _user: string,
       overrides?: CallOverrides
-    ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        boolean
-      ] & {
-        totalLiquidityBalanceBNB: BigNumber;
-        totalCollateralBalanceBNB: BigNumber;
-        totalBorrowBalanceBNB: BigNumber;
-        totalFeesBNB: BigNumber;
-        currentLtv: BigNumber;
-        currentLiquidationThreshold: BigNumber;
-        healthFactor: BigNumber;
-        healthFactorBelowThreshold: boolean;
-      }
-    >;
+    ): Promise<{
+      totalLiquidityBalanceBNB: BigNumber;
+      totalCollateralBalanceBNB: BigNumber;
+      totalBorrowBalanceBNB: BigNumber;
+      totalFeesBNB: BigNumber;
+      currentLtv: BigNumber;
+      currentLiquidationThreshold: BigNumber;
+      healthFactor: BigNumber;
+      healthFactorBelowThreshold: boolean;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: BigNumber;
+      4: BigNumber;
+      5: BigNumber;
+      6: BigNumber;
+      7: boolean;
+    }>;
 
     core(overrides?: CallOverrides): Promise<string>;
 
@@ -976,232 +950,208 @@ export class LendingPoolDataProvider extends Contract {
     getReserveConfigurationData(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        string,
-        boolean,
-        boolean,
-        boolean,
-        boolean
-      ] & {
-        ltv: BigNumber;
-        liquidationThreshold: BigNumber;
-        liquidationBonus: BigNumber;
-        rateStrategyAddress: string;
-        usageAsCollateralEnabled: boolean;
-        borrowingEnabled: boolean;
-        stableBorrowRateEnabled: boolean;
-        isActive: boolean;
-      }
-    >;
+    ): Promise<{
+      ltv: BigNumber;
+      liquidationThreshold: BigNumber;
+      liquidationBonus: BigNumber;
+      rateStrategyAddress: string;
+      usageAsCollateralEnabled: boolean;
+      borrowingEnabled: boolean;
+      stableBorrowRateEnabled: boolean;
+      isActive: boolean;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: string;
+      4: boolean;
+      5: boolean;
+      6: boolean;
+      7: boolean;
+    }>;
 
     "getReserveConfigurationData(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        string,
-        boolean,
-        boolean,
-        boolean,
-        boolean
-      ] & {
-        ltv: BigNumber;
-        liquidationThreshold: BigNumber;
-        liquidationBonus: BigNumber;
-        rateStrategyAddress: string;
-        usageAsCollateralEnabled: boolean;
-        borrowingEnabled: boolean;
-        stableBorrowRateEnabled: boolean;
-        isActive: boolean;
-      }
-    >;
+    ): Promise<{
+      ltv: BigNumber;
+      liquidationThreshold: BigNumber;
+      liquidationBonus: BigNumber;
+      rateStrategyAddress: string;
+      usageAsCollateralEnabled: boolean;
+      borrowingEnabled: boolean;
+      stableBorrowRateEnabled: boolean;
+      isActive: boolean;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: string;
+      4: boolean;
+      5: boolean;
+      6: boolean;
+      7: boolean;
+    }>;
 
     getReserveData(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        string,
-        number
-      ] & {
-        totalLiquidity: BigNumber;
-        availableLiquidity: BigNumber;
-        totalBorrowsStable: BigNumber;
-        totalBorrowsVariable: BigNumber;
-        liquidityRate: BigNumber;
-        variableBorrowRate: BigNumber;
-        stableBorrowRate: BigNumber;
-        averageStableBorrowRate: BigNumber;
-        utilizationRate: BigNumber;
-        liquidityIndex: BigNumber;
-        variableBorrowIndex: BigNumber;
-        bMXXTokenAddress: string;
-        lastUpdateTimestamp: number;
-      }
-    >;
+    ): Promise<{
+      totalLiquidity: BigNumber;
+      availableLiquidity: BigNumber;
+      totalBorrowsStable: BigNumber;
+      totalBorrowsVariable: BigNumber;
+      liquidityRate: BigNumber;
+      variableBorrowRate: BigNumber;
+      stableBorrowRate: BigNumber;
+      averageStableBorrowRate: BigNumber;
+      utilizationRate: BigNumber;
+      liquidityIndex: BigNumber;
+      variableBorrowIndex: BigNumber;
+      mTokenAddress: string;
+      lastUpdateTimestamp: number;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: BigNumber;
+      4: BigNumber;
+      5: BigNumber;
+      6: BigNumber;
+      7: BigNumber;
+      8: BigNumber;
+      9: BigNumber;
+      10: BigNumber;
+      11: string;
+      12: number;
+    }>;
 
     "getReserveData(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        string,
-        number
-      ] & {
-        totalLiquidity: BigNumber;
-        availableLiquidity: BigNumber;
-        totalBorrowsStable: BigNumber;
-        totalBorrowsVariable: BigNumber;
-        liquidityRate: BigNumber;
-        variableBorrowRate: BigNumber;
-        stableBorrowRate: BigNumber;
-        averageStableBorrowRate: BigNumber;
-        utilizationRate: BigNumber;
-        liquidityIndex: BigNumber;
-        variableBorrowIndex: BigNumber;
-        bMXXTokenAddress: string;
-        lastUpdateTimestamp: number;
-      }
-    >;
+    ): Promise<{
+      totalLiquidity: BigNumber;
+      availableLiquidity: BigNumber;
+      totalBorrowsStable: BigNumber;
+      totalBorrowsVariable: BigNumber;
+      liquidityRate: BigNumber;
+      variableBorrowRate: BigNumber;
+      stableBorrowRate: BigNumber;
+      averageStableBorrowRate: BigNumber;
+      utilizationRate: BigNumber;
+      liquidityIndex: BigNumber;
+      variableBorrowIndex: BigNumber;
+      mTokenAddress: string;
+      lastUpdateTimestamp: number;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: BigNumber;
+      4: BigNumber;
+      5: BigNumber;
+      6: BigNumber;
+      7: BigNumber;
+      8: BigNumber;
+      9: BigNumber;
+      10: BigNumber;
+      11: string;
+      12: number;
+    }>;
 
     getUserAccountData(
       _user: string,
       overrides?: CallOverrides
-    ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber
-      ] & {
-        totalLiquidityBNB: BigNumber;
-        totalCollateralBNB: BigNumber;
-        totalBorrowsBNB: BigNumber;
-        totalFeesBNB: BigNumber;
-        availableBorrowsBNB: BigNumber;
-        currentLiquidationThreshold: BigNumber;
-        ltv: BigNumber;
-        healthFactor: BigNumber;
-      }
-    >;
+    ): Promise<{
+      totalLiquidityBNB: BigNumber;
+      totalCollateralBNB: BigNumber;
+      totalBorrowsBNB: BigNumber;
+      totalFeesBNB: BigNumber;
+      availableBorrowsBNB: BigNumber;
+      currentLiquidationThreshold: BigNumber;
+      ltv: BigNumber;
+      healthFactor: BigNumber;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: BigNumber;
+      4: BigNumber;
+      5: BigNumber;
+      6: BigNumber;
+      7: BigNumber;
+    }>;
 
     "getUserAccountData(address)"(
       _user: string,
       overrides?: CallOverrides
-    ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber
-      ] & {
-        totalLiquidityBNB: BigNumber;
-        totalCollateralBNB: BigNumber;
-        totalBorrowsBNB: BigNumber;
-        totalFeesBNB: BigNumber;
-        availableBorrowsBNB: BigNumber;
-        currentLiquidationThreshold: BigNumber;
-        ltv: BigNumber;
-        healthFactor: BigNumber;
-      }
-    >;
+    ): Promise<{
+      totalLiquidityBNB: BigNumber;
+      totalCollateralBNB: BigNumber;
+      totalBorrowsBNB: BigNumber;
+      totalFeesBNB: BigNumber;
+      availableBorrowsBNB: BigNumber;
+      currentLiquidationThreshold: BigNumber;
+      ltv: BigNumber;
+      healthFactor: BigNumber;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: BigNumber;
+      4: BigNumber;
+      5: BigNumber;
+      6: BigNumber;
+      7: BigNumber;
+    }>;
 
     getUserReserveData(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        boolean
-      ] & {
-        currentmTokenBalance: BigNumber;
-        currentBorrowBalance: BigNumber;
-        principalBorrowBalance: BigNumber;
-        borrowRateMode: BigNumber;
-        borrowRate: BigNumber;
-        liquidityRate: BigNumber;
-        originationFee: BigNumber;
-        variableBorrowIndex: BigNumber;
-        lastUpdateTimestamp: BigNumber;
-        usageAsCollateralEnabled: boolean;
-      }
-    >;
+    ): Promise<{
+      currentmTokenBalance: BigNumber;
+      currentBorrowBalance: BigNumber;
+      principalBorrowBalance: BigNumber;
+      borrowRateMode: BigNumber;
+      borrowRate: BigNumber;
+      liquidityRate: BigNumber;
+      originationFee: BigNumber;
+      variableBorrowIndex: BigNumber;
+      lastUpdateTimestamp: BigNumber;
+      usageAsCollateralEnabled: boolean;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: BigNumber;
+      4: BigNumber;
+      5: BigNumber;
+      6: BigNumber;
+      7: BigNumber;
+      8: BigNumber;
+      9: boolean;
+    }>;
 
     "getUserReserveData(address,address)"(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        boolean
-      ] & {
-        currentmTokenBalance: BigNumber;
-        currentBorrowBalance: BigNumber;
-        principalBorrowBalance: BigNumber;
-        borrowRateMode: BigNumber;
-        borrowRate: BigNumber;
-        liquidityRate: BigNumber;
-        originationFee: BigNumber;
-        variableBorrowIndex: BigNumber;
-        lastUpdateTimestamp: BigNumber;
-        usageAsCollateralEnabled: boolean;
-      }
-    >;
+    ): Promise<{
+      currentmTokenBalance: BigNumber;
+      currentBorrowBalance: BigNumber;
+      principalBorrowBalance: BigNumber;
+      borrowRateMode: BigNumber;
+      borrowRate: BigNumber;
+      liquidityRate: BigNumber;
+      originationFee: BigNumber;
+      variableBorrowIndex: BigNumber;
+      lastUpdateTimestamp: BigNumber;
+      usageAsCollateralEnabled: boolean;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: BigNumber;
+      4: BigNumber;
+      5: BigNumber;
+      6: BigNumber;
+      7: BigNumber;
+      8: BigNumber;
+      9: boolean;
+    }>;
 
     initialize(
       _addressesProvider: string,

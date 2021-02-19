@@ -178,39 +178,79 @@ export class RewardsManager extends Contract {
   functions: {
     addRewardItem(
       _reserve: string,
-      _sharesLp: BigNumberish,
-      _sharingLpBase: BigNumberish,
-      _shareGov: BigNumberish,
+      _lpRewardAmt: BigNumberish,
+      lpBase: BigNumberish,
+      govRewardAmt: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     "addRewardItem(address,uint256,uint256,uint256)"(
       _reserve: string,
-      _sharesLp: BigNumberish,
-      _sharingLpBase: BigNumberish,
-      _shareGov: BigNumberish,
+      _lpRewardAmt: BigNumberish,
+      lpBase: BigNumberish,
+      govRewardAmt: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    addressesProvider(overrides?: CallOverrides): Promise<[string]>;
+    addressesProvider(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "addressesProvider()"(overrides?: CallOverrides): Promise<[string]>;
+    "addressesProvider()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    coreAddress(overrides?: CallOverrides): Promise<[string]>;
+    coreAddress(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "coreAddress()"(overrides?: CallOverrides): Promise<[string]>;
+    "coreAddress()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    isOwner(overrides?: CallOverrides): Promise<[boolean]>;
+    isOwner(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: boolean;
+    }>;
 
-    "isOwner()"(overrides?: CallOverrides): Promise<[boolean]>;
+    "isOwner()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: boolean;
+    }>;
 
-    lendingPoolAddress(overrides?: CallOverrides): Promise<[string]>;
+    lendingPoolAddress(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "lendingPoolAddress()"(overrides?: CallOverrides): Promise<[string]>;
+    "lendingPoolAddress()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    owner(overrides?: CallOverrides): Promise<[string]>;
+    owner(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "owner()"(overrides?: CallOverrides): Promise<[string]>;
+    "owner()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
     readRewards(
       _reserve: string,
@@ -218,7 +258,9 @@ export class RewardsManager extends Contract {
       _type: BigNumberish,
       _share: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "readRewards(address,address,uint8,uint256)"(
       _reserve: string,
@@ -226,7 +268,9 @@ export class RewardsManager extends Contract {
       _type: BigNumberish,
       _share: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     registerPools(
       _reserves: string[],
@@ -259,20 +303,34 @@ export class RewardsManager extends Contract {
     rewardPools(
       arg0: string,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { nextRewardPtr: BigNumber; valid: boolean }
-    >;
+    ): Promise<{
+      nextRewardPtr: BigNumber;
+      valid: boolean;
+      0: BigNumber;
+      1: boolean;
+    }>;
 
     "rewardPools(address)"(
       arg0: string,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { nextRewardPtr: BigNumber; valid: boolean }
-    >;
+    ): Promise<{
+      nextRewardPtr: BigNumber;
+      valid: boolean;
+      0: BigNumber;
+      1: boolean;
+    }>;
 
-    stakingToken(overrides?: CallOverrides): Promise<[string]>;
+    stakingToken(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "stakingToken()"(overrides?: CallOverrides): Promise<[string]>;
+    "stakingToken()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
     transferOwnership(
       newOwner: string,
@@ -339,17 +397,17 @@ export class RewardsManager extends Contract {
 
   addRewardItem(
     _reserve: string,
-    _sharesLp: BigNumberish,
-    _sharingLpBase: BigNumberish,
-    _shareGov: BigNumberish,
+    _lpRewardAmt: BigNumberish,
+    lpBase: BigNumberish,
+    govRewardAmt: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
   "addRewardItem(address,uint256,uint256,uint256)"(
     _reserve: string,
-    _sharesLp: BigNumberish,
-    _sharingLpBase: BigNumberish,
-    _shareGov: BigNumberish,
+    _lpRewardAmt: BigNumberish,
+    lpBase: BigNumberish,
+    govRewardAmt: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
@@ -420,16 +478,22 @@ export class RewardsManager extends Contract {
   rewardPools(
     arg0: string,
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, boolean] & { nextRewardPtr: BigNumber; valid: boolean }
-  >;
+  ): Promise<{
+    nextRewardPtr: BigNumber;
+    valid: boolean;
+    0: BigNumber;
+    1: boolean;
+  }>;
 
   "rewardPools(address)"(
     arg0: string,
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, boolean] & { nextRewardPtr: BigNumber; valid: boolean }
-  >;
+  ): Promise<{
+    nextRewardPtr: BigNumber;
+    valid: boolean;
+    0: BigNumber;
+    1: boolean;
+  }>;
 
   stakingToken(overrides?: CallOverrides): Promise<string>;
 
@@ -500,17 +564,17 @@ export class RewardsManager extends Contract {
   callStatic: {
     addRewardItem(
       _reserve: string,
-      _sharesLp: BigNumberish,
-      _sharingLpBase: BigNumberish,
-      _shareGov: BigNumberish,
+      _lpRewardAmt: BigNumberish,
+      lpBase: BigNumberish,
+      govRewardAmt: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     "addRewardItem(address,uint256,uint256,uint256)"(
       _reserve: string,
-      _sharesLp: BigNumberish,
-      _sharingLpBase: BigNumberish,
-      _shareGov: BigNumberish,
+      _lpRewardAmt: BigNumberish,
+      lpBase: BigNumberish,
+      govRewardAmt: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -581,16 +645,22 @@ export class RewardsManager extends Contract {
     rewardPools(
       arg0: string,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { nextRewardPtr: BigNumber; valid: boolean }
-    >;
+    ): Promise<{
+      nextRewardPtr: BigNumber;
+      valid: boolean;
+      0: BigNumber;
+      1: boolean;
+    }>;
 
     "rewardPools(address)"(
       arg0: string,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { nextRewardPtr: BigNumber; valid: boolean }
-    >;
+    ): Promise<{
+      nextRewardPtr: BigNumber;
+      valid: boolean;
+      0: BigNumber;
+      1: boolean;
+    }>;
 
     stakingToken(overrides?: CallOverrides): Promise<string>;
 
@@ -669,17 +739,17 @@ export class RewardsManager extends Contract {
   estimateGas: {
     addRewardItem(
       _reserve: string,
-      _sharesLp: BigNumberish,
-      _sharingLpBase: BigNumberish,
-      _shareGov: BigNumberish,
+      _lpRewardAmt: BigNumberish,
+      lpBase: BigNumberish,
+      govRewardAmt: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
     "addRewardItem(address,uint256,uint256,uint256)"(
       _reserve: string,
-      _sharesLp: BigNumberish,
-      _sharingLpBase: BigNumberish,
-      _shareGov: BigNumberish,
+      _lpRewardAmt: BigNumberish,
+      lpBase: BigNumberish,
+      govRewardAmt: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
@@ -824,17 +894,17 @@ export class RewardsManager extends Contract {
   populateTransaction: {
     addRewardItem(
       _reserve: string,
-      _sharesLp: BigNumberish,
-      _sharingLpBase: BigNumberish,
-      _shareGov: BigNumberish,
+      _lpRewardAmt: BigNumberish,
+      lpBase: BigNumberish,
+      govRewardAmt: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     "addRewardItem(address,uint256,uint256,uint256)"(
       _reserve: string,
-      _sharesLp: BigNumberish,
-      _sharingLpBase: BigNumberish,
-      _shareGov: BigNumberish,
+      _lpRewardAmt: BigNumberish,
+      lpBase: BigNumberish,
+      govRewardAmt: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 

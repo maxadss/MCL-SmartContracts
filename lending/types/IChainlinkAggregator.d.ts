@@ -93,34 +93,66 @@ export class IChainlinkAggregator extends Contract {
     getAnswer(
       roundId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getAnswer(uint256)"(
       roundId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getTimestamp(
       roundId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getTimestamp(uint256)"(
       roundId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    latestAnswer(overrides?: CallOverrides): Promise<[BigNumber]>;
+    latestAnswer(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "latestAnswer()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "latestAnswer()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    latestRound(overrides?: CallOverrides): Promise<[BigNumber]>;
+    latestRound(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "latestRound()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "latestRound()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    latestTimestamp(overrides?: CallOverrides): Promise<[BigNumber]>;
+    latestTimestamp(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "latestTimestamp()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "latestTimestamp()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
   };
 
   getAnswer(

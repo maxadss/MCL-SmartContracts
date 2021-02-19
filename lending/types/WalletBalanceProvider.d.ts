@@ -61,23 +61,33 @@ export class WalletBalanceProvider extends Contract {
       _user: string,
       _token: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "balanceOf(address,address)"(
       _user: string,
       _token: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getUserWalletBalances(
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[string[], BigNumber[]]>;
+    ): Promise<{
+      0: string[];
+      1: BigNumber[];
+    }>;
 
     "getUserWalletBalances(address)"(
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[string[], BigNumber[]]>;
+    ): Promise<{
+      0: string[];
+      1: BigNumber[];
+    }>;
   };
 
   balanceOf(
@@ -95,12 +105,18 @@ export class WalletBalanceProvider extends Contract {
   getUserWalletBalances(
     _user: string,
     overrides?: CallOverrides
-  ): Promise<[string[], BigNumber[]]>;
+  ): Promise<{
+    0: string[];
+    1: BigNumber[];
+  }>;
 
   "getUserWalletBalances(address)"(
     _user: string,
     overrides?: CallOverrides
-  ): Promise<[string[], BigNumber[]]>;
+  ): Promise<{
+    0: string[];
+    1: BigNumber[];
+  }>;
 
   callStatic: {
     balanceOf(
@@ -118,12 +134,18 @@ export class WalletBalanceProvider extends Contract {
     getUserWalletBalances(
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[string[], BigNumber[]]>;
+    ): Promise<{
+      0: string[];
+      1: BigNumber[];
+    }>;
 
     "getUserWalletBalances(address)"(
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[string[], BigNumber[]]>;
+    ): Promise<{
+      0: string[];
+      1: BigNumber[];
+    }>;
   };
 
   filters: {};

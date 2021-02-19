@@ -100,45 +100,91 @@ export class FeeProvider extends Contract {
   interface: FeeProviderInterface;
 
   functions: {
-    FEE_PROVIDER_REVISION(overrides?: CallOverrides): Promise<[BigNumber]>;
+    FEE_PROVIDER_REVISION(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "FEE_PROVIDER_REVISION()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "FEE_PROVIDER_REVISION()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     calculateLoanOriginationFee(
       _amount: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "calculateLoanOriginationFee(uint256)"(
       _amount: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     calculateRewards(
       _originationFee: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber, BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+    }>;
 
     "calculateRewards(uint256)"(
       _originationFee: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber, BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+    }>;
 
-    getFeeRates(overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    getFeeRates(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+    }>;
 
-    "getFeeRates()"(overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    "getFeeRates()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+    }>;
 
-    getFlashLoanFee(overrides?: CallOverrides): Promise<[BigNumber]>;
+    getFlashLoanFee(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "getFlashLoanFee()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "getFlashLoanFee()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getRewardRates(
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber, BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+    }>;
 
     "getRewardRates()"(
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber, BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+    }>;
 
     initialize(
       _addressesProvider: string,
@@ -168,16 +214,34 @@ export class FeeProvider extends Contract {
   calculateRewards(
     _originationFee: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<[BigNumber, BigNumber, BigNumber]>;
+  ): Promise<{
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+  }>;
 
   "calculateRewards(uint256)"(
     _originationFee: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<[BigNumber, BigNumber, BigNumber]>;
+  ): Promise<{
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+  }>;
 
-  getFeeRates(overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+  getFeeRates(
+    overrides?: CallOverrides
+  ): Promise<{
+    0: BigNumber;
+    1: BigNumber;
+  }>;
 
-  "getFeeRates()"(overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+  "getFeeRates()"(
+    overrides?: CallOverrides
+  ): Promise<{
+    0: BigNumber;
+    1: BigNumber;
+  }>;
 
   getFlashLoanFee(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -185,11 +249,19 @@ export class FeeProvider extends Contract {
 
   getRewardRates(
     overrides?: CallOverrides
-  ): Promise<[BigNumber, BigNumber, BigNumber]>;
+  ): Promise<{
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+  }>;
 
   "getRewardRates()"(
     overrides?: CallOverrides
-  ): Promise<[BigNumber, BigNumber, BigNumber]>;
+  ): Promise<{
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+  }>;
 
   initialize(
     _addressesProvider: string,
@@ -219,16 +291,34 @@ export class FeeProvider extends Contract {
     calculateRewards(
       _originationFee: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber, BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+    }>;
 
     "calculateRewards(uint256)"(
       _originationFee: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber, BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+    }>;
 
-    getFeeRates(overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    getFeeRates(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+    }>;
 
-    "getFeeRates()"(overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    "getFeeRates()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+    }>;
 
     getFlashLoanFee(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -236,11 +326,19 @@ export class FeeProvider extends Contract {
 
     getRewardRates(
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber, BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+    }>;
 
     "getRewardRates()"(
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber, BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+    }>;
 
     initialize(
       _addressesProvider: string,

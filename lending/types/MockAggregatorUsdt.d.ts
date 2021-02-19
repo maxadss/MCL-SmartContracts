@@ -55,9 +55,17 @@ export class MockAggregatorUSDT extends Contract {
   interface: MockAggregatorUSDTInterface;
 
   functions: {
-    latestAnswer(overrides?: CallOverrides): Promise<[BigNumber]>;
+    latestAnswer(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "latestAnswer()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "latestAnswer()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
   };
 
   latestAnswer(overrides?: CallOverrides): Promise<BigNumber>;

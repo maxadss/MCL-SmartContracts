@@ -59,6 +59,7 @@ interface MockLendingPoolCoreInterface extends ethers.utils.Interface {
     "getReserveVariableBorrowsCumulativeIndex(address)": FunctionFragment;
     "getReservemTokenAddress(address)": FunctionFragment;
     "getReserves()": FunctionFragment;
+    "getTotalmTokenSupply(address)": FunctionFragment;
     "getUserBasicReserveData(address,address)": FunctionFragment;
     "getUserBorrowBalances(address,address)": FunctionFragment;
     "getUserCurrentBorrowRateMode(address,address)": FunctionFragment;
@@ -245,6 +246,10 @@ interface MockLendingPoolCoreInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "getReserves",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getTotalmTokenSupply",
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "getUserBasicReserveData",
@@ -570,6 +575,10 @@ interface MockLendingPoolCoreInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "getTotalmTokenSupply",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "getUserBasicReserveData",
     data: BytesLike
   ): Result;
@@ -754,9 +763,17 @@ export class MockLendingPoolCore extends Contract {
   interface: MockLendingPoolCoreInterface;
 
   functions: {
-    CORE_REVISION(overrides?: CallOverrides): Promise<[BigNumber]>;
+    CORE_REVISION(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "CORE_REVISION()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "CORE_REVISION()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     activateReserve(
       _reserve: string,
@@ -768,9 +785,17 @@ export class MockLendingPoolCore extends Contract {
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    addressesProvider(overrides?: CallOverrides): Promise<[string]>;
+    addressesProvider(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "addressesProvider()"(overrides?: CallOverrides): Promise<[string]>;
+    "addressesProvider()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
     deactivateReserve(
       _reserve: string,
@@ -850,9 +875,17 @@ export class MockLendingPoolCore extends Contract {
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    feeProvider(overrides?: CallOverrides): Promise<[string]>;
+    feeProvider(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "feeProvider()"(overrides?: CallOverrides): Promise<[string]>;
+    "feeProvider()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
     freezeReserve(
       _reserve: string,
@@ -867,354 +900,528 @@ export class MockLendingPoolCore extends Contract {
     getReserveAvailableLiquidity(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getReserveAvailableLiquidity(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getReserveConfiguration(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber, BigNumber, boolean]>;
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: boolean;
+    }>;
 
     "getReserveConfiguration(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber, BigNumber, boolean]>;
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: boolean;
+    }>;
 
     getReserveCurrentAverageStableBorrowRate(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getReserveCurrentAverageStableBorrowRate(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getReserveCurrentLiquidityRate(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getReserveCurrentLiquidityRate(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getReserveCurrentStableBorrowRate(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getReserveCurrentStableBorrowRate(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getReserveCurrentVariableBorrowRate(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getReserveCurrentVariableBorrowRate(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getReserveDecimals(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getReserveDecimals(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getReserveInterestRateStrategyAddress(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<{
+      0: string;
+    }>;
 
     "getReserveInterestRateStrategyAddress(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<{
+      0: string;
+    }>;
 
     getReserveIsActive(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    ): Promise<{
+      0: boolean;
+    }>;
 
     "getReserveIsActive(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    ): Promise<{
+      0: boolean;
+    }>;
 
     getReserveIsFreezed(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    ): Promise<{
+      0: boolean;
+    }>;
 
     "getReserveIsFreezed(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    ): Promise<{
+      0: boolean;
+    }>;
 
     getReserveIsStableBorrowRateEnabled(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    ): Promise<{
+      0: boolean;
+    }>;
 
     "getReserveIsStableBorrowRateEnabled(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    ): Promise<{
+      0: boolean;
+    }>;
 
     getReserveLastUpdate(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[number] & { timestamp: number }>;
+    ): Promise<{
+      timestamp: number;
+      0: number;
+    }>;
 
     "getReserveLastUpdate(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[number] & { timestamp: number }>;
+    ): Promise<{
+      timestamp: number;
+      0: number;
+    }>;
 
     getReserveLiquidationBonus(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getReserveLiquidationBonus(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getReserveLiquidationThreshold(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getReserveLiquidationThreshold(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getReserveLiquidityCumulativeIndex(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getReserveLiquidityCumulativeIndex(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getReserveNormalizedIncome(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getReserveNormalizedIncome(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getReserveTotalBorrows(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getReserveTotalBorrows(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getReserveTotalBorrowsStable(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getReserveTotalBorrowsStable(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getReserveTotalBorrowsVariable(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getReserveTotalBorrowsVariable(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getReserveTotalLiquidity(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getReserveTotalLiquidity(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getReserveUtilizationRate(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getReserveUtilizationRate(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getReserveVariableBorrowsCumulativeIndex(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getReserveVariableBorrowsCumulativeIndex(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getReservemTokenAddress(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<{
+      0: string;
+    }>;
 
     "getReservemTokenAddress(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<{
+      0: string;
+    }>;
 
-    getReserves(overrides?: CallOverrides): Promise<[string[]]>;
+    getReserves(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string[];
+    }>;
 
-    "getReserves()"(overrides?: CallOverrides): Promise<[string[]]>;
+    "getReserves()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string[];
+    }>;
+
+    getTotalmTokenSupply(
+      _reserve: string,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
+
+    "getTotalmTokenSupply(address)"(
+      _reserve: string,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getUserBasicReserveData(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber, BigNumber, boolean]>;
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: boolean;
+    }>;
 
     "getUserBasicReserveData(address,address)"(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber, BigNumber, boolean]>;
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: boolean;
+    }>;
 
     getUserBorrowBalances(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber, BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+    }>;
 
     "getUserBorrowBalances(address,address)"(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber, BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+    }>;
 
     getUserCurrentBorrowRateMode(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[number]>;
+    ): Promise<{
+      0: number;
+    }>;
 
     "getUserCurrentBorrowRateMode(address,address)"(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[number]>;
+    ): Promise<{
+      0: number;
+    }>;
 
     getUserCurrentStableBorrowRate(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getUserCurrentStableBorrowRate(address,address)"(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getUserLastUpdate(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber] & { timestamp: BigNumber }>;
+    ): Promise<{
+      timestamp: BigNumber;
+      0: BigNumber;
+    }>;
 
     "getUserLastUpdate(address,address)"(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber] & { timestamp: BigNumber }>;
+    ): Promise<{
+      timestamp: BigNumber;
+      0: BigNumber;
+    }>;
 
     getUserOriginationFee(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getUserOriginationFee(address,address)"(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getUserStakedTokenBalance(
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getUserStakedTokenBalance(address)"(
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getUserUnderlyingAssetBalance(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getUserUnderlyingAssetBalance(address,address)"(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getUserVariableBorrowCumulativeIndex(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getUserVariableBorrowCumulativeIndex(address,address)"(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getUsermTokenBalance(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getUsermTokenBalance(address,address)"(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     initReserve(
       _reserve: string,
@@ -1245,52 +1452,76 @@ export class MockLendingPoolCore extends Contract {
     isReserveBorrowingEnabled(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    ): Promise<{
+      0: boolean;
+    }>;
 
     "isReserveBorrowingEnabled(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    ): Promise<{
+      0: boolean;
+    }>;
 
     isReserveUsageAsCollateralEnabled(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    ): Promise<{
+      0: boolean;
+    }>;
 
     "isReserveUsageAsCollateralEnabled(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    ): Promise<{
+      0: boolean;
+    }>;
 
     isUserAllowedToBorrowAtStable(
       _reserve: string,
       _user: string,
       _amount: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    ): Promise<{
+      0: boolean;
+    }>;
 
     "isUserAllowedToBorrowAtStable(address,address,uint256)"(
       _reserve: string,
       _user: string,
       _amount: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    ): Promise<{
+      0: boolean;
+    }>;
 
     isUserUseReserveAsCollateralEnabled(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    ): Promise<{
+      0: boolean;
+    }>;
 
     "isUserUseReserveAsCollateralEnabled(address,address)"(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    ): Promise<{
+      0: boolean;
+    }>;
 
-    lendingPoolAddress(overrides?: CallOverrides): Promise<[string]>;
+    lendingPoolAddress(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "lendingPoolAddress()"(overrides?: CallOverrides): Promise<[string]>;
+    "lendingPoolAddress()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
     liquidateFee(
       _token: string,
@@ -1304,9 +1535,17 @@ export class MockLendingPoolCore extends Contract {
       overrides?: PayableOverrides
     ): Promise<ContractTransaction>;
 
-    parametersProvider(overrides?: CallOverrides): Promise<[string]>;
+    parametersProvider(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "parametersProvider()"(overrides?: CallOverrides): Promise<[string]>;
+    "parametersProvider()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
     refreshConfiguration(overrides?: Overrides): Promise<ContractTransaction>;
 
@@ -1327,16 +1566,28 @@ export class MockLendingPoolCore extends Contract {
     reservesList(
       arg0: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<{
+      0: string;
+    }>;
 
     "reservesList(uint256)"(
       arg0: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<{
+      0: string;
+    }>;
 
-    rewardManager(overrides?: CallOverrides): Promise<[string]>;
+    rewardManager(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "rewardManager()"(overrides?: CallOverrides): Promise<[string]>;
+    "rewardManager()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
     setReserveBaseLTVasCollateral(
       _reserve: string,
@@ -1730,12 +1981,22 @@ export class MockLendingPoolCore extends Contract {
   getReserveConfiguration(
     _reserve: string,
     overrides?: CallOverrides
-  ): Promise<[BigNumber, BigNumber, BigNumber, boolean]>;
+  ): Promise<{
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+    3: boolean;
+  }>;
 
   "getReserveConfiguration(address)"(
     _reserve: string,
     overrides?: CallOverrides
-  ): Promise<[BigNumber, BigNumber, BigNumber, boolean]>;
+  ): Promise<{
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+    3: boolean;
+  }>;
 
   getReserveCurrentAverageStableBorrowRate(
     _reserve: string,
@@ -1951,29 +2212,57 @@ export class MockLendingPoolCore extends Contract {
 
   "getReserves()"(overrides?: CallOverrides): Promise<string[]>;
 
+  getTotalmTokenSupply(
+    _reserve: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  "getTotalmTokenSupply(address)"(
+    _reserve: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   getUserBasicReserveData(
     _reserve: string,
     _user: string,
     overrides?: CallOverrides
-  ): Promise<[BigNumber, BigNumber, BigNumber, boolean]>;
+  ): Promise<{
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+    3: boolean;
+  }>;
 
   "getUserBasicReserveData(address,address)"(
     _reserve: string,
     _user: string,
     overrides?: CallOverrides
-  ): Promise<[BigNumber, BigNumber, BigNumber, boolean]>;
+  ): Promise<{
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+    3: boolean;
+  }>;
 
   getUserBorrowBalances(
     _reserve: string,
     _user: string,
     overrides?: CallOverrides
-  ): Promise<[BigNumber, BigNumber, BigNumber]>;
+  ): Promise<{
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+  }>;
 
   "getUserBorrowBalances(address,address)"(
     _reserve: string,
     _user: string,
     overrides?: CallOverrides
-  ): Promise<[BigNumber, BigNumber, BigNumber]>;
+  ): Promise<{
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+  }>;
 
   getUserCurrentBorrowRateMode(
     _reserve: string,
@@ -2572,12 +2861,22 @@ export class MockLendingPoolCore extends Contract {
     getReserveConfiguration(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber, BigNumber, boolean]>;
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: boolean;
+    }>;
 
     "getReserveConfiguration(address)"(
       _reserve: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber, BigNumber, boolean]>;
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: boolean;
+    }>;
 
     getReserveCurrentAverageStableBorrowRate(
       _reserve: string,
@@ -2793,29 +3092,57 @@ export class MockLendingPoolCore extends Contract {
 
     "getReserves()"(overrides?: CallOverrides): Promise<string[]>;
 
+    getTotalmTokenSupply(
+      _reserve: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "getTotalmTokenSupply(address)"(
+      _reserve: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     getUserBasicReserveData(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber, BigNumber, boolean]>;
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: boolean;
+    }>;
 
     "getUserBasicReserveData(address,address)"(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber, BigNumber, boolean]>;
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: boolean;
+    }>;
 
     getUserBorrowBalances(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber, BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+    }>;
 
     "getUserBorrowBalances(address,address)"(
       _reserve: string,
       _user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber, BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+    }>;
 
     getUserCurrentBorrowRateMode(
       _reserve: string,
@@ -3163,7 +3490,10 @@ export class MockLendingPoolCore extends Contract {
       _borrowFee: BigNumberish,
       _rateMode: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+    }>;
 
     "updateStateOnBorrow(address,address,uint256,uint256,uint8)"(
       _reserve: string,
@@ -3172,7 +3502,10 @@ export class MockLendingPoolCore extends Contract {
       _borrowFee: BigNumberish,
       _rateMode: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+    }>;
 
     updateStateOnDeposit(
       _reserve: string,
@@ -3284,7 +3617,10 @@ export class MockLendingPoolCore extends Contract {
       _balanceIncrease: BigNumberish,
       _currentRateMode: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[number, BigNumber]>;
+    ): Promise<{
+      0: number;
+      1: BigNumber;
+    }>;
 
     "updateStateOnSwapRate(address,address,uint256,uint256,uint256,uint8)"(
       _reserve: string,
@@ -3294,7 +3630,10 @@ export class MockLendingPoolCore extends Contract {
       _balanceIncrease: BigNumberish,
       _currentRateMode: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[number, BigNumber]>;
+    ): Promise<{
+      0: number;
+      1: BigNumber;
+    }>;
   };
 
   filters: {
@@ -3651,6 +3990,16 @@ export class MockLendingPoolCore extends Contract {
     getReserves(overrides?: CallOverrides): Promise<BigNumber>;
 
     "getReserves()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getTotalmTokenSupply(
+      _reserve: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "getTotalmTokenSupply(address)"(
+      _reserve: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     getUserBasicReserveData(
       _reserve: string,
@@ -4505,6 +4854,16 @@ export class MockLendingPoolCore extends Contract {
     getReserves(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "getReserves()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getTotalmTokenSupply(
+      _reserve: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "getTotalmTokenSupply(address)"(
+      _reserve: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     getUserBasicReserveData(
       _reserve: string,

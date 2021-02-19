@@ -71,13 +71,29 @@ export class Ownable extends Contract {
   interface: OwnableInterface;
 
   functions: {
-    isOwner(overrides?: CallOverrides): Promise<[boolean]>;
+    isOwner(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: boolean;
+    }>;
 
-    "isOwner()"(overrides?: CallOverrides): Promise<[boolean]>;
+    "isOwner()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: boolean;
+    }>;
 
-    owner(overrides?: CallOverrides): Promise<[string]>;
+    owner(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "owner()"(overrides?: CallOverrides): Promise<[string]>;
+    "owner()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
     renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
 

@@ -76,9 +76,17 @@ export class MockFlashLoanReceiver extends Contract {
   interface: MockFlashLoanReceiverInterface;
 
   functions: {
-    addressesProvider(overrides?: CallOverrides): Promise<[string]>;
+    addressesProvider(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "addressesProvider()"(overrides?: CallOverrides): Promise<[string]>;
+    "addressesProvider()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
     executeOperation(
       _reserve: string,

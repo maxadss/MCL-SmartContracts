@@ -389,92 +389,223 @@ export class LendingPoolAddressesProvider extends Contract {
   interface: LendingPoolAddressesProviderInterface;
 
   functions: {
-    getAddress(_key: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    getAddress(
+      _key: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
     "getAddress(bytes32)"(
       _key: BytesLike,
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<{
+      0: string;
+    }>;
 
-    getFeeProvider(overrides?: CallOverrides): Promise<[string]>;
+    getFeeProvider(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "getFeeProvider()"(overrides?: CallOverrides): Promise<[string]>;
+    "getFeeProvider()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    getGovRewardVault(overrides?: CallOverrides): Promise<[string]>;
+    getGovRewardVault(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "getGovRewardVault()"(overrides?: CallOverrides): Promise<[string]>;
+    "getGovRewardVault()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    getLendingPool(overrides?: CallOverrides): Promise<[string]>;
+    getLendingPool(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "getLendingPool()"(overrides?: CallOverrides): Promise<[string]>;
+    "getLendingPool()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    getLendingPoolConfigurator(overrides?: CallOverrides): Promise<[string]>;
+    getLendingPoolConfigurator(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
     "getLendingPoolConfigurator()"(
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<{
+      0: string;
+    }>;
 
-    getLendingPoolCore(overrides?: CallOverrides): Promise<[string]>;
+    getLendingPoolCore(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "getLendingPoolCore()"(overrides?: CallOverrides): Promise<[string]>;
+    "getLendingPoolCore()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    getLendingPoolDataProvider(overrides?: CallOverrides): Promise<[string]>;
+    getLendingPoolDataProvider(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
     "getLendingPoolDataProvider()"(
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<{
+      0: string;
+    }>;
 
     getLendingPoolLiquidationManager(
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<{
+      0: string;
+    }>;
 
     "getLendingPoolLiquidationManager()"(
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<{
+      0: string;
+    }>;
 
-    getLendingPoolManager(overrides?: CallOverrides): Promise<[string]>;
+    getLendingPoolManager(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "getLendingPoolManager()"(overrides?: CallOverrides): Promise<[string]>;
+    "getLendingPoolManager()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
     getLendingPoolParametersProvider(
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<{
+      0: string;
+    }>;
 
     "getLendingPoolParametersProvider()"(
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<{
+      0: string;
+    }>;
 
-    getLendingRateOracle(overrides?: CallOverrides): Promise<[string]>;
+    getLendingRateOracle(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "getLendingRateOracle()"(overrides?: CallOverrides): Promise<[string]>;
+    "getLendingRateOracle()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    getLpRewardVault(overrides?: CallOverrides): Promise<[string]>;
+    getLpRewardVault(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "getLpRewardVault()"(overrides?: CallOverrides): Promise<[string]>;
+    "getLpRewardVault()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    getPriceOracle(overrides?: CallOverrides): Promise<[string]>;
+    getPriceOracle(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "getPriceOracle()"(overrides?: CallOverrides): Promise<[string]>;
+    "getPriceOracle()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    getRewardManager(overrides?: CallOverrides): Promise<[string]>;
+    getRewardManager(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "getRewardManager()"(overrides?: CallOverrides): Promise<[string]>;
+    "getRewardManager()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    getSafetyRewardVault(overrides?: CallOverrides): Promise<[string]>;
+    getSafetyRewardVault(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "getSafetyRewardVault()"(overrides?: CallOverrides): Promise<[string]>;
+    "getSafetyRewardVault()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    getStakingToken(overrides?: CallOverrides): Promise<[string]>;
+    getStakingToken(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "getStakingToken()"(overrides?: CallOverrides): Promise<[string]>;
+    "getStakingToken()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    isOwner(overrides?: CallOverrides): Promise<[boolean]>;
+    isOwner(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: boolean;
+    }>;
 
-    "isOwner()"(overrides?: CallOverrides): Promise<[boolean]>;
+    "isOwner()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: boolean;
+    }>;
 
-    owner(overrides?: CallOverrides): Promise<[string]>;
+    owner(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "owner()"(overrides?: CallOverrides): Promise<[string]>;
+    "owner()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
     renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
 

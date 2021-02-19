@@ -103,66 +103,97 @@ export class IKyberNetworkProxyInterface extends Contract {
   interface: IKyberNetworkProxyInterfaceInterface;
 
   functions: {
-    enabled(overrides?: CallOverrides): Promise<[boolean]>;
+    enabled(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: boolean;
+    }>;
 
-    "enabled()"(overrides?: CallOverrides): Promise<[boolean]>;
+    "enabled()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: boolean;
+    }>;
 
     getExpectedRate(
       src: string,
       dest: string,
       srcQty: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & {
-        expectedRate: BigNumber;
-        slippageRate: BigNumber;
-      }
-    >;
+    ): Promise<{
+      expectedRate: BigNumber;
+      slippageRate: BigNumber;
+      0: BigNumber;
+      1: BigNumber;
+    }>;
 
     "getExpectedRate(address,address,uint256)"(
       src: string,
       dest: string,
       srcQty: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & {
-        expectedRate: BigNumber;
-        slippageRate: BigNumber;
-      }
-    >;
+    ): Promise<{
+      expectedRate: BigNumber;
+      slippageRate: BigNumber;
+      0: BigNumber;
+      1: BigNumber;
+    }>;
 
     getUserCapInTokenWei(
       user: string,
       token: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getUserCapInTokenWei(address,address)"(
       user: string,
       token: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getUserCapInWei(
       user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getUserCapInWei(address)"(
       user: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    info(id: BytesLike, overrides?: CallOverrides): Promise<[BigNumber]>;
+    info(
+      id: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "info(bytes32)"(
       id: BytesLike,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    maxGasPrice(overrides?: CallOverrides): Promise<[BigNumber]>;
+    maxGasPrice(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "maxGasPrice()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "maxGasPrice()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     tradeWithHint(
       src: string,
@@ -198,24 +229,24 @@ export class IKyberNetworkProxyInterface extends Contract {
     dest: string,
     srcQty: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, BigNumber] & {
-      expectedRate: BigNumber;
-      slippageRate: BigNumber;
-    }
-  >;
+  ): Promise<{
+    expectedRate: BigNumber;
+    slippageRate: BigNumber;
+    0: BigNumber;
+    1: BigNumber;
+  }>;
 
   "getExpectedRate(address,address,uint256)"(
     src: string,
     dest: string,
     srcQty: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, BigNumber] & {
-      expectedRate: BigNumber;
-      slippageRate: BigNumber;
-    }
-  >;
+  ): Promise<{
+    expectedRate: BigNumber;
+    slippageRate: BigNumber;
+    0: BigNumber;
+    1: BigNumber;
+  }>;
 
   getUserCapInTokenWei(
     user: string,
@@ -278,24 +309,24 @@ export class IKyberNetworkProxyInterface extends Contract {
       dest: string,
       srcQty: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & {
-        expectedRate: BigNumber;
-        slippageRate: BigNumber;
-      }
-    >;
+    ): Promise<{
+      expectedRate: BigNumber;
+      slippageRate: BigNumber;
+      0: BigNumber;
+      1: BigNumber;
+    }>;
 
     "getExpectedRate(address,address,uint256)"(
       src: string,
       dest: string,
       srcQty: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & {
-        expectedRate: BigNumber;
-        slippageRate: BigNumber;
-      }
-    >;
+    ): Promise<{
+      expectedRate: BigNumber;
+      slippageRate: BigNumber;
+      0: BigNumber;
+      1: BigNumber;
+    }>;
 
     getUserCapInTokenWei(
       user: string,

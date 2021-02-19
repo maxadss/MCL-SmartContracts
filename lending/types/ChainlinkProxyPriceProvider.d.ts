@@ -132,44 +132,80 @@ export class ChainlinkProxyPriceProvider extends Contract {
     getAssetPrice(
       _asset: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getAssetPrice(address)"(
       _asset: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getAssetsPrices(
       _assets: string[],
       overrides?: CallOverrides
-    ): Promise<[BigNumber[]]>;
+    ): Promise<{
+      0: BigNumber[];
+    }>;
 
     "getAssetsPrices(address[])"(
       _assets: string[],
       overrides?: CallOverrides
-    ): Promise<[BigNumber[]]>;
+    ): Promise<{
+      0: BigNumber[];
+    }>;
 
-    getFallbackOracle(overrides?: CallOverrides): Promise<[string]>;
+    getFallbackOracle(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "getFallbackOracle()"(overrides?: CallOverrides): Promise<[string]>;
+    "getFallbackOracle()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
     getSourceOfAsset(
       _asset: string,
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<{
+      0: string;
+    }>;
 
     "getSourceOfAsset(address)"(
       _asset: string,
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<{
+      0: string;
+    }>;
 
-    isOwner(overrides?: CallOverrides): Promise<[boolean]>;
+    isOwner(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: boolean;
+    }>;
 
-    "isOwner()"(overrides?: CallOverrides): Promise<[boolean]>;
+    "isOwner()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: boolean;
+    }>;
 
-    owner(overrides?: CallOverrides): Promise<[string]>;
+    owner(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "owner()"(overrides?: CallOverrides): Promise<[string]>;
+    "owner()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
     renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
 

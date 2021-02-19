@@ -45,12 +45,19 @@ export class UintStorage extends Contract {
   interface: UintStorageInterface;
 
   functions: {
-    getUint(_key: BytesLike, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getUint(
+      _key: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getUint(bytes32)"(
       _key: BytesLike,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
   };
 
   getUint(_key: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;

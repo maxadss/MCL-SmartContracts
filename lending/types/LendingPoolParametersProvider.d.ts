@@ -63,17 +63,27 @@ export class LendingPoolParametersProvider extends Contract {
   functions: {
     getMaxStableRateBorrowSizePercent(
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getMaxStableRateBorrowSizePercent()"(
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    getRebalanceDownRateDelta(overrides?: CallOverrides): Promise<[BigNumber]>;
+    getRebalanceDownRateDelta(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getRebalanceDownRateDelta()"(
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
   };
 
   getMaxStableRateBorrowSizePercent(

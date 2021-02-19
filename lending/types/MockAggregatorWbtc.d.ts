@@ -55,9 +55,17 @@ export class MockAggregatorWBTC extends Contract {
   interface: MockAggregatorWBTCInterface;
 
   functions: {
-    latestAnswer(overrides?: CallOverrides): Promise<[BigNumber]>;
+    latestAnswer(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "latestAnswer()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "latestAnswer()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
   };
 
   latestAnswer(overrides?: CallOverrides): Promise<BigNumber>;

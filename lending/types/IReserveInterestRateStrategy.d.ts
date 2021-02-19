@@ -67,13 +67,14 @@ export class IReserveInterestRateStrategy extends Contract {
       _totalBorrowsVariable: BigNumberish,
       _averageStableBorrowRate: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber, BigNumber] & {
-        liquidityRate: BigNumber;
-        stableBorrowRate: BigNumber;
-        variableBorrowRate: BigNumber;
-      }
-    >;
+    ): Promise<{
+      liquidityRate: BigNumber;
+      stableBorrowRate: BigNumber;
+      variableBorrowRate: BigNumber;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+    }>;
 
     "calculateInterestRates(address,uint256,uint256,uint256,uint256)"(
       _reserve: string,
@@ -82,19 +83,26 @@ export class IReserveInterestRateStrategy extends Contract {
       _totalBorrowsVariable: BigNumberish,
       _averageStableBorrowRate: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber, BigNumber] & {
-        liquidityRate: BigNumber;
-        stableBorrowRate: BigNumber;
-        variableBorrowRate: BigNumber;
-      }
-    >;
+    ): Promise<{
+      liquidityRate: BigNumber;
+      stableBorrowRate: BigNumber;
+      variableBorrowRate: BigNumber;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+    }>;
 
-    getBaseVariableBorrowRate(overrides?: CallOverrides): Promise<[BigNumber]>;
+    getBaseVariableBorrowRate(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getBaseVariableBorrowRate()"(
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
   };
 
   calculateInterestRates(
@@ -104,13 +112,14 @@ export class IReserveInterestRateStrategy extends Contract {
     _totalBorrowsVariable: BigNumberish,
     _averageStableBorrowRate: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, BigNumber, BigNumber] & {
-      liquidityRate: BigNumber;
-      stableBorrowRate: BigNumber;
-      variableBorrowRate: BigNumber;
-    }
-  >;
+  ): Promise<{
+    liquidityRate: BigNumber;
+    stableBorrowRate: BigNumber;
+    variableBorrowRate: BigNumber;
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+  }>;
 
   "calculateInterestRates(address,uint256,uint256,uint256,uint256)"(
     _reserve: string,
@@ -119,13 +128,14 @@ export class IReserveInterestRateStrategy extends Contract {
     _totalBorrowsVariable: BigNumberish,
     _averageStableBorrowRate: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, BigNumber, BigNumber] & {
-      liquidityRate: BigNumber;
-      stableBorrowRate: BigNumber;
-      variableBorrowRate: BigNumber;
-    }
-  >;
+  ): Promise<{
+    liquidityRate: BigNumber;
+    stableBorrowRate: BigNumber;
+    variableBorrowRate: BigNumber;
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+  }>;
 
   getBaseVariableBorrowRate(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -139,13 +149,14 @@ export class IReserveInterestRateStrategy extends Contract {
       _totalBorrowsVariable: BigNumberish,
       _averageStableBorrowRate: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber, BigNumber] & {
-        liquidityRate: BigNumber;
-        stableBorrowRate: BigNumber;
-        variableBorrowRate: BigNumber;
-      }
-    >;
+    ): Promise<{
+      liquidityRate: BigNumber;
+      stableBorrowRate: BigNumber;
+      variableBorrowRate: BigNumber;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+    }>;
 
     "calculateInterestRates(address,uint256,uint256,uint256,uint256)"(
       _reserve: string,
@@ -154,13 +165,14 @@ export class IReserveInterestRateStrategy extends Contract {
       _totalBorrowsVariable: BigNumberish,
       _averageStableBorrowRate: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber, BigNumber] & {
-        liquidityRate: BigNumber;
-        stableBorrowRate: BigNumber;
-        variableBorrowRate: BigNumber;
-      }
-    >;
+    ): Promise<{
+      liquidityRate: BigNumber;
+      stableBorrowRate: BigNumber;
+      variableBorrowRate: BigNumber;
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+    }>;
 
     getBaseVariableBorrowRate(overrides?: CallOverrides): Promise<BigNumber>;
 

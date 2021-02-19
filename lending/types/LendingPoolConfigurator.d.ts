@@ -281,9 +281,17 @@ export class LendingPoolConfigurator extends Contract {
   interface: LendingPoolConfiguratorInterface;
 
   functions: {
-    CONFIGURATOR_REVISION(overrides?: CallOverrides): Promise<[BigNumber]>;
+    CONFIGURATOR_REVISION(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "CONFIGURATOR_REVISION()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "CONFIGURATOR_REVISION()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     activateReserve(
       _reserve: string,
@@ -425,9 +433,17 @@ export class LendingPoolConfigurator extends Contract {
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    poolAddressesProvider(overrides?: CallOverrides): Promise<[string]>;
+    poolAddressesProvider(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "poolAddressesProvider()"(overrides?: CallOverrides): Promise<[string]>;
+    "poolAddressesProvider()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
     refreshLendingPoolCoreConfiguration(
       overrides?: Overrides

@@ -82,22 +82,30 @@ export class LendingRateOracle extends Contract {
     getMarketBorrowRate(
       _asset: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getMarketBorrowRate(address)"(
       _asset: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     getMarketLiquidityRate(
       _asset: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     "getMarketLiquidityRate(address)"(
       _asset: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     setMarketBorrowRate(
       _asset: string,

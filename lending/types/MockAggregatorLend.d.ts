@@ -55,9 +55,17 @@ export class MockAggregatorLEND extends Contract {
   interface: MockAggregatorLENDInterface;
 
   functions: {
-    latestAnswer(overrides?: CallOverrides): Promise<[BigNumber]>;
+    latestAnswer(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    "latestAnswer()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "latestAnswer()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
   };
 
   latestAnswer(overrides?: CallOverrides): Promise<BigNumber>;

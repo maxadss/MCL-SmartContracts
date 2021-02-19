@@ -24,24 +24,45 @@ interface LendingPoolLiquidationManagerInterface
   extends ethers.utils.Interface {
   functions: {
     "addressesProvider()": FunctionFragment;
+    "core()": FunctionFragment;
+    "dataProvider()": FunctionFragment;
     "liquidationCall(address,address,address,uint256,bool)": FunctionFragment;
+    "parametersProvider()": FunctionFragment;
   };
 
   encodeFunctionData(
     functionFragment: "addressesProvider",
     values?: undefined
   ): string;
+  encodeFunctionData(functionFragment: "core", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "dataProvider",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "liquidationCall",
     values: [string, string, string, BigNumberish, boolean]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "parametersProvider",
+    values?: undefined
   ): string;
 
   decodeFunctionResult(
     functionFragment: "addressesProvider",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "core", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "dataProvider",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "liquidationCall",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "parametersProvider",
     data: BytesLike
   ): Result;
 
@@ -68,9 +89,41 @@ export class LendingPoolLiquidationManager extends Contract {
   interface: LendingPoolLiquidationManagerInterface;
 
   functions: {
-    addressesProvider(overrides?: CallOverrides): Promise<[string]>;
+    addressesProvider(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
-    "addressesProvider()"(overrides?: CallOverrides): Promise<[string]>;
+    "addressesProvider()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
+
+    core(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
+
+    "core()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
+
+    dataProvider(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
+
+    "dataProvider()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
 
     liquidationCall(
       _collateral: string,
@@ -89,11 +142,31 @@ export class LendingPoolLiquidationManager extends Contract {
       _receiveMToken: boolean,
       overrides?: PayableOverrides
     ): Promise<ContractTransaction>;
+
+    parametersProvider(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
+
+    "parametersProvider()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
   };
 
   addressesProvider(overrides?: CallOverrides): Promise<string>;
 
   "addressesProvider()"(overrides?: CallOverrides): Promise<string>;
+
+  core(overrides?: CallOverrides): Promise<string>;
+
+  "core()"(overrides?: CallOverrides): Promise<string>;
+
+  dataProvider(overrides?: CallOverrides): Promise<string>;
+
+  "dataProvider()"(overrides?: CallOverrides): Promise<string>;
 
   liquidationCall(
     _collateral: string,
@@ -113,10 +186,22 @@ export class LendingPoolLiquidationManager extends Contract {
     overrides?: PayableOverrides
   ): Promise<ContractTransaction>;
 
+  parametersProvider(overrides?: CallOverrides): Promise<string>;
+
+  "parametersProvider()"(overrides?: CallOverrides): Promise<string>;
+
   callStatic: {
     addressesProvider(overrides?: CallOverrides): Promise<string>;
 
     "addressesProvider()"(overrides?: CallOverrides): Promise<string>;
+
+    core(overrides?: CallOverrides): Promise<string>;
+
+    "core()"(overrides?: CallOverrides): Promise<string>;
+
+    dataProvider(overrides?: CallOverrides): Promise<string>;
+
+    "dataProvider()"(overrides?: CallOverrides): Promise<string>;
 
     liquidationCall(
       _collateral: string,
@@ -125,7 +210,10 @@ export class LendingPoolLiquidationManager extends Contract {
       _purchaseAmount: BigNumberish,
       _receiveMToken: boolean,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, string]>;
+    ): Promise<{
+      0: BigNumber;
+      1: string;
+    }>;
 
     "liquidationCall(address,address,address,uint256,bool)"(
       _collateral: string,
@@ -134,7 +222,14 @@ export class LendingPoolLiquidationManager extends Contract {
       _purchaseAmount: BigNumberish,
       _receiveMToken: boolean,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, string]>;
+    ): Promise<{
+      0: BigNumber;
+      1: string;
+    }>;
+
+    parametersProvider(overrides?: CallOverrides): Promise<string>;
+
+    "parametersProvider()"(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
@@ -165,6 +260,14 @@ export class LendingPoolLiquidationManager extends Contract {
 
     "addressesProvider()"(overrides?: CallOverrides): Promise<BigNumber>;
 
+    core(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "core()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    dataProvider(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "dataProvider()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     liquidationCall(
       _collateral: string,
       _reserve: string,
@@ -182,6 +285,10 @@ export class LendingPoolLiquidationManager extends Contract {
       _receiveMToken: boolean,
       overrides?: PayableOverrides
     ): Promise<BigNumber>;
+
+    parametersProvider(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "parametersProvider()"(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -191,6 +298,14 @@ export class LendingPoolLiquidationManager extends Contract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    core(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "core()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    dataProvider(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "dataProvider()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     liquidationCall(
       _collateral: string,
       _reserve: string,
@@ -207,6 +322,14 @@ export class LendingPoolLiquidationManager extends Contract {
       _purchaseAmount: BigNumberish,
       _receiveMToken: boolean,
       overrides?: PayableOverrides
+    ): Promise<PopulatedTransaction>;
+
+    parametersProvider(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "parametersProvider()"(
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
 }
