@@ -1,0 +1,577 @@
+{
+  "contractName": "MockTransferHook",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [],
+      "name": "MockHookEvent",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "onTransfer",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.6.12+commit.27d51765\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[],\"name\":\"MockHookEvent\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"onTransfer\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/mocks/MockTransferHook.sol\":\"MockTransferHook\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/interfaces/ITransferHook.sol\":{\"keccak256\":\"0xa3b2818d12ee973dd7891ec3a7ea5a34d8d0785578ee217e4bcffc6e6ebd837d\",\"license\":\"agpl-3.0\",\"urls\":[\"bzz-raw://5b29439df210d92510d1df7367265b72fec8f9c4e16fcaaa4fb35405a06ff3cf\",\"dweb:/ipfs/QmPMwRb3CSvRAsJVJgLZj6ws3VvY8VhbLetayDFVYry2ZA\"]},\"/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/mocks/MockTransferHook.sol\":{\"keccak256\":\"0xfeb3a6b4b5ee60ab0bd97b62f58e8c2a4151a37f9713e01907a1f5f51ede47ab\",\"license\":\"agpl-3.0\",\"urls\":[\"bzz-raw://b26d1a704db49fd747f75b6cacb0286fbf9be818fac9525a41be8298ab88f426\",\"dweb:/ipfs/QmdEDBrCnWd8HbkS3bjXSknE7P6Bez3UnoxNxz5axaiyMw\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5060ff8061001f6000396000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c80634a39314914602d575b600080fd5b609660048036036060811015604157600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803590602001909291905050506098565b005b7f34250cbfa6d218c1d0a9b5950b60dac352f03d00642722e501cbc86d1ea8130160405160405180910390a150505056fea2646970667358221220427812f670c62be3a3020da49dde6b00d0def533fc7ca15e7502a4e23d7a797264736f6c634300060c0033",
+  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060285760003560e01c80634a39314914602d575b600080fd5b609660048036036060811015604157600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803590602001909291905050506098565b005b7f34250cbfa6d218c1d0a9b5950b60dac352f03d00642722e501cbc86d1ea8130160405160405180910390a150505056fea2646970667358221220427812f670c62be3a3020da49dde6b00d0def533fc7ca15e7502a4e23d7a797264736f6c634300060c0033",
+  "immutableReferences": {},
+  "sourceMap": "131:236:22:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "131:236:22:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;211:153;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;341:15;;;;;;;;;;211:153;;;:::o",
+  "source": "// SPDX-License-Identifier: agpl-3.0\r\npragma solidity 0.6.12;\r\n\r\nimport {ITransferHook} from \"../interfaces/ITransferHook.sol\";\r\n\r\ncontract MockTransferHook is ITransferHook {\r\n    event MockHookEvent();\r\n\r\n    function onTransfer(\r\n        address from,\r\n        address to,\r\n        uint256 amount\r\n    ) external override {\r\n        emit MockHookEvent();\r\n    }\r\n}\r\n",
+  "sourcePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/mocks/MockTransferHook.sol",
+  "ast": {
+    "absolutePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/mocks/MockTransferHook.sol",
+    "exportedSymbols": {
+      "MockTransferHook": [2038]
+    },
+    "id": 2039,
+    "license": "agpl-3.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 2017,
+        "literals": ["solidity", "0.6", ".12"],
+        "nodeType": "PragmaDirective",
+        "src": "38:23:22"
+      },
+      {
+        "absolutePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/interfaces/ITransferHook.sol",
+        "file": "../interfaces/ITransferHook.sol",
+        "id": 2019,
+        "nodeType": "ImportDirective",
+        "scope": 2039,
+        "sourceUnit": 160,
+        "src": "65:62:22",
+        "symbolAliases": [
+          {
+            "foreign": {
+              "argumentTypes": null,
+              "id": 2018,
+              "name": "ITransferHook",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": null,
+              "src": "73:13:22",
+              "typeDescriptions": {
+                "typeIdentifier": null,
+                "typeString": null
+              }
+            },
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 2020,
+              "name": "ITransferHook",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 159,
+              "src": "160:13:22",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_ITransferHook_$159",
+                "typeString": "contract ITransferHook"
+              }
+            },
+            "id": 2021,
+            "nodeType": "InheritanceSpecifier",
+            "src": "160:13:22"
+          }
+        ],
+        "contractDependencies": [159],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 2038,
+        "linearizedBaseContracts": [2038, 159],
+        "name": "MockTransferHook",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 2023,
+            "name": "MockHookEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 2022,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "200:2:22"
+            },
+            "src": "181:22:22"
+          },
+          {
+            "baseFunctions": [158],
+            "body": {
+              "id": 2036,
+              "nodeType": "Block",
+              "src": "325:39:22",
+              "statements": [
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "id": 2033,
+                      "name": "MockHookEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 2023,
+                      "src": "341:13:22",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$__$returns$__$",
+                        "typeString": "function ()"
+                      }
+                    },
+                    "id": 2034,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "341:15:22",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 2035,
+                  "nodeType": "EmitStatement",
+                  "src": "336:20:22"
+                }
+              ]
+            },
+            "documentation": null,
+            "functionSelector": "4a393149",
+            "id": 2037,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "onTransfer",
+            "nodeType": "FunctionDefinition",
+            "overrides": {
+              "id": 2031,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "316:8:22"
+            },
+            "parameters": {
+              "id": 2030,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2025,
+                  "mutability": "mutable",
+                  "name": "from",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 2037,
+                  "src": "241:12:22",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2024,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "241:7:22",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 2027,
+                  "mutability": "mutable",
+                  "name": "to",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 2037,
+                  "src": "264:10:22",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2026,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "264:7:22",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 2029,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 2037,
+                  "src": "285:14:22",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2028,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "285:7:22",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "230:76:22"
+            },
+            "returnParameters": {
+              "id": 2032,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "325:0:22"
+            },
+            "scope": 2038,
+            "src": "211:153:22",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 2039,
+        "src": "131:236:22"
+      }
+    ],
+    "src": "38:331:22"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/mocks/MockTransferHook.sol",
+    "exportedSymbols": {
+      "MockTransferHook": [2038]
+    },
+    "id": 2039,
+    "license": "agpl-3.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 2017,
+        "literals": ["solidity", "0.6", ".12"],
+        "nodeType": "PragmaDirective",
+        "src": "38:23:22"
+      },
+      {
+        "absolutePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/interfaces/ITransferHook.sol",
+        "file": "../interfaces/ITransferHook.sol",
+        "id": 2019,
+        "nodeType": "ImportDirective",
+        "scope": 2039,
+        "sourceUnit": 160,
+        "src": "65:62:22",
+        "symbolAliases": [
+          {
+            "foreign": {
+              "argumentTypes": null,
+              "id": 2018,
+              "name": "ITransferHook",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": null,
+              "src": "73:13:22",
+              "typeDescriptions": {
+                "typeIdentifier": null,
+                "typeString": null
+              }
+            },
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 2020,
+              "name": "ITransferHook",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 159,
+              "src": "160:13:22",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_ITransferHook_$159",
+                "typeString": "contract ITransferHook"
+              }
+            },
+            "id": 2021,
+            "nodeType": "InheritanceSpecifier",
+            "src": "160:13:22"
+          }
+        ],
+        "contractDependencies": [159],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 2038,
+        "linearizedBaseContracts": [2038, 159],
+        "name": "MockTransferHook",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 2023,
+            "name": "MockHookEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 2022,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "200:2:22"
+            },
+            "src": "181:22:22"
+          },
+          {
+            "baseFunctions": [158],
+            "body": {
+              "id": 2036,
+              "nodeType": "Block",
+              "src": "325:39:22",
+              "statements": [
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "id": 2033,
+                      "name": "MockHookEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 2023,
+                      "src": "341:13:22",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$__$returns$__$",
+                        "typeString": "function ()"
+                      }
+                    },
+                    "id": 2034,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "341:15:22",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 2035,
+                  "nodeType": "EmitStatement",
+                  "src": "336:20:22"
+                }
+              ]
+            },
+            "documentation": null,
+            "functionSelector": "4a393149",
+            "id": 2037,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "onTransfer",
+            "nodeType": "FunctionDefinition",
+            "overrides": {
+              "id": 2031,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "316:8:22"
+            },
+            "parameters": {
+              "id": 2030,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2025,
+                  "mutability": "mutable",
+                  "name": "from",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 2037,
+                  "src": "241:12:22",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2024,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "241:7:22",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 2027,
+                  "mutability": "mutable",
+                  "name": "to",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 2037,
+                  "src": "264:10:22",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2026,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "264:7:22",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 2029,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 2037,
+                  "src": "285:14:22",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2028,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "285:7:22",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "230:76:22"
+            },
+            "returnParameters": {
+              "id": 2032,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "325:0:22"
+            },
+            "scope": 2038,
+            "src": "211:153:22",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 2039,
+        "src": "131:236:22"
+      }
+    ],
+    "src": "38:331:22"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.6.12+commit.27d51765.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.2.3",
+  "updatedAt": "2021-01-14T04:00:49.137Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

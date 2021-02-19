@@ -1,0 +1,493 @@
+{
+  "contractName": "DistributionTypes",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.6.12+commit.27d51765\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/lib/DistributionTypes.sol\":\"DistributionTypes\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/lib/DistributionTypes.sol\":{\"keccak256\":\"0x2841731f788e7dafac6d7b046b3d3f528aeef97ac91fbcd77ca4d13dc25dc6de\",\"license\":\"agpl-3.0\",\"urls\":[\"bzz-raw://8e1f3f75bea3082a18ea7023019d7d9d74e7b82f24bebb1001598f65ed9cd223\",\"dweb:/ipfs/QmUQK4Qzxer2DzjEN6nRdHTy41z3csELM2MrqdNZbrSe6Y\"]}},\"version\":1}",
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220f06283e8303d0b3c1169b91bc44c0c9ff5084f3dcaabfe3c3cef400145205be664736f6c634300060c0033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220f06283e8303d0b3c1169b91bc44c0c9ff5084f3dcaabfe3c3cef400145205be664736f6c634300060c0033",
+  "immutableReferences": {},
+  "sourceMap": "100:269:12:-:0;;;;;;;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "100:269:12:-:0;;;;;;;;",
+  "source": "// SPDX-License-Identifier: agpl-3.0\r\npragma solidity 0.6.12;\r\npragma experimental ABIEncoderV2;\r\n\r\nlibrary DistributionTypes {\r\n  struct AssetConfigInput {\r\n    uint128 emissionPerSecond;\r\n    uint256 totalStaked;\r\n    address underlyingAsset;\r\n  }\r\n\r\n  struct UserStakeInput {\r\n    address underlyingAsset;\r\n    uint256 stakedByUser;\r\n    uint256 totalStaked;\r\n  }\r\n}\r\n",
+  "sourcePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/lib/DistributionTypes.sol",
+  "ast": {
+    "absolutePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/lib/DistributionTypes.sol",
+    "exportedSymbols": {
+      "DistributionTypes": [549]
+    },
+    "id": 550,
+    "license": "agpl-3.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 533,
+        "literals": ["solidity", "0.6", ".12"],
+        "nodeType": "PragmaDirective",
+        "src": "38:23:12"
+      },
+      {
+        "id": 534,
+        "literals": ["experimental", "ABIEncoderV2"],
+        "nodeType": "PragmaDirective",
+        "src": "63:33:12"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "library",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 549,
+        "linearizedBaseContracts": [549],
+        "name": "DistributionTypes",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "DistributionTypes.AssetConfigInput",
+            "id": 541,
+            "members": [
+              {
+                "constant": false,
+                "id": 536,
+                "mutability": "mutable",
+                "name": "emissionPerSecond",
+                "nodeType": "VariableDeclaration",
+                "overrides": null,
+                "scope": 541,
+                "src": "162:25:12",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint128",
+                  "typeString": "uint128"
+                },
+                "typeName": {
+                  "id": 535,
+                  "name": "uint128",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "162:7:12",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 538,
+                "mutability": "mutable",
+                "name": "totalStaked",
+                "nodeType": "VariableDeclaration",
+                "overrides": null,
+                "scope": 541,
+                "src": "194:19:12",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 537,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "194:7:12",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 540,
+                "mutability": "mutable",
+                "name": "underlyingAsset",
+                "nodeType": "VariableDeclaration",
+                "overrides": null,
+                "scope": 541,
+                "src": "220:23:12",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 539,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "220:7:12",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "AssetConfigInput",
+            "nodeType": "StructDefinition",
+            "scope": 549,
+            "src": "131:118:12",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "DistributionTypes.UserStakeInput",
+            "id": 548,
+            "members": [
+              {
+                "constant": false,
+                "id": 543,
+                "mutability": "mutable",
+                "name": "underlyingAsset",
+                "nodeType": "VariableDeclaration",
+                "overrides": null,
+                "scope": 548,
+                "src": "284:23:12",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 542,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "284:7:12",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 545,
+                "mutability": "mutable",
+                "name": "stakedByUser",
+                "nodeType": "VariableDeclaration",
+                "overrides": null,
+                "scope": 548,
+                "src": "314:20:12",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 544,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "314:7:12",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 547,
+                "mutability": "mutable",
+                "name": "totalStaked",
+                "nodeType": "VariableDeclaration",
+                "overrides": null,
+                "scope": 548,
+                "src": "341:19:12",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 546,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "341:7:12",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "UserStakeInput",
+            "nodeType": "StructDefinition",
+            "scope": 549,
+            "src": "255:111:12",
+            "visibility": "public"
+          }
+        ],
+        "scope": 550,
+        "src": "100:269:12"
+      }
+    ],
+    "src": "38:333:12"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/lib/DistributionTypes.sol",
+    "exportedSymbols": {
+      "DistributionTypes": [549]
+    },
+    "id": 550,
+    "license": "agpl-3.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 533,
+        "literals": ["solidity", "0.6", ".12"],
+        "nodeType": "PragmaDirective",
+        "src": "38:23:12"
+      },
+      {
+        "id": 534,
+        "literals": ["experimental", "ABIEncoderV2"],
+        "nodeType": "PragmaDirective",
+        "src": "63:33:12"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "library",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 549,
+        "linearizedBaseContracts": [549],
+        "name": "DistributionTypes",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "DistributionTypes.AssetConfigInput",
+            "id": 541,
+            "members": [
+              {
+                "constant": false,
+                "id": 536,
+                "mutability": "mutable",
+                "name": "emissionPerSecond",
+                "nodeType": "VariableDeclaration",
+                "overrides": null,
+                "scope": 541,
+                "src": "162:25:12",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint128",
+                  "typeString": "uint128"
+                },
+                "typeName": {
+                  "id": 535,
+                  "name": "uint128",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "162:7:12",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 538,
+                "mutability": "mutable",
+                "name": "totalStaked",
+                "nodeType": "VariableDeclaration",
+                "overrides": null,
+                "scope": 541,
+                "src": "194:19:12",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 537,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "194:7:12",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 540,
+                "mutability": "mutable",
+                "name": "underlyingAsset",
+                "nodeType": "VariableDeclaration",
+                "overrides": null,
+                "scope": 541,
+                "src": "220:23:12",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 539,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "220:7:12",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "AssetConfigInput",
+            "nodeType": "StructDefinition",
+            "scope": 549,
+            "src": "131:118:12",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "DistributionTypes.UserStakeInput",
+            "id": 548,
+            "members": [
+              {
+                "constant": false,
+                "id": 543,
+                "mutability": "mutable",
+                "name": "underlyingAsset",
+                "nodeType": "VariableDeclaration",
+                "overrides": null,
+                "scope": 548,
+                "src": "284:23:12",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 542,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "284:7:12",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 545,
+                "mutability": "mutable",
+                "name": "stakedByUser",
+                "nodeType": "VariableDeclaration",
+                "overrides": null,
+                "scope": 548,
+                "src": "314:20:12",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 544,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "314:7:12",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 547,
+                "mutability": "mutable",
+                "name": "totalStaked",
+                "nodeType": "VariableDeclaration",
+                "overrides": null,
+                "scope": 548,
+                "src": "341:19:12",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 546,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "341:7:12",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "UserStakeInput",
+            "nodeType": "StructDefinition",
+            "scope": 549,
+            "src": "255:111:12",
+            "visibility": "public"
+          }
+        ],
+        "scope": 550,
+        "src": "100:269:12"
+      }
+    ],
+    "src": "38:333:12"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.6.12+commit.27d51765.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.2.3",
+  "updatedAt": "2021-01-14T04:00:49.103Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

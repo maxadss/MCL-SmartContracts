@@ -20,7 +20,6 @@ contracts/ethereum/flattened/*.sol
 coverage.json
 coverage/*
 node_modules
-build
 .DS_Store
 artifacts
 cache/*

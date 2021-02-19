@@ -1,0 +1,336 @@
+{
+  "contractName": "IbMXXDistributionManager",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint128",
+              "name": "emissionPerSecond",
+              "type": "uint128"
+            },
+            {
+              "internalType": "uint256",
+              "name": "totalStaked",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "underlyingAsset",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct DistributionTypes.AssetConfigInput[]",
+          "name": "assetsConfigInput",
+          "type": "tuple[]"
+        }
+      ],
+      "name": "configureAssets",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.6.12+commit.27d51765\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"components\":[{\"internalType\":\"uint128\",\"name\":\"emissionPerSecond\",\"type\":\"uint128\"},{\"internalType\":\"uint256\",\"name\":\"totalStaked\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"underlyingAsset\",\"type\":\"address\"}],\"internalType\":\"struct DistributionTypes.AssetConfigInput[]\",\"name\":\"assetsConfigInput\",\"type\":\"tuple[]\"}],\"name\":\"configureAssets\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/interfaces/IbMXXDistributionManager.sol\":\"IbMXXDistributionManager\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/interfaces/IbMXXDistributionManager.sol\":{\"keccak256\":\"0x2352a3326032a6b6f6b836a58eb218f784511bddde9d082ef88b194422697fdd\",\"license\":\"agpl-3.0\",\"urls\":[\"bzz-raw://faac19025bcd3f871918415e157f5a9de001fc414ec3327b3f0d2addd880e9b6\",\"dweb:/ipfs/QmQR9hcicvxZQikvqHWJSBKEoqXC78TKCVrn62wYPerA8N\"]},\"/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/lib/DistributionTypes.sol\":{\"keccak256\":\"0x2841731f788e7dafac6d7b046b3d3f528aeef97ac91fbcd77ca4d13dc25dc6de\",\"license\":\"agpl-3.0\",\"urls\":[\"bzz-raw://8e1f3f75bea3082a18ea7023019d7d9d74e7b82f24bebb1001598f65ed9cd223\",\"dweb:/ipfs/QmUQK4Qzxer2DzjEN6nRdHTy41z3csELM2MrqdNZbrSe6Y\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: agpl-3.0\r\npragma solidity 0.6.12;\r\npragma experimental ABIEncoderV2;\r\n\r\nimport {DistributionTypes} from \"../lib/DistributionTypes.sol\";\r\n\r\ninterface IbMXXDistributionManager {\r\n    function configureAssets(\r\n        DistributionTypes.AssetConfigInput[] calldata assetsConfigInput\r\n    ) external;\r\n}\r\n",
+  "sourcePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/interfaces/IbMXXDistributionManager.sol",
+  "ast": {
+    "absolutePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/interfaces/IbMXXDistributionManager.sol",
+    "exportedSymbols": {
+      "IbMXXDistributionManager": [171]
+    },
+    "id": 172,
+    "license": "agpl-3.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 161,
+        "literals": ["solidity", "0.6", ".12"],
+        "nodeType": "PragmaDirective",
+        "src": "38:23:6"
+      },
+      {
+        "id": 162,
+        "literals": ["experimental", "ABIEncoderV2"],
+        "nodeType": "PragmaDirective",
+        "src": "63:33:6"
+      },
+      {
+        "absolutePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/lib/DistributionTypes.sol",
+        "file": "../lib/DistributionTypes.sol",
+        "id": 164,
+        "nodeType": "ImportDirective",
+        "scope": 172,
+        "sourceUnit": 550,
+        "src": "100:63:6",
+        "symbolAliases": [
+          {
+            "foreign": {
+              "argumentTypes": null,
+              "id": 163,
+              "name": "DistributionTypes",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": null,
+              "src": "108:17:6",
+              "typeDescriptions": {
+                "typeIdentifier": null,
+                "typeString": null
+              }
+            },
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 171,
+        "linearizedBaseContracts": [171],
+        "name": "IbMXXDistributionManager",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": null,
+            "functionSelector": "b2a5dbfa",
+            "id": 170,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "configureAssets",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 168,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 167,
+                  "mutability": "mutable",
+                  "name": "assetsConfigInput",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 170,
+                  "src": "244:63:6",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_struct$_AssetConfigInput_$541_calldata_ptr_$dyn_calldata_ptr",
+                    "typeString": "struct DistributionTypes.AssetConfigInput[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "contractScope": null,
+                      "id": 165,
+                      "name": "DistributionTypes.AssetConfigInput",
+                      "nodeType": "UserDefinedTypeName",
+                      "referencedDeclaration": 541,
+                      "src": "244:34:6",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_AssetConfigInput_$541_storage_ptr",
+                        "typeString": "struct DistributionTypes.AssetConfigInput"
+                      }
+                    },
+                    "id": 166,
+                    "length": null,
+                    "nodeType": "ArrayTypeName",
+                    "src": "244:36:6",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_struct$_AssetConfigInput_$541_storage_$dyn_storage_ptr",
+                      "typeString": "struct DistributionTypes.AssetConfigInput[]"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "233:81:6"
+            },
+            "returnParameters": {
+              "id": 169,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "323:0:6"
+            },
+            "scope": 171,
+            "src": "209:115:6",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 172,
+        "src": "167:160:6"
+      }
+    ],
+    "src": "38:291:6"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/interfaces/IbMXXDistributionManager.sol",
+    "exportedSymbols": {
+      "IbMXXDistributionManager": [171]
+    },
+    "id": 172,
+    "license": "agpl-3.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 161,
+        "literals": ["solidity", "0.6", ".12"],
+        "nodeType": "PragmaDirective",
+        "src": "38:23:6"
+      },
+      {
+        "id": 162,
+        "literals": ["experimental", "ABIEncoderV2"],
+        "nodeType": "PragmaDirective",
+        "src": "63:33:6"
+      },
+      {
+        "absolutePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/lib/DistributionTypes.sol",
+        "file": "../lib/DistributionTypes.sol",
+        "id": 164,
+        "nodeType": "ImportDirective",
+        "scope": 172,
+        "sourceUnit": 550,
+        "src": "100:63:6",
+        "symbolAliases": [
+          {
+            "foreign": {
+              "argumentTypes": null,
+              "id": 163,
+              "name": "DistributionTypes",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": null,
+              "src": "108:17:6",
+              "typeDescriptions": {
+                "typeIdentifier": null,
+                "typeString": null
+              }
+            },
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 171,
+        "linearizedBaseContracts": [171],
+        "name": "IbMXXDistributionManager",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": null,
+            "functionSelector": "b2a5dbfa",
+            "id": 170,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "configureAssets",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 168,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 167,
+                  "mutability": "mutable",
+                  "name": "assetsConfigInput",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 170,
+                  "src": "244:63:6",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_struct$_AssetConfigInput_$541_calldata_ptr_$dyn_calldata_ptr",
+                    "typeString": "struct DistributionTypes.AssetConfigInput[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "contractScope": null,
+                      "id": 165,
+                      "name": "DistributionTypes.AssetConfigInput",
+                      "nodeType": "UserDefinedTypeName",
+                      "referencedDeclaration": 541,
+                      "src": "244:34:6",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_AssetConfigInput_$541_storage_ptr",
+                        "typeString": "struct DistributionTypes.AssetConfigInput"
+                      }
+                    },
+                    "id": 166,
+                    "length": null,
+                    "nodeType": "ArrayTypeName",
+                    "src": "244:36:6",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_struct$_AssetConfigInput_$541_storage_$dyn_storage_ptr",
+                      "typeString": "struct DistributionTypes.AssetConfigInput[]"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "233:81:6"
+            },
+            "returnParameters": {
+              "id": 169,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "323:0:6"
+            },
+            "scope": 171,
+            "src": "209:115:6",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 172,
+        "src": "167:160:6"
+      }
+    ],
+    "src": "38:291:6"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.6.12+commit.27d51765.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.2.3",
+  "updatedAt": "2021-01-14T04:00:49.095Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

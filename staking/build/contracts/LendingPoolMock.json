@@ -1,0 +1,453 @@
+{
+  "contractName": "LendingPoolMock",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [],
+      "name": "LendingPoolMockEvent",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        }
+      ],
+      "name": "updateGovernanceStakingRewards",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.6.12+commit.27d51765\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[],\"name\":\"LendingPoolMockEvent\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_user\",\"type\":\"address\"}],\"name\":\"updateGovernanceStakingRewards\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/mocks/LendingPoolMock.sol\":\"LendingPoolMock\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/interfaces/ILendingPool.sol\":{\"keccak256\":\"0xcc21ec46ea719a0a5feba678595c18da0451023d367c5e19046f187d67911ffb\",\"license\":\"agpl-3.0\",\"urls\":[\"bzz-raw://b5fd6ccd4ed528e6db11770fb47b9d37e7679e756b41295ec43f0f9a6c3a66c1\",\"dweb:/ipfs/QmVdACwQUWG3P4VFAgKKyUuP44RQHUBd8SqKeVBygQzFcK\"]},\"/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/mocks/LendingPoolMock.sol\":{\"keccak256\":\"0xf4a39606fa58e70e03a512e289a787d7c5b138d937d4133326900dd0e40ac4f3\",\"license\":\"agpl-3.0\",\"urls\":[\"bzz-raw://c328ee9f27b702ea2f1799802063d134dd9cfe013673933e9dd3916ae12fa411\",\"dweb:/ipfs/QmcaEG3NrBu9kaEZu13tGyGzNHUCNnt47HCEpRpXiBMFzr\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b5060d38061001e6000396000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c80632d24f6c714602d575b600080fd5b606c60048036036020811015604157600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050606e565b005b7f974e1cbe7608e81eb2c1b0f073f63819df0886b8c4060f0dfb622fbb1925995d60405160405180910390a15056fea26469706673582212203b6a48c52e7abacb5452693daf38b3d87c020e9728079542dbb0911b3704d7bb64736f6c634300060c0033",
+  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060285760003560e01c80632d24f6c714602d575b600080fd5b606c60048036036020811015604157600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050606e565b005b7f974e1cbe7608e81eb2c1b0f073f63819df0886b8c4060f0dfb622fbb1925995d60405160405180910390a15056fea26469706673582212203b6a48c52e7abacb5452693daf38b3d87c020e9728079542dbb0911b3704d7bb64736f6c634300060c0033",
+  "immutableReferences": {},
+  "sourceMap": "124:189:22:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "124:189:22:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;199:112;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;285:22;;;;;;;;;;199:112;:::o",
+  "source": "// SPDX-License-Identifier: agpl-3.0\npragma solidity 0.6.12;\n\nimport {ILendingPool} from \"../interfaces/ILendingPool.sol\";\n\ncontract LendingPoolMock is ILendingPool {\n event LendingPoolMockEvent();\n function updateGovernanceStakingRewards(address _user)\n  external override{\n     emit LendingPoolMockEvent();\n }\n}\n",
+  "sourcePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/mocks/LendingPoolMock.sol",
+  "ast": {
+    "absolutePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/mocks/LendingPoolMock.sol",
+    "exportedSymbols": {
+      "LendingPoolMock": [2034]
+    },
+    "id": 2035,
+    "license": "agpl-3.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 2017,
+        "literals": ["solidity", "0.6", ".12"],
+        "nodeType": "PragmaDirective",
+        "src": "37:23:22"
+      },
+      {
+        "absolutePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/interfaces/ILendingPool.sol",
+        "file": "../interfaces/ILendingPool.sol",
+        "id": 2019,
+        "nodeType": "ImportDirective",
+        "scope": 2035,
+        "sourceUnit": 121,
+        "src": "62:60:22",
+        "symbolAliases": [
+          {
+            "foreign": {
+              "argumentTypes": null,
+              "id": 2018,
+              "name": "ILendingPool",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": null,
+              "src": "70:12:22",
+              "typeDescriptions": {
+                "typeIdentifier": null,
+                "typeString": null
+              }
+            },
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 2020,
+              "name": "ILendingPool",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 120,
+              "src": "152:12:22",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_ILendingPool_$120",
+                "typeString": "contract ILendingPool"
+              }
+            },
+            "id": 2021,
+            "nodeType": "InheritanceSpecifier",
+            "src": "152:12:22"
+          }
+        ],
+        "contractDependencies": [120],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 2034,
+        "linearizedBaseContracts": [2034, 120],
+        "name": "LendingPoolMock",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 2023,
+            "name": "LendingPoolMockEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 2022,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "194:2:22"
+            },
+            "src": "168:29:22"
+          },
+          {
+            "baseFunctions": [119],
+            "body": {
+              "id": 2032,
+              "nodeType": "Block",
+              "src": "273:38:22",
+              "statements": [
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "id": 2029,
+                      "name": "LendingPoolMockEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 2023,
+                      "src": "285:20:22",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$__$returns$__$",
+                        "typeString": "function ()"
+                      }
+                    },
+                    "id": 2030,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "285:22:22",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 2031,
+                  "nodeType": "EmitStatement",
+                  "src": "280:27:22"
+                }
+              ]
+            },
+            "documentation": null,
+            "functionSelector": "2d24f6c7",
+            "id": 2033,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "updateGovernanceStakingRewards",
+            "nodeType": "FunctionDefinition",
+            "overrides": {
+              "id": 2027,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "265:8:22"
+            },
+            "parameters": {
+              "id": 2026,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2025,
+                  "mutability": "mutable",
+                  "name": "_user",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 2033,
+                  "src": "239:13:22",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2024,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "239:7:22",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "238:15:22"
+            },
+            "returnParameters": {
+              "id": 2028,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "273:0:22"
+            },
+            "scope": 2034,
+            "src": "199:112:22",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 2035,
+        "src": "124:189:22"
+      }
+    ],
+    "src": "37:277:22"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/mocks/LendingPoolMock.sol",
+    "exportedSymbols": {
+      "LendingPoolMock": [2034]
+    },
+    "id": 2035,
+    "license": "agpl-3.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 2017,
+        "literals": ["solidity", "0.6", ".12"],
+        "nodeType": "PragmaDirective",
+        "src": "37:23:22"
+      },
+      {
+        "absolutePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/staking/contracts/interfaces/ILendingPool.sol",
+        "file": "../interfaces/ILendingPool.sol",
+        "id": 2019,
+        "nodeType": "ImportDirective",
+        "scope": 2035,
+        "sourceUnit": 121,
+        "src": "62:60:22",
+        "symbolAliases": [
+          {
+            "foreign": {
+              "argumentTypes": null,
+              "id": 2018,
+              "name": "ILendingPool",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": null,
+              "src": "70:12:22",
+              "typeDescriptions": {
+                "typeIdentifier": null,
+                "typeString": null
+              }
+            },
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 2020,
+              "name": "ILendingPool",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 120,
+              "src": "152:12:22",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_ILendingPool_$120",
+                "typeString": "contract ILendingPool"
+              }
+            },
+            "id": 2021,
+            "nodeType": "InheritanceSpecifier",
+            "src": "152:12:22"
+          }
+        ],
+        "contractDependencies": [120],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 2034,
+        "linearizedBaseContracts": [2034, 120],
+        "name": "LendingPoolMock",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 2023,
+            "name": "LendingPoolMockEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 2022,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "194:2:22"
+            },
+            "src": "168:29:22"
+          },
+          {
+            "baseFunctions": [119],
+            "body": {
+              "id": 2032,
+              "nodeType": "Block",
+              "src": "273:38:22",
+              "statements": [
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "id": 2029,
+                      "name": "LendingPoolMockEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 2023,
+                      "src": "285:20:22",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$__$returns$__$",
+                        "typeString": "function ()"
+                      }
+                    },
+                    "id": 2030,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "285:22:22",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 2031,
+                  "nodeType": "EmitStatement",
+                  "src": "280:27:22"
+                }
+              ]
+            },
+            "documentation": null,
+            "functionSelector": "2d24f6c7",
+            "id": 2033,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "updateGovernanceStakingRewards",
+            "nodeType": "FunctionDefinition",
+            "overrides": {
+              "id": 2027,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "265:8:22"
+            },
+            "parameters": {
+              "id": 2026,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2025,
+                  "mutability": "mutable",
+                  "name": "_user",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 2033,
+                  "src": "239:13:22",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2024,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "239:7:22",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "238:15:22"
+            },
+            "returnParameters": {
+              "id": 2028,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "273:0:22"
+            },
+            "scope": 2034,
+            "src": "199:112:22",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 2035,
+        "src": "124:189:22"
+      }
+    ],
+    "src": "37:277:22"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.6.12+commit.27d51765.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.2.3",
+  "updatedAt": "2021-02-02T06:20:37.724Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

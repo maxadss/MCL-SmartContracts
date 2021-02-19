@@ -1,0 +1,815 @@
+{
+  "contractName": "LendingPoolParametersProvider",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getMaxStableRateBorrowSizePercent",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getRebalanceDownRateDelta",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "pure",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"getMaxStableRateBorrowSizePercent\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"pure\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getRebalanceDownRateDelta\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"author\":\"Multiplier Finance\",\"methods\":{\"getMaxStableRateBorrowSizePercent()\":{\"details\":\"returns the maximum stable rate borrow size, in percentage of the available liquidity.*\"},\"getRebalanceDownRateDelta()\":{\"details\":\"returns the delta between the current stable rate and the user stable rate at which the borrow position of the user will be rebalanced (scaled down)*\"}},\"title\":\"LendingPoolParametersProvider\"},\"userdoc\":{\"methods\":{},\"notice\":\"stores the configuration parameters of the Lending Pool contract*\"}},\"settings\":{\"compilationTarget\":{\"/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/configuration/LendingPoolParametersProvider.sol\":\"LendingPoolParametersProvider\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":100},\"remappings\":[]},\"sources\":{\"/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/configuration/LendingPoolParametersProvider.sol\":{\"keccak256\":\"0xbb583067983aebd4b6745842bbc6f2b91bad5c74365284533ed0a1cdc228c864\",\"urls\":[\"bzz-raw://61a4a0ae7fb918220450d60dbf3b0a38971f6c05d06064879865e505d614de13\",\"dweb:/ipfs/QmNdZb5r41H1Muwrk5VPLSvqUB1Uuy3667BCUUGekArkLe\"]},\"/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/configuration/UintStorage.sol\":{\"keccak256\":\"0xb616bd337eec5f92bb624dde514de35cdf5e73eda2baa605f05ff308d2b094dd\",\"urls\":[\"bzz-raw://2b651539463491b3a6ffa0a2760f9aab379f36fa820a4d29c6a34939132ad996\",\"dweb:/ipfs/Qmc7V59VkFyCdfXxhuK52j4YkBuG8iry6tjn8PSEojDDvG\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5060c08061001f6000396000f3fe6080604052348015600f57600080fd5b506004361060325760003560e01c806346f4f8d1146037578063d6b725ac146053575b600080fd5b603d606f565b6040518082815260200191505060405180910390f35b60596082565b6040518082815260200191505060405180910390f35b60006aa56fa5b99019a5c8000000905090565b6000601990509056fea265627a7a723158205c04c233af272238624958ad1d2f29e1c2ce84565233dd8d63d72e3edc39197664736f6c63430005100032",
+  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060325760003560e01c806346f4f8d1146037578063d6b725ac146053575b600080fd5b603d606f565b6040518082815260200191505060405180910390f35b60596082565b6040518082815260200191505060405180910390f35b60006aa56fa5b99019a5c8000000905090565b6000601990509056fea265627a7a723158205c04c233af272238624958ad1d2f29e1c2ce84565233dd8d63d72e3edc39197664736f6c63430005100032",
+  "sourceMap": "218:793:2:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;218:793:2;;;;;;;",
+  "deployedSourceMap": "218:793:2:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;218:793:2;;;;;;;;;;;;;;;;;;;;;;;;882:122;;;:::i;:::-;;;;;;;;;;;;;;;;;;;540:141;;;:::i;:::-;;;;;;;;;;;;;;;;;;;882:122;942:7;395:8;962:34;;882:122;:::o;540:141::-;608:7;333:2;629:44;;540:141;:::o",
+  "source": "pragma solidity ^0.5.0;\r\n\r\nimport \"./UintStorage.sol\";\r\n\r\n/**\r\n* @title LendingPoolParametersProvider\r\n* @author Multiplier Finance\r\n* @notice stores the configuration parameters of the Lending Pool contract\r\n**/\r\n\r\n\r\ncontract LendingPoolParametersProvider {\r\n    \r\n    uint256 private constant MAX_STABLE_RATE_BORROW_SIZE_PERCENT = 25;\r\n    uint256 private constant REBALANCE_DOWN_RATE_DELTA = (1e27)/5;\r\n    \r\n    /**\r\n    * @dev returns the maximum stable rate borrow size, in percentage of the\r\n    * available liquidity.\r\n    **/\r\n    function getMaxStableRateBorrowSizePercent() external pure returns (uint256)  {\r\n        return (MAX_STABLE_RATE_BORROW_SIZE_PERCENT);\r\n    }\r\n\r\n    /**\r\n    * @dev returns the delta between the current stable rate and the user\r\n    * stable rate at which the borrow position of the user will be rebalanced\r\n    * (scaled down)\r\n    **/\r\n    function getRebalanceDownRateDelta() external pure returns (uint256) {\r\n        return (REBALANCE_DOWN_RATE_DELTA);\r\n    }\r\n  \r\n}\r\n",
+  "sourcePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/configuration/LendingPoolParametersProvider.sol",
+  "ast": {
+    "absolutePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/configuration/LendingPoolParametersProvider.sol",
+    "exportedSymbols": {
+      "LendingPoolParametersProvider": [679]
+    },
+    "id": 680,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 650,
+        "literals": ["solidity", "^", "0.5", ".0"],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:2"
+      },
+      {
+        "absolutePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/configuration/UintStorage.sol",
+        "file": "./UintStorage.sol",
+        "id": 651,
+        "nodeType": "ImportDirective",
+        "scope": 680,
+        "sourceUnit": 713,
+        "src": "27:27:2",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@title LendingPoolParametersProvider\n@author Multiplier Finance\n@notice stores the configuration parameters of the Lending Pool contract*",
+        "fullyImplemented": true,
+        "id": 679,
+        "linearizedBaseContracts": [679],
+        "name": "LendingPoolParametersProvider",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": true,
+            "id": 654,
+            "name": "MAX_STABLE_RATE_BORROW_SIZE_PERCENT",
+            "nodeType": "VariableDeclaration",
+            "scope": 679,
+            "src": "270:65:2",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 652,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "270:7:2",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "3235",
+              "id": 653,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "333:2:2",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_25_by_1",
+                "typeString": "int_const 25"
+              },
+              "value": "25"
+            },
+            "visibility": "private"
+          },
+          {
+            "constant": true,
+            "id": 660,
+            "name": "REBALANCE_DOWN_RATE_DELTA",
+            "nodeType": "VariableDeclaration",
+            "scope": 679,
+            "src": "342:61:2",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 655,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "342:7:2",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "commonType": {
+                "typeIdentifier": "t_rational_200000000000000000000000000_by_1",
+                "typeString": "int_const 200000000000000000000000000"
+              },
+              "id": 659,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "lValueRequested": false,
+              "leftExpression": {
+                "argumentTypes": null,
+                "components": [
+                  {
+                    "argumentTypes": null,
+                    "hexValue": "31653237",
+                    "id": 656,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "number",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "396:4:2",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_rational_1000000000000000000000000000_by_1",
+                      "typeString": "int_const 1000000000000000000000000000"
+                    },
+                    "value": "1e27"
+                  }
+                ],
+                "id": 657,
+                "isConstant": false,
+                "isInlineArray": false,
+                "isLValue": false,
+                "isPure": true,
+                "lValueRequested": false,
+                "nodeType": "TupleExpression",
+                "src": "395:6:2",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_rational_1000000000000000000000000000_by_1",
+                  "typeString": "int_const 1000000000000000000000000000"
+                }
+              },
+              "nodeType": "BinaryOperation",
+              "operator": "/",
+              "rightExpression": {
+                "argumentTypes": null,
+                "hexValue": "35",
+                "id": 658,
+                "isConstant": false,
+                "isLValue": false,
+                "isPure": true,
+                "kind": "number",
+                "lValueRequested": false,
+                "nodeType": "Literal",
+                "src": "402:1:2",
+                "subdenomination": null,
+                "typeDescriptions": {
+                  "typeIdentifier": "t_rational_5_by_1",
+                  "typeString": "int_const 5"
+                },
+                "value": "5"
+              },
+              "src": "395:8:2",
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_200000000000000000000000000_by_1",
+                "typeString": "int_const 200000000000000000000000000"
+              }
+            },
+            "visibility": "private"
+          },
+          {
+            "body": {
+              "id": 668,
+              "nodeType": "Block",
+              "src": "618:63:2",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "components": [
+                      {
+                        "argumentTypes": null,
+                        "id": 665,
+                        "name": "MAX_STABLE_RATE_BORROW_SIZE_PERCENT",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 654,
+                        "src": "637:35:2",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "id": 666,
+                    "isConstant": false,
+                    "isInlineArray": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "lValueRequested": false,
+                    "nodeType": "TupleExpression",
+                    "src": "636:37:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "functionReturnParameters": 664,
+                  "id": 667,
+                  "nodeType": "Return",
+                  "src": "629:44:2"
+                }
+              ]
+            },
+            "documentation": "@dev returns the maximum stable rate borrow size, in percentage of the\navailable liquidity.*",
+            "id": 669,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getMaxStableRateBorrowSizePercent",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 661,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "582:2:2"
+            },
+            "returnParameters": {
+              "id": 664,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 663,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 669,
+                  "src": "608:7:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 662,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "608:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "607:9:2"
+            },
+            "scope": 679,
+            "src": "540:141:2",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": {
+              "id": 677,
+              "nodeType": "Block",
+              "src": "951:53:2",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "components": [
+                      {
+                        "argumentTypes": null,
+                        "id": 674,
+                        "name": "REBALANCE_DOWN_RATE_DELTA",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 660,
+                        "src": "970:25:2",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "id": 675,
+                    "isConstant": false,
+                    "isInlineArray": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "lValueRequested": false,
+                    "nodeType": "TupleExpression",
+                    "src": "969:27:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "functionReturnParameters": 673,
+                  "id": 676,
+                  "nodeType": "Return",
+                  "src": "962:34:2"
+                }
+              ]
+            },
+            "documentation": "@dev returns the delta between the current stable rate and the user\nstable rate at which the borrow position of the user will be rebalanced\n(scaled down)*",
+            "id": 678,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getRebalanceDownRateDelta",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 670,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "916:2:2"
+            },
+            "returnParameters": {
+              "id": 673,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 672,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 678,
+                  "src": "942:7:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 671,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "942:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "941:9:2"
+            },
+            "scope": 679,
+            "src": "882:122:2",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 680,
+        "src": "218:793:2"
+      }
+    ],
+    "src": "0:1013:2"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/configuration/LendingPoolParametersProvider.sol",
+    "exportedSymbols": {
+      "LendingPoolParametersProvider": [679]
+    },
+    "id": 680,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 650,
+        "literals": ["solidity", "^", "0.5", ".0"],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:2"
+      },
+      {
+        "absolutePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/configuration/UintStorage.sol",
+        "file": "./UintStorage.sol",
+        "id": 651,
+        "nodeType": "ImportDirective",
+        "scope": 680,
+        "sourceUnit": 713,
+        "src": "27:27:2",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@title LendingPoolParametersProvider\n@author Multiplier Finance\n@notice stores the configuration parameters of the Lending Pool contract*",
+        "fullyImplemented": true,
+        "id": 679,
+        "linearizedBaseContracts": [679],
+        "name": "LendingPoolParametersProvider",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": true,
+            "id": 654,
+            "name": "MAX_STABLE_RATE_BORROW_SIZE_PERCENT",
+            "nodeType": "VariableDeclaration",
+            "scope": 679,
+            "src": "270:65:2",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 652,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "270:7:2",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "3235",
+              "id": 653,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "333:2:2",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_25_by_1",
+                "typeString": "int_const 25"
+              },
+              "value": "25"
+            },
+            "visibility": "private"
+          },
+          {
+            "constant": true,
+            "id": 660,
+            "name": "REBALANCE_DOWN_RATE_DELTA",
+            "nodeType": "VariableDeclaration",
+            "scope": 679,
+            "src": "342:61:2",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 655,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "342:7:2",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "commonType": {
+                "typeIdentifier": "t_rational_200000000000000000000000000_by_1",
+                "typeString": "int_const 200000000000000000000000000"
+              },
+              "id": 659,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "lValueRequested": false,
+              "leftExpression": {
+                "argumentTypes": null,
+                "components": [
+                  {
+                    "argumentTypes": null,
+                    "hexValue": "31653237",
+                    "id": 656,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "number",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "396:4:2",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_rational_1000000000000000000000000000_by_1",
+                      "typeString": "int_const 1000000000000000000000000000"
+                    },
+                    "value": "1e27"
+                  }
+                ],
+                "id": 657,
+                "isConstant": false,
+                "isInlineArray": false,
+                "isLValue": false,
+                "isPure": true,
+                "lValueRequested": false,
+                "nodeType": "TupleExpression",
+                "src": "395:6:2",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_rational_1000000000000000000000000000_by_1",
+                  "typeString": "int_const 1000000000000000000000000000"
+                }
+              },
+              "nodeType": "BinaryOperation",
+              "operator": "/",
+              "rightExpression": {
+                "argumentTypes": null,
+                "hexValue": "35",
+                "id": 658,
+                "isConstant": false,
+                "isLValue": false,
+                "isPure": true,
+                "kind": "number",
+                "lValueRequested": false,
+                "nodeType": "Literal",
+                "src": "402:1:2",
+                "subdenomination": null,
+                "typeDescriptions": {
+                  "typeIdentifier": "t_rational_5_by_1",
+                  "typeString": "int_const 5"
+                },
+                "value": "5"
+              },
+              "src": "395:8:2",
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_200000000000000000000000000_by_1",
+                "typeString": "int_const 200000000000000000000000000"
+              }
+            },
+            "visibility": "private"
+          },
+          {
+            "body": {
+              "id": 668,
+              "nodeType": "Block",
+              "src": "618:63:2",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "components": [
+                      {
+                        "argumentTypes": null,
+                        "id": 665,
+                        "name": "MAX_STABLE_RATE_BORROW_SIZE_PERCENT",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 654,
+                        "src": "637:35:2",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "id": 666,
+                    "isConstant": false,
+                    "isInlineArray": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "lValueRequested": false,
+                    "nodeType": "TupleExpression",
+                    "src": "636:37:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "functionReturnParameters": 664,
+                  "id": 667,
+                  "nodeType": "Return",
+                  "src": "629:44:2"
+                }
+              ]
+            },
+            "documentation": "@dev returns the maximum stable rate borrow size, in percentage of the\navailable liquidity.*",
+            "id": 669,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getMaxStableRateBorrowSizePercent",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 661,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "582:2:2"
+            },
+            "returnParameters": {
+              "id": 664,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 663,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 669,
+                  "src": "608:7:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 662,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "608:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "607:9:2"
+            },
+            "scope": 679,
+            "src": "540:141:2",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": {
+              "id": 677,
+              "nodeType": "Block",
+              "src": "951:53:2",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "components": [
+                      {
+                        "argumentTypes": null,
+                        "id": 674,
+                        "name": "REBALANCE_DOWN_RATE_DELTA",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 660,
+                        "src": "970:25:2",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "id": 675,
+                    "isConstant": false,
+                    "isInlineArray": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "lValueRequested": false,
+                    "nodeType": "TupleExpression",
+                    "src": "969:27:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "functionReturnParameters": 673,
+                  "id": 676,
+                  "nodeType": "Return",
+                  "src": "962:34:2"
+                }
+              ]
+            },
+            "documentation": "@dev returns the delta between the current stable rate and the user\nstable rate at which the borrow position of the user will be rebalanced\n(scaled down)*",
+            "id": 678,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getRebalanceDownRateDelta",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 670,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "916:2:2"
+            },
+            "returnParameters": {
+              "id": 673,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 672,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 678,
+                  "src": "942:7:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 671,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "942:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "941:9:2"
+            },
+            "scope": 679,
+            "src": "882:122:2",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 680,
+        "src": "218:793:2"
+      }
+    ],
+    "src": "0:1013:2"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.2.3",
+  "updatedAt": "2021-02-19T07:32:48.491Z",
+  "devdoc": {
+    "author": "Multiplier Finance",
+    "methods": {
+      "getMaxStableRateBorrowSizePercent()": {
+        "details": "returns the maximum stable rate borrow size, in percentage of the available liquidity.*"
+      },
+      "getRebalanceDownRateDelta()": {
+        "details": "returns the delta between the current stable rate and the user stable rate at which the borrow position of the user will be rebalanced (scaled down)*"
+      }
+    },
+    "title": "LendingPoolParametersProvider"
+  },
+  "userdoc": {
+    "methods": {},
+    "notice": "stores the configuration parameters of the Lending Pool contract*"
+  }
+}

@@ -1,0 +1,258 @@
+{
+  "contractName": "BscAddressLib",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/libraries/BscAddressLib.sol\":\"BscAddressLib\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":100},\"remappings\":[]},\"sources\":{\"/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/libraries/BscAddressLib.sol\":{\"keccak256\":\"0x3394ecdd453a910f9b0d64c721294a31904993ce14b534cdcaca1848f543eee4\",\"urls\":[\"bzz-raw://3678779163c9903ef53ab797bfce1a64f09ea8c544307db766d906d66dd3b341\",\"dweb:/ipfs/QmZ1jX7nuiBCqjFq8CapZia2Sj95Anq7TqLT74wUkWxLrP\"]}},\"version\":1}",
+  "bytecode": "0x60556023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a7231582018fa788d5e78a899aa259a2c68b6348dd64c399c19991c9e4bc40af0090d8e9f64736f6c63430005100032",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a7231582018fa788d5e78a899aa259a2c68b6348dd64c399c19991c9e4bc40af0090d8e9f64736f6c63430005100032",
+  "sourceMap": "27:290:22:-;;132:2:-1;166:7;155:9;146:7;137:37;255:7;249:14;246:1;241:23;235:4;232:33;222:2;;269:9;222:2;293:9;290:1;283:20;323:4;314:7;306:22;347:7;338;331:24",
+  "deployedSourceMap": "27:290:22:-;;;;;;;;",
+  "source": "pragma solidity ^0.5.0;\r\n\r\nlibrary BscAddressLib {\r\n    /**\r\n     * @dev returns the address used within the protocol to identify ETH\r\n     * @return the address assigned to ETH\r\n     */\r\n    function bnbAddress() internal pure returns (address) {\r\n        return 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;\r\n    }\r\n}\r\n",
+  "sourcePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/libraries/BscAddressLib.sol",
+  "ast": {
+    "absolutePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/libraries/BscAddressLib.sol",
+    "exportedSymbols": {
+      "BscAddressLib": [9836]
+    },
+    "id": 9837,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 9827,
+        "literals": ["solidity", "^", "0.5", ".0"],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:22"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "library",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 9836,
+        "linearizedBaseContracts": [9836],
+        "name": "BscAddressLib",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 9834,
+              "nodeType": "Block",
+              "src": "246:68:22",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "hexValue": "307845656565654565656545654565654565456545656545454565656565456565656565656545456545",
+                    "id": 9832,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "number",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "264:42:22",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address_payable",
+                      "typeString": "address payable"
+                    },
+                    "value": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+                  },
+                  "functionReturnParameters": 9831,
+                  "id": 9833,
+                  "nodeType": "Return",
+                  "src": "257:49:22"
+                }
+              ]
+            },
+            "documentation": "@dev returns the address used within the protocol to identify ETH\n@return the address assigned to ETH",
+            "id": 9835,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "bnbAddress",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 9828,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "211:2:22"
+            },
+            "returnParameters": {
+              "id": 9831,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9830,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9835,
+                  "src": "237:7:22",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 9829,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "237:7:22",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "236:9:22"
+            },
+            "scope": 9836,
+            "src": "192:122:22",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 9837,
+        "src": "27:290:22"
+      }
+    ],
+    "src": "0:319:22"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/dev/Documents/Project/MCLendNew/MCL-SmartContracts/lending/contracts/libraries/BscAddressLib.sol",
+    "exportedSymbols": {
+      "BscAddressLib": [9836]
+    },
+    "id": 9837,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 9827,
+        "literals": ["solidity", "^", "0.5", ".0"],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:22"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "library",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 9836,
+        "linearizedBaseContracts": [9836],
+        "name": "BscAddressLib",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 9834,
+              "nodeType": "Block",
+              "src": "246:68:22",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "hexValue": "307845656565654565656545654565654565456545656545454565656565456565656565656545456545",
+                    "id": 9832,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "number",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "264:42:22",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address_payable",
+                      "typeString": "address payable"
+                    },
+                    "value": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+                  },
+                  "functionReturnParameters": 9831,
+                  "id": 9833,
+                  "nodeType": "Return",
+                  "src": "257:49:22"
+                }
+              ]
+            },
+            "documentation": "@dev returns the address used within the protocol to identify ETH\n@return the address assigned to ETH",
+            "id": 9835,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "bnbAddress",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 9828,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "211:2:22"
+            },
+            "returnParameters": {
+              "id": 9831,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9830,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9835,
+                  "src": "237:7:22",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 9829,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "237:7:22",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "236:9:22"
+            },
+            "scope": 9836,
+            "src": "192:122:22",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 9837,
+        "src": "27:290:22"
+      }
+    ],
+    "src": "0:319:22"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.2.3",
+  "updatedAt": "2021-01-15T04:28:32.511Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}
