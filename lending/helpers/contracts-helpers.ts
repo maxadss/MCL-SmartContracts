@@ -17,7 +17,7 @@ import { Artifact } from "hardhat/types";
 import { Artifact as BuidlerArtifact } from "@nomiclabs/buidler/types";
 import { verifyContract } from "./etherscan-verification";
 import { getIErc20Detailed } from "./contracts-getters";
-import { MintableERC20 } from "../types/MintableERC20";
+import { MintableERC20 } from "../types/MintableErc20";
 import { ETHEREUM_ADDRESS } from "./constants";
 
 export type MockTokenMap = { [symbol: string]: MintableERC20 };
