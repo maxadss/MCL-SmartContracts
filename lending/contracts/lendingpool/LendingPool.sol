@@ -359,8 +359,8 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
         );
 
         //minting mToken to user 1:1 with the specific exchange rate
-        mToken mToken = mToken(core.getReservemTokenAddress(_reserve));
-        mToken.mintOnDeposit(msg.sender, _amount);
+        mToken token = mToken(core.getReservemTokenAddress(_reserve));
+        token.mintOnDeposit(msg.sender, _amount);
 
         //transfer to the core contract
         core.transferToReserve.value(msg.value)(_reserve, msg.sender, _amount);
