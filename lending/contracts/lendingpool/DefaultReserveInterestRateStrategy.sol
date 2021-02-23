@@ -22,20 +22,19 @@ contract DefaultReserveInterestRateStrategy is IReserveInterestRateStrategy {
     using SafeMath for uint256;
 
     /**
-     * @dev this constant represents the utilization rate at which the pool aims
+     * @dev this value represents the utilization rate at which the pool aims
      * to obtain most competitive borrow rates
      * expressed in ray
      **/
-    uint256 public constant OPTIMAL_UTILIZATION_RATE = 0.8 * 1e27;
+    uint256 public  optimalUtilizationRate = 0.8 * 1e27;
 
     /**
-     * @dev this constant represents the excess utilization rate above the
+     * @dev this value represents the excess utilization rate above the
      * optimal. It's always equal to
      * 1-optimal utilization rate. Added as a constant here for gas optimizations
      * expressed in ray
      **/
-
-    uint256 public constant EXCESS_UTILIZATION_RATE = 0.2 * 1e27;
+    uint256 public  excessUtilizationRate  = 0.2 * 1e27;
 
     LendingPoolAddressesProvider public addressesProvider;
 
@@ -66,7 +65,8 @@ contract DefaultReserveInterestRateStrategy is IReserveInterestRateStrategy {
         uint256 _variableRateSlope1,
         uint256 _variableRateSlope2,
         uint256 _stableRateSlope1,
-        uint256 _stableRateSlope2
+        uint256 _stableRateSlope2,
+        uint256 _optimalUtilizationRate
     ) public {
         addressesProvider = _provider;
         baseVariableBorrowRate = _baseVariableBorrowRate;
@@ -74,6 +74,9 @@ contract DefaultReserveInterestRateStrategy is IReserveInterestRateStrategy {
         variableRateSlope2 = _variableRateSlope2;
         stableRateSlope1 = _stableRateSlope1;
         stableRateSlope2 = _stableRateSlope2;
+        optimalUtilizationRate = _optimalUtilizationRate;
+        excessUtilizationRate = 1e27.sub(_optimalUtilizationRate);
+
         reserve = _reserve;
     }
 
@@ -142,10 +145,10 @@ contract DefaultReserveInterestRateStrategy is IReserveInterestRateStrategy {
         )
             .getMarketBorrowRate(_reserve);
 
-        if (utilizationRate > OPTIMAL_UTILIZATION_RATE) {
+        if (utilizationRate > optimalUtilizationRate) {
             uint256 excessUtilizationRateRatio =
-                utilizationRate.sub(OPTIMAL_UTILIZATION_RATE).rayDiv(
-                    EXCESS_UTILIZATION_RATE
+                utilizationRate.sub(optimalUtilizationRate).rayDiv(
+                    excessUtilizationRate
                 );
 
             currentStableBorrowRate = currentStableBorrowRate
@@ -158,11 +161,11 @@ contract DefaultReserveInterestRateStrategy is IReserveInterestRateStrategy {
         } else {
             currentStableBorrowRate = currentStableBorrowRate.add(
                 stableRateSlope1.rayMul(
-                    utilizationRate.rayDiv(OPTIMAL_UTILIZATION_RATE)
+                    utilizationRate.rayDiv(optimalUtilizationRate)
                 )
             );
             currentVariableBorrowRate = baseVariableBorrowRate.add(
-                utilizationRate.rayDiv(OPTIMAL_UTILIZATION_RATE).rayMul(
+                utilizationRate.rayDiv(optimalUtilizationRate).rayMul(
                     variableRateSlope1
                 )
             );
