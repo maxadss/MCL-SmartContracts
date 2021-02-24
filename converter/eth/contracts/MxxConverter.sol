@@ -11,7 +11,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-pragma solidity ^0.5.0;
+pragma solidity ^0.7.0;
 
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "openzeppelin-solidity/contracts/utils/ReentrancyGuard.sol";
@@ -72,12 +72,12 @@ contract MxxConverter is Ownable, ReentrancyGuard {
     /**
      * @dev - Variable to store Official MXX ERC20 token address
      */
-    address public MXX_ADDRESS = 0x8F1E37Afacdc033dC2c0BF2BD116eaa558eFCdE8;
+    address public MXX_ADDRESS;
 
     /**
      * @dev - Address to store the Official MXX Burn Address
      */
-    address public BURN_ADDRESS = 0x1f31541E77cAC6BFAE2FBdA66a2085e6C137871e;
+    address public BURN_ADDRESS;
 
     /**
      * @dev - The grand total number of Mxx that can be converted to BSC.
@@ -100,9 +100,14 @@ contract MxxConverter is Ownable, ReentrancyGuard {
     mapping(uint256 => ConversionDetails) public allConversions;
 
     /**
-     * @dev - The fee percent for each conversion.
+     * @dev - The fee percent for each conversion. Default is 1_000_000 (ie 1%). 1e8 is 100%
      */
     uint256 public feePcnt = 1_000_000;
+
+     /**
+     * @dev - The max fee is 10%
+     */
+    uint256 public constant MAX_FEE_PCNT = 10_000_000;
 
     constructor(address mxx, address burnAddress) public Ownable() {
         availableMxxAmt = MAX_CONVERTABLE;
@@ -198,6 +203,7 @@ contract MxxConverter is Ownable, ReentrancyGuard {
      * Access Control: Only Owner
      */
     function setFee(uint256 _fee) external onlyOwner() {
+        require(_fee <= MAX_FEE_PCNT, "Max fee exceeded");
         feePcnt = _fee;
     }
 }
