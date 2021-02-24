@@ -24,17 +24,17 @@ contract DefaultReserveInterestRateStrategy is IReserveInterestRateStrategy {
     /**
      * @dev this value represents the utilization rate at which the pool aims
      * to obtain most competitive borrow rates
-     * expressed in ray
+     * expressed in ray (e27)
      **/
-    uint256 public  optimalUtilizationRate = 0.8 * 1e27;
+    uint256 public  optimalUtilizationRate;
 
     /**
      * @dev this value represents the excess utilization rate above the
      * optimal. It's always equal to
      * 1-optimal utilization rate. Added as a constant here for gas optimizations
-     * expressed in ray
+     * expressed in ray (e27)
      **/
-    uint256 public  excessUtilizationRate  = 0.2 * 1e27;
+    uint256 public  excessUtilizationRate;
 
     LendingPoolAddressesProvider public addressesProvider;
 
@@ -75,7 +75,7 @@ contract DefaultReserveInterestRateStrategy is IReserveInterestRateStrategy {
         stableRateSlope1 = _stableRateSlope1;
         stableRateSlope2 = _stableRateSlope2;
         optimalUtilizationRate = _optimalUtilizationRate;
-        excessUtilizationRate = 1e27.sub(_optimalUtilizationRate);
+        excessUtilizationRate = uint256(1e27).sub(_optimalUtilizationRate);
 
         reserve = _reserve;
     }
