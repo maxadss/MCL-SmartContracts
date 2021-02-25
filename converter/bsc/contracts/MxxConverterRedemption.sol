@@ -204,4 +204,17 @@ contract MxxConverterRedemption is Ownable, ReentrancyGuard {
 
         emit RedeemedSuccess(_id, record.fromAddress, record.toAddress, record.amtbMxx);
     }
+
+    /**
+     * @dev This function allows the owner to withdraw the bMxx fee.
+     * @param _amount - The amount to withdraw.
+     * Access Control: Only Owner.
+     */
+     function withdrawFees(uint256 _amount)
+        public
+        onlyOwner()
+        nonReentrant()
+    {
+        ERC20(bMxxTokenAddress).safeTransfer(msg.sender, _amount);
+    }
 }
