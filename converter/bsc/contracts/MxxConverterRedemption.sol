@@ -27,6 +27,7 @@ import "./bMxx.sol";
 contract MxxConverterRedemption is Ownable, ReentrancyGuard {
     // Using SafeMath Library to prevent integer overflow
     using SafeMath for uint256;
+    using SafeERC20 for ERC20;
 
     /**
      * @dev - A enum to store the status of each cobversion
